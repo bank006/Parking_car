@@ -12,19 +12,30 @@ function Logins() {
     const [passworddata , setpassworddata] = useState([]);
     const [emaildata , setemaildata ] = useState([]);
     const [IDdata ,setIDdata] = useState([]);
-    const [res , setres] =useState([])
     const [shouldRedirect, setShouldRedirect] = useState(false);
+
+    // สำหรับการเช็คค่า email ซำ้ใน admin เเละการส่งเข้าลูปเพื่อดึงข้อมูล
+    const [admin_emailcheck , setadmin_emailcheck] = useState([])
+    const [email_data , setemail_data] = useState([])
+    const [password_data , setpassword_data] =useState([])
 
     const navigate = useNavigate();
     
     const handleLogin =() =>{
-        if(!emaildata.includes(email)){
+        if(email_data.includes(email) && password_data.includes(password)){
+            alert('welcom admin')
+            const admin = email
+            navigate('/Download_ad/'+ admin)   
+        }
+        else if(!emaildata.includes(email) ){
             alert('Loginerror')
             navigate('/Logins')
+         
         }
-        else if(!passworddata.includes(password)){
+        else if(!passworddata.includes(password) ){
             alert('somtingwentwrong')
             navigate('/Logins')
+         
         }
         else {
             alert("success")
@@ -54,7 +65,6 @@ function Logins() {
     useEffect(()=>{
         const userdata = usersdata.map((item)=> item.passNhash)
         setpassworddata(userdata)
-
     },[usersdata]);
 
     useEffect(()=>{
@@ -63,21 +73,38 @@ function Logins() {
         setShouldRedirect(true)
     },[usersdata])
 
+    console.log(emaildata)
+
     useEffect(()=>{
         const IDuserdata = usersdata.map((itememail)=> itememail._id)
         setIDdata(IDuserdata)
     },[usersdata])
-
-
-    useEffect(()=>{
-        axios.get('http://localhost:4001/users').then((usersdata)=>{
-            setres(usersdata.data)
-        })
-        .catch((error)=>{
-            console.log(error)
-        })
-    },[]);
     
+    // การดึง APIs สำหรับการเช็คอีเมลของ admin
+    useEffect(()=>{
+        axios.get('http://localhost:4001/admin/email_admin')
+        .then((response)=>{
+            setadmin_emailcheck(response.data)
+        })
+        .catch((error) => {
+            console.error('Error fetching data:', error);
+            });
+    },[])
+    console.log(admin_emailcheck)
+    
+    // การลูปเอาข้อมูลใน Array
+    useEffect(()=>{
+        const email_admin = admin_emailcheck.map((item)=> item.adminmail);
+        const password_admin = admin_emailcheck.map((itempassword)=> itempassword.password)
+        setemail_data(email_admin)
+        setpassword_data(password_admin)
+
+    },[admin_emailcheck])
+
+    // console.log(email_data)
+    // console.log(password_data)
+
+
   return (
     <div className='login'>
         <form >
@@ -88,7 +115,8 @@ function Logins() {
             <button type='submit' onClick={handleLogin}>submit</button>
             <p>สมัครสมาชิก <Link to={'/Register'}>Regiser</Link></p>
         </form>
-        <Link to={'/Dashbord_ad'}>admin</Link>
+        <Link to={'/Register_ad'}>admin</Link>
+        {/* <Link to={'/Download_ad'}>add</Link> */}
     </div>
   )
 }

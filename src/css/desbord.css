@@ -1,0 +1,39 @@
+.boxitem1{
+      border-bottom: 1px solid black;
+      border-top:1px solid rgb(0, 0, 0);
+      border-left:dotted 3px black ;
+      margin-top: 15px ;
+      
+}
+.boxitem2{
+    border-bottom: 1px solid black;
+    border-top:1px solid black;
+    border-left:dotted 3px black ;
+    margin-bottom: 10px;
+}
+
+
+.popup {
+    visibility: hidden;
+    display: grid;
+    place-items: center; /* จัดให้เนื้อหาตรงกลาง */
+    position: fixed; /* ใช้ Fixed Position เพื่อให้คอมโพเนนต์อยู่ตรงกลางของหน้าจอ */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: white; /* สีพื้นหลังสำหรับแนวโค้ง */
+}
+
+.popup.visible{
+    visibility: visible;
+}
+
+.regis
+{
+    width: 500px;
+    height: 500px;
+    border: 1px solid black;
+}
+  
+

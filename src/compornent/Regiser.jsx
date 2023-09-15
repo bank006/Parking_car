@@ -12,36 +12,43 @@ function Regiser() {
     const [email , setemail] = useState('');
     const [password , setpassword] = useState('');
     const [passwordnh , setpasswordnh] = useState('');
+     // สำหรับการเช็คค่า email ซำ้ใน users เเละการส่งเข้าลูปเพื่อดึงข้อมูล
     const [datas , setdata] = useState([]);
-    // const [dataemail , setdataemail] = useState([]);
     const [emails, setEmails] = useState([]);
+
     const [cpass , setcpass] = useState('')
+
+    // สำหรับการเช็คค่า email ซำ้ใน admin เเละการส่งเข้าลูปเพื่อดึงข้อมูล
+    const [admin_emailcheck , setadmin_emailcheck] = useState([])
+    const [emaildata , setemaildata] = useState([])
+
     const navigate = useNavigate();
 
 
     const handleregister =(e) =>{
         e.preventDefault();
-        setname('');
-        setemail('');
-        setpassword('');
+       
         try{
-            axios.post('http://localhost:4001/users/register',{name , email , password , passwordnh})  
-            
             if(name == ''){
                 alert("something went worng" )
                 navigate("/Register")
+                end();
             }else if (password == ''){
                 alert("something went wrong")
                 navigate("/Register")
-            }else if (emails.includes(email) || email ==''){
+                end();
+            }else if (emails.includes(email)|| emaildata.includes(email) || email ==''){
                 alert("Email went wrong")
                 navigate("/Register")
+                end();
             }else if (password != cpass){
                 alert("password not match")
                 navigate("/Register")
+                end();
             }else{
                 navigate("/Logins")
             }
+            axios.post('http://localhost:4001/users/register',{name , email , password , passwordnh})  
                 
         }
         catch(error){
@@ -63,9 +70,10 @@ function Regiser() {
     const cpass1 =(e)=>{
         setcpass(e.target.value)
     }
-    console.log(password)
-    console.log(cpass)
+    // console.log(password)
+    // console.log(cpass)
 
+    // การดึง APIs สำหรับการเช็คอีเมลของ users
     useEffect(()=>{
         axios.get('http://localhost:4001/users/getemail')
         .then((datas)=>{
@@ -76,31 +84,45 @@ function Regiser() {
           });
     }, []);
 
+     // การลูปเอาข้อมูลใน Array
     useEffect(() => {
-
         const emailList = datas.map((item)=> item.email);
         setEmails(emailList);
         
-      }, [datas]);
+    }, [datas]);
+
+      // การดึง APIs สำหรับการเช็คอีเมลของ admin
+    useEffect(()=>{
+        axios.get('http://localhost:4001/admin/email_admin')
+        .then((response)=>{
+            setadmin_emailcheck(response.data)
+        })
+        .catch((error) => {
+            console.error('Error fetching data:', error);
+          });
+    },[])
+    // console.log(email_admin)
+
+    // การลูปเอาข้อมูลใน Array
+    useEffect(()=>{
+        const email_admin = admin_emailcheck.map((item)=> item.adminmail);
+        setemaildata(email_admin)
+    },[admin_emailcheck])
+
+
+
       
-    // useEffect(()=>{
-    //     if()
-    // })
-
-   
-  
-
   return (
     <div className='container'>
         <p>register</p>
         <Link to={"/Logins"}>to login</Link>
          <form >
             <p>name</p>
-            <input type="text" value={name}  onChange={name1} />
+            <input type="text" onChange={name1} />
             <p>email</p>
-            <input type="email" value={email} onChange={email1} />
+            <input type="email" onChange={email1} />
             <p>password</p>
-            <input type="password" value={password} onChange={password1} />
+            <input type="password"  onChange={password1} />
             <p>confrimepassword</p>
             <input type="password"  onChange={cpass1} />
             <button type='submit' onClick={handleregister}>submit</button>

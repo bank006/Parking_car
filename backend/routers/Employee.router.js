@@ -10,7 +10,7 @@ router.use(express.json());
 let EmployeeShema = require('../models/employee')
 
 
-router.get('/', (req , res)=>{
+router.get('/', (req , res , next)=>{
     EmployeeShema.find((err ,data)=>{
         if(err){
             return next (err)

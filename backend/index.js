@@ -6,9 +6,12 @@ let express = require('express'),
 
 
 
-const usersRouter = require('../backend/routers/Users.router');
-const employeeRouter = require('../backend/routers/Employee.router')
-const adminRouter = require('../backend/routers/Admin.router')
+const usersRouter = require('./Users.router');
+const employeeRouter = require('../backend/routers/Employee.router');
+const adminRouter = require('../backend/routers/Admin.router');
+const profileRouter = require('./Profile.router')
+const storeRouter = require('./store.router')
+const productRouter = require('./Product.router')
 
 const session = require('express-session');
 
@@ -26,6 +29,7 @@ mongoose.connect(dbconfig.db,{
 )
 
 const app = express();
+
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -47,6 +51,9 @@ app.get('*',(req , res ,next)=>{
 app.use('/users' , usersRouter);
 app.use('/employee' , employeeRouter)
 app.use('/admin' , adminRouter)
+app.use('/profile' , profileRouter)
+app.use('/store', storeRouter)
+app.use('/product' , productRouter)
 
 
 

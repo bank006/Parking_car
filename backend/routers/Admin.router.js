@@ -22,16 +22,40 @@ router.get('/', (req ,res , next)=>{
 })
 
 router.post('/postadmin' , (req ,res ,next)=>{
-    const {admin_name , admin_password , admin_passwordnh} = req.body
-    
-    Adminshema.create({admin_name , admin_password , admin_passwordnh} ,(err , admindata)=>{
-        if(err){
-            console.log(err)
+    const {admin_name , admin_email , admin_password , admin_passwordnh} = req.body
+    Adminshema.findOne({admin_email:admin_email}).then((adminsob)=>{
+        if(!adminsob){
+            Adminshema.create({admin_name ,admin_email, admin_password , admin_passwordnh} ,(err , admindata)=>{
+                console.log(admindata)
+                res.status(200).json(adminsob)
+                if(err){
+                    console.log(err)
+                }
+            })
+        }else{
+            const ms =  "email have in system"
+            res.json({ms});
+            console.log(ms)
         }
-        else{
+    })
+})
+
+
+router.get ('/email_admin' , (req ,res , next )=>{
+    Adminshema.aggregate([{$project:{adminmail:'$admin_email' , password : '$admin_passwordnh'}}],(err ,admindata)=>{
+        if(err){
+            return next(err)
+        }else{
+            console.log(admindata)
             res.status(200).send(admindata)
         }
     })
+})
+
+router.get('/dataAdmin/:useremail' , async(req , res , next)=>{
+    const adminemail = req.params.useremail
+    let getdataAdmin = await Adminshema.findOne({admin_email : req.params.useremail})
+    res.status(200).json(getdataAdmin)
 })
 
 module.exports = router 

@@ -22,8 +22,9 @@ let UserShema = new Schema({
         type : String,
         required:[true]
     },
+    image: String,
     time:{
-        type: Date, default: Date.now
+        type: Date, default:Date.now
     }
     
 })
@@ -37,5 +38,7 @@ UserShema.pre('save'  , function(next){
         console.log(error.errors);
     })
 })
+
+
 const users = mongoose.model('users', UserShema)
 module.exports = users
