@@ -1,0 +1,54 @@
+.popup {
+    visibility: hidden;
+    display: grid;
+    place-items: center; /* จัดให้เนื้อหาตรงกลาง */
+    position: fixed; /* ใช้ Fixed Position เพื่อให้คอมโพเนนต์อยู่ตรงกลางของหน้าจอ */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    
+
+   .booking{
+       width: 800px;
+       height: 600px;
+       border: 1px solid black;
+       background-color: white;
+       overflow: scroll;
+
+       .popups.visible{
+        visibility: visible;
+    }
+
+   }
+
+}
+
+.popupconfirme{
+    visibility: hidden;
+    display: grid;
+    place-items: center; /* จัดให้เนื้อหาตรงกลาง */
+    position: fixed; /* ใช้ Fixed Position เพื่อให้คอมโพเนนต์อยู่ตรงกลางของหน้าจอ */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    .item-confirme{
+        width: 800px;
+       height: 600px;
+       border: 1px solid black;
+       background-color: white;
+       overflow: scroll;
+
+    }  
+    
+}
+
+.popupconfirme.visible{
+    visibility: visible;
+}
+
+
+
+

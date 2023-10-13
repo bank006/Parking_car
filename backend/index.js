@@ -2,6 +2,7 @@ let express = require('express'),
     mongoose = require('mongoose'),
     cors = require('cors'),
     bodyParser = require('body-parser'),
+    path = require('path'),
     dbconfig = require('../backend/database/db')
 
 
@@ -12,21 +13,36 @@ const adminRouter = require('../backend/routers/Admin.router');
 const profileRouter = require('./Profile.router')
 const storeRouter = require('./store.router')
 const productRouter = require('./Product.router')
+const bookingRouter = require('./Booking.router')
+const bookingconRouter = require('./Bookingcon.router')
+const bookinghisRouter = require('./Bookinghis.router')
+const shoppingcardRouter = require('./Shoppingcard.router')
+const qrprompayRouter = require('./qr-prompay.router')
 
 const session = require('express-session');
 
 global.logInid = null
 
+mongoose.set('useFindAndModify', false);
 mongoose.Promise = global.Promise;
-mongoose.connect(dbconfig.db,{
-    useNewUrlParser: true ,
-}).then(()=>{
+mongoose.connect(dbconfig.db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    // สร้างดัชนีที่นี่
+    const yourCollection = mongoose.connection.collection('yourCollectionName');
+    yourCollection.createIndexes({ yourField: 1 }, function (err, result) {
+        if (err) {
+            console.error(err);
+        } else {
+            console.log('Indexes created successfully', result);
+        }
+    });
     console.log("database connect");
-},
-(err)=>{
+}, (err) => {
     console.log(err);
-}
-)
+})
+
 
 const app = express();
 
@@ -54,7 +70,13 @@ app.use('/admin' , adminRouter)
 app.use('/profile' , profileRouter)
 app.use('/store', storeRouter)
 app.use('/product' , productRouter)
-
+app.use('/booking', bookingRouter)
+app.use('/bookingcon' , bookingconRouter )
+app.use('/bookinghis' , bookinghisRouter )
+app.use("/shoppingcart", shoppingcardRouter );
+app.use("/payment" , qrprompayRouter)
+app.use('/images', express.static(path.join(__dirname, './qrcode')));
+// app.use('/booking' , bookingRouter )
 
 
 
@@ -66,19 +88,21 @@ const server = app.listen(port,()=>{
 })
 
 
-app.use((req,res,next)=>{
-     next((createError(404)))
- })
+app.use((req, res, next) => {
+    const error = new Error('Not Found');
+    error.status = 404;
+    next(error);
+  });
+  
 
- app.use(function(err,res,req,next){
-     console.error(err.message);
-     if(!err.statusCode)err.statusCode = 500;
-
-     res.status(err.statusCode).json({
-         message:err.message
-     })
-    
- })
+ app.use(function (err, req, res, next) {
+    console.error(err.message);
+    if (!err.statusCode) err.statusCode = 500;
+  
+    res.status(err.statusCode).json({
+      message: err.message
+    });
+  });
 
 
 

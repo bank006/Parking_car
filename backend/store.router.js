@@ -71,11 +71,4 @@ router.get('/loginstore/:IDstore' , async (req , res ,next)=>{
 })
 
 
-
-
-
-
-
-
-
 module.exports =  router ;

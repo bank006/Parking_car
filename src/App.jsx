@@ -1,5 +1,5 @@
 import { BrowserRouter , Route , Routes  } from 'react-router-dom'
-import Login from './compornent/Login'
+// import Login from './compornent/Login'
 import Regiser from './compornent/Regiser'
 import Indexs from './compornent/indexs'
 import Dashbord from './compornent/Dashbord'
@@ -13,6 +13,12 @@ import Store from './compornent/store/Store'
 import Profile from './compornent/Profile'
 import Detail_store from './compornent/store/Detail_store'
 import Push_product from './compornent/store/Push_product'
+import Booking_History from './compornent/Booking_History'
+import Booking_confirm from './compornent/Booking_confirm'
+import History from './compornent/History'
+import Logins from './compornent/Logins'
+import Payment from './compornent/Payment'
+import Navbars from './compornent/Navbar'
 
 function App() {
 
@@ -21,19 +27,25 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Indexs/>}/>
-        <Route path='/Logins' element={<Login/>}/>
+        {/* <Route path='/Logins' element={<Login/>}/> */}
         <Route path='/Register' element={<Regiser/>}/>
-        <Route path='/Dashbord/:IDuser' element={<Dashbord/>}/>
+        <Route path='/Dashbord' element={<Dashbord/>}/>
         <Route path='/Book_car/' element={<Book_car/>}/>
         <Route path='/Dowload/:usersemail' element={<Dowload/>}/>
         <Route path='/Incrud/:IDuser' element={<Incurd_em/>}/>
-        <Route path='/Dashbord_ad/:IDadmin' element={<Dasgbord_ad/>}/>
+        <Route path='/Dashbord_ad' element={<Dasgbord_ad/>}/>
         <Route path='/Register_ad' element={<Register_admin/>}/>
         <Route path='/Download_ad/:email_admin' element={<Dowload_ad/>}/>
-        <Route path='/Store/:IDstore' element={<Store/>}/>
+        <Route path='/Store' element={<Store/>}/>
         <Route path='/Profile/:UserId' element={<Profile/>}/>
-        <Route path='/Detail_store/:IDstore/:IDuser' element={<Detail_store/>}/>
+        <Route path='/Detail_store' element={<Detail_store/>}/>
         <Route path='/Pust_product/:IDstore' element={<Push_product/>}/>
+        <Route path='/Booking_histre/:IDuser' element={<Booking_History/>}/>
+        <Route path='/Booking_confirm/:IDuser' element={<Booking_confirm/>}/>
+        <Route  path='/login' element={<Logins/>} />
+        <Route path='/History' element={<History/>}/>
+        <Route path='/Payment' element={<Payment/>}/>
+        <Route path='/Navbers' element={<Navbars/>} />
       </Routes>
     </BrowserRouter>
 

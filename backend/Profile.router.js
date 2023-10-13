@@ -78,6 +78,7 @@ router.get("/getimage/:UserId", (req, res) => {
   });
 
 
+    //GET AII USER WITH PROFILE
   router.get('/joinprofile', (req ,res) => {
     const User = require('./models/users'); 
     ProfileShema.aggregate([{$lookup :{from: User.collection.name , localField: "IDuser" , foreignField :"_id" , as:"users"}}]).then((dataUser)=>{
@@ -92,16 +93,7 @@ router.get("/getimage/:UserId", (req, res) => {
     })
   })
 
-
-
-
-
-
-
-
-
-
-
+ 
 
 // router.route("/Profile_post").post((req,res)=>{
 //     ProfileShema.create(req.body)

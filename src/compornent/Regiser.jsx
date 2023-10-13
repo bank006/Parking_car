@@ -13,7 +13,7 @@ function Regiser() {
     const [password , setpassword] = useState('');
     const [passwordnh , setpasswordnh] = useState('');
      // สำหรับการเช็คค่า email ซำ้ใน users เเละการส่งเข้าลูปเพื่อดึงข้อมูล
-    const [datas , setdata] = useState([]);
+    const [datas , setdata] = useState([]); 
     const [emails, setEmails] = useState([]);
 
     const [cpass , setcpass] = useState('')
@@ -46,7 +46,7 @@ function Regiser() {
                 navigate("/Register")
                 end();
             }else{
-                navigate("/Logins")
+                navigate("/logins")
             }
             axios.post('http://localhost:4001/users/register',{name , email , password , passwordnh})  
                 

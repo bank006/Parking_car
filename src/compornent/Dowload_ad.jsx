@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams , Link , useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
 import axios from 'axios'
 
 function Dowload_ad() {
@@ -9,6 +10,7 @@ function Dowload_ad() {
     const {email_admin} = useParams();
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     // เช้คอีเมลที่ส่งมาจากล้อคอิน
     // หลังจากนั้นดึงข้อมูลออกมา

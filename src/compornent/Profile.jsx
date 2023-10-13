@@ -2,6 +2,7 @@ import React ,{useEffect , useState} from 'react'
 import { useParams ,Link } from 'react-router-dom';
 import axios from 'axios';
 import fs from 'fs';
+import Book_car from './Book_car';
 
 function Profile() {
 
@@ -58,12 +59,28 @@ function Profile() {
                 const response = await axios.post('http://localhost:4001/profile/Profile_post',  formData,{
                     headers: {"Content-Type": "multipart/form-data"}
                 });
+                update(formData);
                 console.log('Image uploaded successfully:', response.data);
+
             } catch (error) {
                 console.error('Error uploading image:', error);
               }
+        } else{
+            console.log("Not image")
         }
     }
+
+    const update = async(formData)=>{
+        try{
+            const responses = await axios.put('http://localhost:4001/users/userProfile_post',  formData,{
+                headers: {"Content-Type": "multipart/form-data"}
+            });
+            console.log('Image uploaded successfully:', responses.data);
+        } catch(err){
+            console.log(err)
+        }
+    }
+
 
     // ดึงข้อมูลที่ได้รับมาจาก api ที่ทำการจอยมาโดยเทียบกับข้อมูล UserId
    useEffect(()=>{
@@ -118,59 +135,12 @@ function Profile() {
 //    console.log(data)
 //    console.log(userprs)
 
-    // // ระบบการจอง เเละยกเลิกอัติโนมัติ
-    const HALF_HOUR_MS = 50 * 60 * 1000;
-    const [remainingTime, setRemainingTime] = useState(null);
-  
-    useEffect(() => {
-        const interval = setInterval(() => {
-          const currentTime = new Date();
-          const bookingTime = new Date(timedata);
-      
-          if (!isNaN(bookingTime)) {
-            const result = currentTime - bookingTime;
-            console.log(result)
-            console.log(HALF_HOUR_MS)
-      
-            if (result < HALF_HOUR_MS) {
-              const timeLeft = HALF_HOUR_MS - result;
-              const hours = Math.floor(timeLeft / (60 * 60 * 1000));
-              const minutes = Math.floor((timeLeft % (60 * 60 * 1000)) / (60 * 1000));
-              const seconds = Math.floor((timeLeft % (60 * 1000)) / 1000);
-      
-              console.log(`${hours} ชั่วโมง ${minutes} นาที ${seconds} วินาที`);
-                console.log(timeLeft)
-              setRemainingTime(`${hours} ชั่วโมง ${minutes} นาที `);
-      
-            //     if (result >= HALF_HOUR_MS) {
-            //         clearInterval(interval); // หยุด interval เมื่อเวลาเหลือ 0
-            //         setRemainingTime("Time's up!");
-            //   }
-            }else if (result >= HALF_HOUR_MS){
-                clearInterval(interval); // หยุด interval เมื่อเวลาเหลือ 0
-                setRemainingTime("Time's up!");
-            }
-          }
-        }, 60000); // 60,000 มิลลิวินาที (60 วินาที)
-      
-        return () => clearInterval(interval);
-      }, [timedata]);
-      
 
 
-    
-  
-    // if (remainingTime === null) {
-    //   return <p>Loading...</p>;
-    // }else{
-    //     const minutes = Math.floor(remainingTime / (60 * 1000));
-    //     const seconds = Math.floor((remainingTime % (60 * 1000)) / 1000);
-    //     return <p>{minutes} : {seconds}</p>
-    // }
   return (
     <div>
          <div className='profile'>
-            <h1>{remainingTime}</h1>
+            
             {data.length == 0 ?(
                 <img src="../public/images/1.png" width={150} height={150} />
             ):(

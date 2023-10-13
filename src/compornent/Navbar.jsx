@@ -2,12 +2,21 @@ import React from 'react'
 import { Navbar , Container, Nav  } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-function Navbars() {
+
+import Booking_History from './Booking_History'
+import Shopping_cart from './Shopping_cart'
+import History from './History'
+
+function Navbars(props) {
+
+  const { IDuser } = props.totalID;
   return (
     <Navbar bg='dark' variant='dark'>
         <Container>
             <Nav>
-                <h1>navbar</h1>
+                <Booking_History totalID = {{IDuser : IDuser }}/>
+                <Shopping_cart IDuser ={{IDuser : IDuser}}/>
+                <History IDuser = {{IDuser}}/>
                 {/* <Link to='/'></Link> */}
             </Nav>         
         </Container>

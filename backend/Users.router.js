@@ -68,11 +68,7 @@ router.post('/login', (req, res) => {
       } else {
         const vrfpassword = argon2.verify(user.password ,password).then((verifypass)=>{
             if(verifypass == true){
-                console.log(user)
-                res.writeHead(302,{
-                    'Location': '/Register'
-                })
-                
+                console.log(verifypass)
             }
             else{
                 console.log('error')
@@ -82,6 +78,32 @@ router.post('/login', (req, res) => {
       }
     });
   });
+
+
+
+  router.post('/logins', async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const user = await UserShema.findOne({ email: email });
+        if (!user) {
+            return res.status(200).json({ success: false, message: 'ไม่พบผู้ใช้' });
+        }
+
+        const isPasswordValid = await argon2.verify(user.password, password);
+        if (!isPasswordValid) {
+            return res.status(200).json({ success: false, message: 'รหัสผ่านไม่ถูกต้อง' });
+        }
+
+        // ทำสิ่งที่คุณต้องการเมื่อรหัสผ่านถูกต้อง เช่นการสร้างโทเคน, เข้าสู่ระบบ, และอื่น ๆ
+        res.json({ success: true , data: user  });
+
+    } catch (error) {
+        console.error('เกิดข้อผิดพลาดในการเข้าสู่ระบบ:', error);
+        res.status(200).json({ success: false, message: 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ' });
+    }
+});
+
 
   
 
@@ -122,13 +144,13 @@ const Storage = multer.diskStorage({
 
 const upload = multer({storage : Storage})
 
-router.post('/userProfile_post',upload.single('image') , async(req , res ,next)=>{
+router.put('/userProfile_post',upload.single('image') , async(req , res ,next)=>{
  console.log(req.body)
  const imageName = req.file.filename;
  const IDuser = req.body.IDuser
  
  try{
-    await UserShema.findByIdAndUpdate(IDuser, { image: imageName });
+    await UserShema.findByIdAndUpdate(IDuser, { image: imageName }, { new: true });
     res.json({status : ok})
  }catch(error){
     res.json({status : error})
@@ -144,7 +166,11 @@ router.get("/getimage/:UserId", (req, res) => {
     } catch (error) {
       res.json({ status: error });
     }
-  });
+  })
+
+ 
+
+  
 
  
 module.exports =  router ;

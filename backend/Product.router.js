@@ -11,7 +11,9 @@ router.use(express.json());
 router.use('/images', express.static(path.join(__dirname, './public')));
 
 let ProductShema = require('./models/product');
-let store = require('./models/store')
+let store = require('./models/store');
+const product = require('./models/product');
+const { default: axios } = require('axios');
 
 router.get('/', (req,res)=>{
     ProductShema.find((err,data)=>{
@@ -65,6 +67,11 @@ router.get('/getproduct/:IDstore' ,async (req , res ,next)=>{
     res.status(200).json(productstore)
 })
 
+router.get('/callproduct/:IDproduct' , async(req ,res)=>{
+    let recallproduct = await ProductShema.findOne({_id : (req.params.IDproduct)})
+    res.status(200).json(recallproduct)
+})
+
 
 router.get('/joinproduct' , (req , res )=>{
     const Store = require('./models/store')
@@ -78,6 +85,25 @@ router.get('/joinproduct' , (req , res )=>{
         }
     }).catch((error)=>{
         console.log(error);
+    })
+})
+
+router.put('/updatepostbooking/:IDproductregiss', (req , res)=>{
+    ProductShema.findByIdAndUpdate({_id : req.params.IDproductregiss},{ $inc: { quantityInStock: -1 } })
+    .then((ress)=>{
+        res.status(200).json(ress)
+    }).catch((err)=>{
+        res.send(err)
+        console.log(err)
+    })
+})
+
+router.put('/updatestock/:IDproduct' ,(req , res)=>{
+    ProductShema.findByIdAndUpdate({_id : req.params.IDproduct},{ $inc: { quantityInStock: +1 }  })
+    .then((resstock)=>{
+        res.status(200).json(resstock)
+    }).catch((err)=>{
+        res.send(err)
     })
 })
 

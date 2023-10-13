@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
 import { useState  } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams , useLocation } from 'react-router-dom'
 
 function Detail_store() {
-  const {IDstore ,IDuser} = useParams();
+  // const {IDstore ,IDuser} = useParams();
+
+  const location = useLocation();
+  const { IDstore, IDuser } = location.state;
 
   const [profilestore , set_profilestore ] = useState([]);
   const [productstore , set_productstore] = useState([]);

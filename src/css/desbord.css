@@ -1,3 +1,8 @@
+:root{
+    --back-ground : #fff ;
+    --text-color : #000000 ;
+}
+
 .boxitem1{
       border-bottom: 1px solid black;
       border-top:1px solid rgb(0, 0, 0);
@@ -21,19 +26,33 @@
     top: 0;
     right: 0;
     bottom: 0;
-    left: 0;
-    background-color: white; /* สีพื้นหลังสำหรับแนวโค้ง */
+    left: 0;    
+    overflow: hidden;
+   /* สีพื้นหลังสำหรับแนวโค้ง */
 }
 
 .popup.visible{
     visibility: visible;
 }
 
+.box-regis{
+    display: grid;
+    place-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: scroll;
+}
 .regis
 {
-    width: 500px;
-    height: 500px;
+    width: 300px;
+    height: 300px;
     border: 1px solid black;
+    color: var(--text-color);
+    background-color: var(--back-ground);
+    
 }
   
 

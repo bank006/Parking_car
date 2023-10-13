@@ -1,16 +1,17 @@
 import React from 'react'
-import { useNavigate,  useParams } from 'react-router-dom'
+import { useNavigate,  useParams ,useLocation, Navigate } from 'react-router-dom'
 import { useState , useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './css/store.css'
 
-
-
-
 function Store() {
+
+    //รับค่า props
+    const location = useLocation();
     const navigate = useNavigate();
-    const {IDstore} = useParams();
+    const IDstore = location.state?.IDstores
+ 
     const [loginstore , set_loginstore] = useState([]);
 
     //push data
@@ -27,8 +28,6 @@ function Store() {
     const [mybookingproduct , set_mybookingproduct ] = useState(false)
 
     const [dataproduct , set_dataproduct] = useState([]);
-    console.log(longitude + ',' + latitude);
-
     // const UserId = userID
 
     // const n1 = 1
@@ -76,11 +75,12 @@ function Store() {
                     headers: {'Content-Type':'multipart/form-data'}
                 })
                console.log('uploaded successfully:', resproduct.data)
-               window.location.href = '/Store/' + IDstore;
+            //    window.location.href = '/Store/' + IDstore;
+            //    navigate('Dashbord' {state:{}})
+                window.location.reload();
             }catch(error){
                 console.log('Error upload data to store' , error)
-            }
-           
+            }    
         }
     }
     
@@ -150,11 +150,7 @@ function Store() {
             set_myproduct(false)
         }
     }
-    console.log(myproduct)
-
-
-
-
+    // console.log(myproduct)
 
   return (
     <div>
@@ -173,16 +169,16 @@ function Store() {
                     </div>
                     <div className='box-upload-'>
                         <input type="text"  placeholder='ชื่อสินค้า' onChange={handlenameproduct} />
-                    </div>
-                    <div className='box-upload-'>
+                    </div> 
+                    <div className='box-upload-'> 
                         <input type="number" placeholder='ราคาสินค้า' onChange={handleprice} />
                     </div>
                     <div className='box-upload-'>
                         <input type="text"  placeholder='รายละเอียดสินค้า' onChange={handledescrip} />
                     </div>
-                    {/* <div className='box-upload-'>
+                    <div className='box-upload-'>
                         <input type="number" placeholder='จำนวนสินค้า' onChange={handlequantity} />
-                    </div> */}
+                    </div>
                     <button type='sunmit' onClick={onsubmitproduct} >submit</button>
                     <Link to={'/Dashbord/' + loginstore.IDuser }>back</Link>
                 </div>
