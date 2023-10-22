@@ -3,6 +3,12 @@
     --text-color : #000000 ;
 }
 
+
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
 .boxitem1{
       border-bottom: 1px solid black;
       border-top:1px solid rgb(0, 0, 0);

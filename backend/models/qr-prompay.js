@@ -29,6 +29,10 @@ let paymentSchema = new Schema({
         type:mongoose.Schema.Types.ObjectId,
         required:[true]
       },
+      reference :{
+        type:String,
+        required:[true]
+      },
       paymentDate: {
         type: Date,
         required: true,

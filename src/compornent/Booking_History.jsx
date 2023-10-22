@@ -154,7 +154,6 @@ function Booking_History(props) {
         }
     }
 
-    // console.log(lgbtn)
     // เพิ่ม stock เข้าไปเมื่อไม่ได้ทำการยืนยัน
     const updatestock = (IDproductregis)=>{
         axios.put(`http://localhost:4001/product/updatestock/${IDproductregis}`)
@@ -300,8 +299,9 @@ function Booking_History(props) {
                                     <p>ชำระเงิน</p>
                                 </div>
                                 <img src={`http://localhost:4001/images/${imageQR}`} alt="QR Code"></img>
+                                <ul>ราคา : {QRs.amount}</ul>
                                 <div className=''>
-                                    <button onClick={reload}>เสร็จสิน</button>
+                                    <button  onClick={reload}>เสร็จสิน</button>
                                 </div>
                             </div>
                         )
@@ -309,7 +309,7 @@ function Booking_History(props) {
                     </div>
                 </div>
             <Payment IDuser={{IDuser}}/>
-            <button onClick={showhistory}>การจอง</button>
+            <button onClick={showhistory} >การจอง</button>
         </div>
     </div>
   )

@@ -1,0 +1,22 @@
+.container-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 59px;
+
+}
+
+.container-nav .title-nav{
+    gap: 2rem;
+    margin-left: 17px;
+}
+
+.container-nav .nav {
+    display: flex;
+}
+
+.nav .item-page{
+    margin: 3px;
+    width: auto;
+    height: auto;
+}

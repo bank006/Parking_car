@@ -54,7 +54,7 @@ router.get('/getcon/:IDuser' , (req , res)=>{
 
 
 router.get('/getdate/:IDuser' , (req , res ,)=>{
-    BookingconSchema.find({IDusercon : (req.params.IDuser)}, 'IDbooking  IDusercon IDproductregiscon timebookingcon startbookingtime')
+    BookingconSchema.find({IDusercon : (req.params.IDuser)}, 'IDbooking  IDusercon IDproductregiscon timebookingcon startbookingtime statuspayment')
     .then((time)=>{
         res.status(200).send(time)
     }).catch((err)=>{

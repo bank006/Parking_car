@@ -46,7 +46,7 @@ function Booking_confirm(props) {
 
     useEffect(()=>{
         const databookin = times.map((items)=>{
-            const {IDbooking ,_id , timebookingcon, startbookingtime ,IDproductregiscon  } = items   
+            const {IDbooking ,_id , timebookingcon, startbookingtime ,IDproductregiscon   , statuspayment} = items   
             const dateObject= new Date(timebookingcon); // เวลาปัจจุบัน
             const startbooking = new Date(startbookingtime);// เวลาที่เริ่มการจอง
             const currentTime= new Date();   // เวลาปัจจุบัน
@@ -75,6 +75,8 @@ function Booking_confirm(props) {
                             const seconds = Math.floor((timeLeft % (60 * 1000)) / 1000);
     
                             const formattedTimes = `${hours} ชั่วโมง ${minutes} นาที ${seconds} วินาที`;
+
+                            // console.log(statuspayment)
     
                             set_timebookings((prevStates)=>({
                                 ...prevStates,
@@ -124,21 +126,6 @@ function Booking_confirm(props) {
         })
     }
 
-
-    //จ่ายเงินด้วย qr
-    const [amount , set_price] = useState([])
-    const getqr =(idbooking)=>{
-        const id = idbooking
-        axios.post('http://localhost:4001/payment/generateQR' ,{amount , id})
-        .then((resqr) => {
-            console.log("เพิ่ม qr เเล้ว" , resqr.data)
-        }).catch((err)=>{
-            console.log(err)
-        })
-    }
-
-    // console.log(bookingcon)
-
   return (
     <div>
           <div className={`popupconfirme ${showconfirme ? 'visible' : ''}`}>
@@ -174,7 +161,6 @@ function Booking_confirm(props) {
                                     <p>เหลือเวลาใช้งาน : {remain}</p>
                                     
                                     <input type="number" onChange={(e)=>set_price(e.target.value)  } />
-                                    <button onClick={()=>getqr(idbooking)}>addprice</button>
                                     <button type='submit' onClick={()=>deletebookingcon(id , IDproducregiscon)}>check out</button>
                                     <button>check in</button>
                                 </div>

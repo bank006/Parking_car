@@ -47,4 +47,13 @@ router.get('/getcard/:IDuser', (req ,res )=>{
 
 })
 
+router.delete('/delete/:_id' , (req , res)=>{
+    ShoppingcardShema.findByIdAndDelete({ _id: req.params._id })
+    .then((results)=>{
+        res.status(200).send(results)
+    }).catch((err)=>{
+        res.status(200).send(err)
+    })
+})
+
 module.exports = router ;

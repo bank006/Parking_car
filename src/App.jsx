@@ -1,4 +1,6 @@
 import { BrowserRouter , Route , Routes  } from 'react-router-dom'
+import './App.css'
+
 // import Login from './compornent/Login'
 import Regiser from './compornent/Regiser'
 import Indexs from './compornent/indexs'
@@ -19,6 +21,10 @@ import History from './compornent/History'
 import Logins from './compornent/Logins'
 import Payment from './compornent/Payment'
 import Navbars from './compornent/Navbar'
+import Home from './compornent/firstpage/Home'
+import Home_login from './compornent/firstpage/Home_login'
+import Navbar_home from './compornent/firstpage/Navbar_home'
+import Verify_otp from './compornent/Verify_otp'
 
 function App() {
 
@@ -26,7 +32,7 @@ function App() {
     <>
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Indexs/>}/>
+        <Route path='indexs' element={<Indexs/>}/>
         {/* <Route path='/Logins' element={<Login/>}/> */}
         <Route path='/Register' element={<Regiser/>}/>
         <Route path='/Dashbord' element={<Dashbord/>}/>
@@ -46,6 +52,10 @@ function App() {
         <Route path='/History' element={<History/>}/>
         <Route path='/Payment' element={<Payment/>}/>
         <Route path='/Navbers' element={<Navbars/>} />
+        <Route path='/Navber_home' element={<Navbar_home/>} />
+        <Route path='/Home' element={<Home/>} />
+        <Route path='/' element={<Home_login/>} />
+        <Route path='/Verify_otp' element={<Verify_otp/>}/>
       </Routes>
     </BrowserRouter>
 
