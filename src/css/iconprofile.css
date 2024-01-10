@@ -1,0 +1,25 @@
+:root{
+    --color-font:  #DD9304;
+}
+
+.icon-profile{
+    align-items: center;
+    justify-content: center;
+    width: 170px;
+    display: flex;
+}
+
+.icon-profile p{
+    cursor: pointer;
+    color: var(--color-font);
+    font-size: 17px;
+    font-weight: 500;
+    margin-right: 32px;
+}
+
+.icon-profile img{
+    width: 50px;
+    height: 50px;
+    border-radius: 38.5px;
+    object-fit: cover;
+}

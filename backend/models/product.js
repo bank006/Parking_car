@@ -13,12 +13,7 @@ let ProductShema = new Schema({
     priceProduct: Number,
     descriptionProduct:String,
     quantityInStock:Number,
-    // latitude: {
-    //     type: String
-    // },
-    // longitude:{
-    //     type: String
-    // },
+    quantityInStockrel:Number,
     location: {
         type: {
             type: String,
@@ -35,7 +30,11 @@ let ProductShema = new Schema({
     },
     timeproduct:{
         type: Date, default: Date.now
-    }
+    },
+    viewstore:{
+        type:Number,
+        default:0
+    },
 })
 
 ProductShema.index({ location: '2dsphere' });

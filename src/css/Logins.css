@@ -1,7 +1,183 @@
-.login{
+:root {
+    --font-yello-title: #E89A05;
+    --font-title: #FFEDCB;
+    --shadow-font: #DD9304;
+    --font-under-shadow-white: #FFFFFF;
+    --bg--dark: #141618;
+}
+
+/* แบ่งส่วนซ้ายและขวา */
+.login-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    overflow: hidden;
+}
+
+.bg {
+    height: 100vh;
+    width: 45%;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    background: url(/public/bg-login.png), lightgray -113.635px 7.192px / 148.458% 100% no-repeat;
+    mix-blend-mode: color-dodge
+}
+
+/* ส่วนด้านขวาที่ล้อคอิน */
+.item-bg {
+    width: 55%;
+    padding-top: 140px;
+    background-color: var(--bg--dark);
+}
+
+.item-title {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.item-title .item-login {
+    padding: 3px;
+}
+
+.item-login h1 {
+    font-size: 60px;
+    color: var(--shadow-font);
+}
+
+.item-title .login-des {
+    padding: 3px;
+    margin-bottom: 20px;
+}
+
+.login-des p {
+    font-size: 16px;
+    color: var(--font-under-shadow-white);
+}
+
+/* errbox */
+
+.box-error p {
+    padding: 5px;
+    text-align: center;
+    color: white;
+}
+
+/* กรอกข้อมูลล้อคอิน */
+
+.content-login {
+    width: 100%;
+}
+
+.value-content {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 90vh;
-    border: 1px solid black;
+}
+
+.login {
+    width: 500px;
+}
+
+.item-email {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    /* margin: 10px 0; */
+    border-radius: 35px;
+    border: 2px solid var(--shadow-font);
+    margin-bottom: 20px;
+}
+
+.item-password {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 10px 0;
+    border-radius: 35px;
+    border: 2px solid var(--shadow-font);
+}
+
+
+.icon {
+    margin-left: 20px;
+    height: 100%;
+    width: 10%;
+    margin-right: 5px;
+    font-size: 20px;
+    color: var(--font-under-shadow-white);
+}
+
+.input {
+    color: var(--font-under-shadow-white);
+    background-color: var(--bg--dark);
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.emailss {
+    color: var(--font-under-shadow-white);
+    background-color: var(--bg--dark);
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+/* radio */
+
+.item-value {
+    width: 100%;
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+.value-forgot {
+    display: flex;
+    width: 220px;
+}
+
+.forgot {
+    margin-left: 10px;
+}
+
+.forgot label {
+    font-size: 14px;
+    color: var(--font-under-shadow-white);
+}
+
+/* ปุ่มล๊อคอิน */
+.login-btn {
+    margin-top: 30px;
+}
+
+.login-btn button {
+    border: none;
+    background-color: #DD9304;
+    width: 100%;
+    height: 54px;
+    border-radius: 30px;
+    font-size: 20px;
+    color: var(--font-under-shadow-white);
+}
+
+.login-btn p {
+    margin-top: 20px;
+    text-align: center;
+    color: var(--font-under-shadow-white);
+}
+
+.login-btn .link {
+    font-weight: 700;
+    color: var(--shadow-font);
 }

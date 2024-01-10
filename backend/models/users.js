@@ -22,7 +22,15 @@ let UserShema = new Schema({
         type : String,
         required:[true]
     },
+    statusverify:{
+        type: Boolean,
+        required:[true]
+    },
     image: String,
+    selectorsimg: {
+        type : Number,
+        default : 0
+    },
     time:{
         type: Date, default:Date.now
     }

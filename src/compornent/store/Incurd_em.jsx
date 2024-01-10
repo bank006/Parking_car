@@ -3,13 +3,17 @@ import React from 'react'
 import { useState , useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 function Incurd_em() {
     
     const [locationInfo, setLocationInfo] = useState(null);
 
 
     // set value in database
-    const {IDuser} = useParams();
+    const location = useLocation();
+    const IDuser = location.state?.IDuser
+
+    
     const IDusers = IDuser
     const [nameStore , setnameStore] = useState('')
     const [provin , setprovin] = useState('')
@@ -28,7 +32,6 @@ function Incurd_em() {
     const handlenameStore =(e)=>{
         setnameStore(e.target.value)
     }
-    console.log(nameStore)
 
     const handleprovin = (e)=>{
         setprovin(e.target.value)
@@ -72,8 +75,7 @@ function Incurd_em() {
 
     useEffect(()=>{
         axios.get(`http://localhost:4001/store/getstore/${IDuser}`).then((res)=>{
-            if(res.data == null){
-                
+            if(res.data == null){   
                 console.log("no have account")
                 // navigate('/Store/' + userID)
             }
@@ -84,7 +86,6 @@ function Incurd_em() {
         })
         
     },[])
-    console.log(imageStores)
 
 
 
@@ -108,9 +109,6 @@ function Incurd_em() {
         getLocation();
         }, []);
 
-
-
-        // console.log(latitude)
 
   return (
     <div className='container'>

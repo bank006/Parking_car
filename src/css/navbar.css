@@ -1,0 +1,82 @@
+:root {
+    --font-yello-title: #E89A05;
+    --font-title: #FFEDCB;
+    --shadow-font: #DD9304;
+    --font-under-shadow-white: #FFFFFF;
+    --bg--dark: #141618;
+}
+
+
+.container-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 59px;
+    padding: 12px;
+    /* position: sticky; */
+}
+
+.nav{
+    justify-content: center;
+    align-items: center;
+}
+
+.container-nav .title-nav{
+    gap: 2rem;
+    margin-left: 17px;
+}
+
+.container-nav .nav {
+    display: flex;
+}
+
+.nav .item-page{
+    margin: 3px;
+    width: auto;
+    height: auto;
+}
+
+
+.title-navs{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    /* width: 100px; */
+}
+
+.logo {
+    flex: 1;
+}
+
+.logo-name{
+    flex: 2;
+
+}
+
+.title-navs h1{
+    font-size: 25px;
+    font-weight: 700;
+    color: var(--font-yello-title);
+}
+
+.title-navs h2{
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--font-title);
+}
+
+
+/* .item-page{
+    border: 1px solid black;
+    color: var(--font-under-shadow-white);
+
+} */
+
+/* .item-page button{
+    cursor: pointer;
+    background: none;
+    border: none;
+} */
+
+
