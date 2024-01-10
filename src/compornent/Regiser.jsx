@@ -5,8 +5,9 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import OtpInput from 'react-otp-input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import '../css/otp.css'
+import '../css/register.css'
 
 
 function Regiser() {
@@ -44,10 +45,10 @@ function Regiser() {
                 navigate("/Register")
             } else {
                 // navigate("/logins")
-                const statusverify = false ;
-                axios.post('http://localhost:4001/users/register', { name, email, password, passwordnh , statusverify })
+                const statusverify = false;
+                axios.post('http://localhost:4001/users/register', { name, email, password, passwordnh, statusverify })
                 sendOTP(email);
-                navigate('/Verify_otp' ,  {state:{email}})
+                navigate('/Verify_otp', { state: { email } })
             }
         }
         catch (error) {
@@ -116,22 +117,39 @@ function Regiser() {
     }, [admin_emailcheck])
 
     return (
-        <div className=''>
-            <div className=''>
-                <p>register</p>
-                <Link to={"/Logins"}>to login</Link>
+        <div className='content-regis'>
+            <div className='item-register'>
+                <div className='form-regis'>
+                    <div className='box-register'>
+                        <div className='regis-title'>
+                            <p>REGISTER</p>
+                        </div>
+                        <div className='containerinput'></div>
+                        <div className='regis-boxinput'>
+                            <label className='regis-icon' htmlFor="username"><FontAwesomeIcon icon={faUser} /></label>
+                            <input className='regis-input' type="text" onChange={name1} placeholder='username' />
+                        </div>
+                        <div className='regis-boxinput'>
+                            <label className='regis-icon' htmlFor="email"><FontAwesomeIcon icon={faEnvelope} />  </label>
+                            <input className='regis-input' type="email" onChange={email1} placeholder='email' />
+                        </div>
+                        <div className='regis-boxinput'>
+                            <label className='regis-icon' htmlFor="password"><FontAwesomeIcon icon={faLock} />  </label>
+                            <input className='regis-input' type="password" onChange={password1} placeholder='password' />
+                        </div>
+                        <div className='regis-boxinput'>
+                            <label className='regis-icon' htmlFor="confrimepassword"><FontAwesomeIcon icon={faLock} /> </label>
+                            <input className='regis-input' type="password" onChange={cpass1} placeholder='confirmpassword' />
+                        </div>
+                        <div className='btn-submit'>
+                            <button type='submit' onClick={handleregister}>submit</button>
+                        </div>
 
-                <p>name</p>
-                <input type="text" onChange={name1} />
-                <p>email</p>
-                <input type="email" onChange={email1} />
-                <p>password</p>
-                <input type="password" onChange={password1} />
-                <p>confrimepassword</p>
-                <input type="password" onChange={cpass1} />
-                <button type='submit' onClick={handleregister}>submit</button>
+                    </div>
+                </div>
+                <div className='register-bg'> </div>
             </div>
-            
+
         </div>
     )
 }

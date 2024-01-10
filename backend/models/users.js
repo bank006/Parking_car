@@ -27,6 +27,10 @@ let UserShema = new Schema({
         required:[true]
     },
     image: String,
+    selectorsimg: {
+        type : Number,
+        default : 0
+    },
     time:{
         type: Date, default:Date.now
     }

@@ -4,6 +4,8 @@ import axios from 'axios'
 
 
 import '../css/history.css'
+import Select from './patment/Selectpayment';
+
 
 function History(props) {
 
@@ -13,8 +15,6 @@ function History(props) {
     const [showhistory, set_showhistory] = useState(false);
     const [bookagain, set_bookagain] = useState(false)
     const [datahistory, set_datahistory] = useState([]);
-
-
     const [IDproductregis, set_IDproductregis] = useState([])
     const [storeregis, set_storeregis] = useState([])
     const [getproducts, set_getproducts] = useState([])
@@ -28,10 +28,17 @@ function History(props) {
         set_showhistory(!showhistory)
     }
 
-    const openbookagain = async (IDproduct, IDstores) => {
+    const openbookagain = async (IDproduct, IDstore) => {
+        
         set_bookagain(!bookagain)
-        set_IDproductregis(IDproduct)
-        set_storeregis(IDstores)
+        set_IDproductregis(IDproduct )
+        set_storeregis(IDstore)
+
+        // set_bookagain(bookagains)
+        // set_IDproductregis(IDproducts )
+        // set_storeregis(IDstores )
+
+        
 
         try {
             const resproduct = await axios.get(`http://localhost:4001/product/callproduct/${IDproduct}`)
@@ -45,7 +52,6 @@ function History(props) {
     }
 
     const closebookagain = () => {
-
         set_bookagain(!bookagain)
     }
 
@@ -54,9 +60,7 @@ function History(props) {
             .then((res) => {
                 if (!res) {
                     console.log('Error not data')
-
                 } else {
-                    console.log(res.data)
                     set_datahistory(res.data)
                 }
             }).catch((err) => {
@@ -69,6 +73,8 @@ function History(props) {
         console.log(IDuser, IDstore)
     }
 
+    const [selectpayment, setselectpayment] = useState(false)
+    const [datapayment, set_datapayment] = useState([])
 
     const againbooking = (IDproductregis, IDuser, storeregis, timeregis) => {
         console.log(IDproductregis, IDuser, storeregis, timeregis)
@@ -77,26 +83,10 @@ function History(props) {
         } else if (timeregis.length === 0) {
             alert('กรุณาเลือกเวลา')
         } else {
-            axios.post('http://localhost:4001/booking/postbooking', { IDproductregis, IDuser, storeregis, startbookingregis, timeregis })
-                .then((res) => {
-                    console.log(res)
-                    window.location.reload();
-                }).catch((err) => {
-                    console.log(err)
-                })
-
-            // ลบสินค้าในสตอค
-            axios.put(`http://localhost:4001/product/updatepostbooking/${IDproductregis}`)
-                .then((update) => {
-                    console.log(update)
-                }).catch((err) => {
-                    console.log(err)
-                })
-
+            setselectpayment(true)
+            set_datapayment({ IDproductregis, IDuser, storeregis, startbookingregis, timeregis })
         }
     }
-
-    // console.log(datahistory)
 
     return (
         <div className='container'>
@@ -106,18 +96,33 @@ function History(props) {
                     <h1>history</h1>
                     {datahistory.map((item, index) => {
                         const IDproduct = item.IDproductregishis
-                        const IDstores = item.storeregishis
+                        const IDstore = item.storeregishis
+
+                        let qproduct;
+                        let qproducts;
+                        if (item.product[0].quantityInStock <= 0) {
+                            qproduct = 'สินค้าหมด'
+                            if (item.product[0].quantityInStock <= 0) {
+                                qproduct = 'สินค้าหมด'
+                            }
+                        } else if (item.product[0].quantityInStock >= 0) {
+                            qproduct = item.product[0].quantityInStock
+                            if (item.product[0].quantityInStock >= 0) {
+                                qproducts =  <button type='button' onClick={() => openbookagain(IDproduct, IDstore)}>จองอีกครั้ง</button>
+                            }
+                        }
                         return (
                             <div className='item-history' key={index}>
                                 <ul>{item.IDproductregishis}</ul>
                                 <ul>ร้านค้า : {item.store[0].nameStore}</ul>
                                 <ul>ชื่อสินค้า :{item.product[0].nameProduct}</ul>
                                 <ul>ราคาสินค้า : {item.product[0].priceProduct}</ul>
+                                <ul>จำนวนสินค้า : {qproduct}</ul>
                                 <div className='btn'>
                                     <button type='button' onClick={() => todetail(IDuser, IDstore)}>ร้านค้า</button>
                                 </div>
                                 <div className='btn'>
-                                    <button type='button' onClick={() => openbookagain(IDproduct, IDstores)}>จองอีกครั้ง</button>
+                                   <p>{qproducts}</p>
                                 </div>
                             </div>
 
@@ -137,7 +142,7 @@ function History(props) {
                                 {/* <label htmlFor='datetime'>เลือกวันที่และเวลา:</label>
                                 <input type="datetime-local" id="datetime" name="datetime" onChange={(e) => set_timeregis(e.target.value)} ></input> */}
 
-
+                                <Select item={{ selectpayment, datapayment }} />
                                 {/* //newfeature */}
                                 <label htmlFor="datetime">เลือกวันที่และเวลาที่เริ่มจอง:</label>
                                 <input type="datetime-local" id="datetime" name="datetime" onChange={(e) => set_startbookingregis(e.target.value)} required></input>

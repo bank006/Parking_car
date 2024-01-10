@@ -16,6 +16,10 @@ let StoreShema = new Schema({
     description:{
         type: String
     },
+    numofview:{
+        type: Number,
+        default: 0
+    },
     imageStores: String,
     latitude: {
         type: String

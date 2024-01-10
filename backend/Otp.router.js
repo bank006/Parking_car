@@ -3,6 +3,7 @@ const express = require('express')
 const cors = require('cors');
 const router = express();
 const nodemailer = require('nodemailer');
+const config = require('./config')
 
 
 router.use(cors());
@@ -32,12 +33,10 @@ const generateOTP = () => {
 const transporter = nodemailer.createTransport({
     service: 'Gmail', // เลือกบริการอีเมลที่คุณใช้
     auth: {
-        user: 'Withun.ksr@gmail.com', // อีเมลของคุณ
-        pass: 'cvyg gtci xksh asqb' // รหัสผ่านของคุณ
+        user: config.email, // อีเมลของคุณ
+        pass: config.password // รหัสผ่านของคุณ
     }
 });
-
-
 
 router.post('/sendOTP', (req, res) => {
     const email = req.body.email;

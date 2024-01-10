@@ -1,9 +1,9 @@
-:root{
+:root {
     --font-yello-title: #E89A05;
     --font-title: #FFEDCB;
     --shadow-font: #DD9304;
     --font-under-shadow-white: #FFFFFF;
-    --bg--dark:#141618;
+    --bg--dark: #141618;
 }
 
 /* แบ่งส่วนซ้ายและขวา */
@@ -30,42 +30,52 @@
     background-color: var(--bg--dark);
 }
 
-.item-title{
+.item-title {
     display: flex;
     justify-content: center;
     text-align: center;
 }
 
-.item-title .item-login{
+.item-title .item-login {
     padding: 3px;
 }
 
-.item-login h1{
+.item-login h1 {
     font-size: 60px;
     color: var(--shadow-font);
 }
 
-.item-title .login-des{
+.item-title .login-des {
     padding: 3px;
     margin-bottom: 20px;
 }
-.login-des p{
+
+.login-des p {
     font-size: 16px;
     color: var(--font-under-shadow-white);
 }
 
+/* errbox */
+
+.box-error p {
+    padding: 5px;
+    text-align: center;
+    color: white;
+}
+
 /* กรอกข้อมูลล้อคอิน */
 
-.content-login{
+.content-login {
     width: 100%;
 }
-.value-content{
+
+.value-content {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.login{
+.login {
     width: 500px;
 }
 
@@ -92,6 +102,7 @@
     border: 2px solid var(--shadow-font);
 }
 
+
 .icon {
     margin-left: 20px;
     height: 100%;
@@ -103,7 +114,18 @@
 
 .input {
     color: var(--font-under-shadow-white);
-    background: none;
+    background-color: var(--bg--dark);
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.emailss {
+    color: var(--font-under-shadow-white);
+    background-color: var(--bg--dark);
     border: none;
     outline: none;
     width: 100%;
@@ -114,32 +136,32 @@
 
 /* radio */
 
-.item-value{
+.item-value {
     width: 100%;
     margin-top: 10px;
     margin-left: 5px;
 }
 
-.value-forgot{
+.value-forgot {
     display: flex;
     width: 220px;
 }
 
-.forgot{
+.forgot {
     margin-left: 10px;
 }
 
-.forgot label{
+.forgot label {
     font-size: 14px;
     color: var(--font-under-shadow-white);
 }
 
 /* ปุ่มล๊อคอิน */
-.login-btn{
+.login-btn {
     margin-top: 30px;
 }
 
-.login-btn button{
+.login-btn button {
     border: none;
     background-color: #DD9304;
     width: 100%;
@@ -155,8 +177,7 @@
     color: var(--font-under-shadow-white);
 }
 
-.login-btn .link{
+.login-btn .link {
     font-weight: 700;
     color: var(--shadow-font);
 }
-

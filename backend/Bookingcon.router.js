@@ -52,6 +52,18 @@ router.get('/getcon/:IDuser' , (req , res)=>{
 })
 })
 
+router.get('/findbooking/:IDproduct' , (req , res)=>{
+    BookingconSchema.find({IDproductregiscon : req.params.IDproduct }).then((resf)=>{
+        if(resf){
+            res.status(200).json(resf)
+        }else{
+            res.status(200).json('error')
+        }
+        
+    }).catch((err)=>{
+        res.status(200).json(err)
+    })
+})
 
 router.get('/getdate/:IDuser' , (req , res ,)=>{
     BookingconSchema.find({IDusercon : (req.params.IDuser)}, 'IDbooking  IDusercon IDproductregiscon timebookingcon startbookingtime statuspayment')
@@ -59,6 +71,16 @@ router.get('/getdate/:IDuser' , (req , res ,)=>{
         res.status(200).send(time)
     }).catch((err)=>{
         res.status(200).send(err)
+    })
+})
+
+router.delete('/cancelbookingcon/:id',(req , res)=>{
+    console.log(req.params.id)
+    BookingconSchema.findByIdAndDelete({_id:req.params.id})
+    .then((cancel)=>{
+        res.send(cancel)
+    }).then((err)=>{
+        res.send(err)
     })
 })
 
@@ -70,5 +92,6 @@ router.delete('/delete/:idbookingcon' , (req , res)=>{
         res.send(err)
     })
 })
+
 
 module.exports = router ; 

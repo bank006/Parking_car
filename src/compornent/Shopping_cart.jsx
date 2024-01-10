@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import '../css/shopingcard.css'
+import Select from './patment/Selectpayment';
 
 
 function Shopping_cart(props) {
@@ -22,21 +24,12 @@ function Shopping_cart(props) {
     useEffect(() => {
         axios.get(`http://localhost:4001/shoppingcart/getcard/${IDuser}`)
             .then((res) => {
-                console.log(res.data)
+                // console.log(res.data)
                 set_itemcard(res.data)
             }).catch((err) => {
                 console.log(err)
             })
     }, [])
-
-    // เพิ่มเข้า bookingcon
-    // ลบข้อมูลใน booking
-    // เพ่ิมเข้า QR
-    // เพิ่มเข้า bookinghistory
-    //  ดึงเอา qr
-    // ลดสินค้าใน stock เมื่อทำการจอง
-
-
 
 
     // เพิ่มข้อมูลใน bookinghistory
@@ -53,6 +46,8 @@ function Shopping_cart(props) {
         set_timebookingcon(e.target.value)
     }
 
+    const [selectpayment, setselectpayment] = useState(false)
+    const [datapayment, set_datapayment] = useState([])
     const booking = (_id, IDproductregis, IDuser, storeregis) => {
 
         if (startbookingregis.length === 0) {
@@ -60,23 +55,27 @@ function Shopping_cart(props) {
         } else if (timeregis.length === 0) {
             alert('กรุณาเลือกเวลา')
         } else {
-            // เพ่ิมข้อมูลวันเวลาการจอง->เพ่ิมข้อมูลใน booking
-            axios.post('http://localhost:4001/booking/postbooking', { IDproductregis, IDuser, storeregis, startbookingregis, timeregis })
-                .then((bookingcon) => {
-                    console.log(bookingcon.data)
-                    deletecard(_id);
-                }).catch((err) => {
-                    console.log(err)
-                })
-            axios.put(`http://localhost:4001/product/updatepostbooking/${IDproductregis}`)
-                .then((update) => {
-                    console.log(update)
-                }).catch((err) => {
-                    console.log(err)
-                })
+            setselectpayment(true)
+            set_datapayment({ IDproductregis, IDuser, storeregis, startbookingregis, timeregis })
+            deletecard(_id);
         }
     }
 
+    const confirmdelete = (_id) => {
+        Swal.fire({
+            icon: 'question',
+            title: 'ต้องการลบใช่หรือไม่',
+            confirmButtonText: 'ยืนยัน',
+            showCancelButton: true,
+            cancelButtonText: 'ยกเลิก'
+        }).then((res) => {
+            if (res.isConfirmed === true) {
+                deletecard(_id)
+            }
+        })
+    }
+
+    //  ลบออกจากรายการที่ชอบ
     const deletecard = (_id) => {
         axios.delete(`http://localhost:4001/shoppingcart/delete/${_id}`)
             .then((resdelete) => {
@@ -85,7 +84,7 @@ function Shopping_cart(props) {
                 console.log(err)
             })
     }
-    console.log(itemcard)
+
     return (
         <div className='container'>
             <div className='button'>
@@ -106,14 +105,15 @@ function Shopping_cart(props) {
                                     <div className=''>
                                         <div className=''>
                                             <div className=''>
+                                                <Select item={{ selectpayment, datapayment }} />
                                                 <label htmlFor="datetime">เลือกวันที่และเวลาที่เริ่มจอง:</label>
                                                 <input type="datetime-local" id="datetime" name="datetime" onChange={handle_startbookingregis} required></input>
                                                 <label htmlFor="datetime">เลือกวันที่และเวลาสิ้นสุดการจอง:</label>
                                                 <input type="datetime-local" id="datetime" name="datetime" onChange={handle_timesregis} required></input>
                                             </div>
                                         </div>
-                                        <button type='button' onClick={() => booking(_id, IDproductregis, IDuser, storeregis)}>จ่ายเงิน</button>
-                                        <button>ลบ</button>
+                                        <button type='button' onClick={() => booking(_id, IDproductregis, IDuser, storeregis)}>สั่งจอง</button>
+                                        <button onClick={() => confirmdelete(_id)} >ลบ</button>
                                     </div>
                                 </div>
                             )
@@ -122,7 +122,10 @@ function Shopping_cart(props) {
                     </div>
 
                 </div>
-                <button type='button' onClick={openshowshopping}>ตระกร้าสินค้า</button>
+                <div className="btnshowregis">
+                    <button className='card-open' type='button' onClick={openshowshopping}>ตระกร้าสินค้า</button>
+                </div>
+
             </div>
         </div>
     )

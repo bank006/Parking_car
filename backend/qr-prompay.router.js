@@ -9,19 +9,86 @@ const moment = require('moment');
 const generatePayload = require('promptpay-qr');
 const uuid = require('uuid'); // Import แพ็กเกจ uuid
 
-
-
 router.use(cors());
 router.use(express.json());
 
 let PromptPayPayment = require('./models/qr-prompay')
 
 
+router.post('/generateQRRatetime', (req, res) => {
+    const amount = parseFloat(_.get(req, ["body", "integerMinutes"]));
+    const id = req.body.id
+    const mobileNumber = '0653724853'
+
+    const randomReferenceCode = _.random(100000, 999999);
+
+    const fileName = randomReferenceCode + '.jpg'
+    const destinationFolder = './qrcode'
+    const fileFullPath = path.join(destinationFolder, fileName);
 
 
+    // สร้าง payload
+    const payload = generatePayload(
+        mobileNumber, { amount, randomReferenceCode }
+    )
+
+    // ตั้งค่าตัวเลือกสำหรับ QR Code
+    const options = {
+        errorCorrectionLevel: 'H',
+        type: 'image/jpeg',
+        quality: 0.92,
+        margin: 1,
+        scale: 4,
+        color: {
+            dark: '#000',
+            light: '#fff'
+        }
+    };
+
+
+    // สร้าง QR Code และบันทึกลงไฟล์
+    qrcode.toFile(fileFullPath, payload, options, async function (err) {
+        if (err) {
+            console.error('เกิดข้อผิดพลาดในการสร้าง QR Code:', err);
+            return res.status(400).json({
+                RespCode: 400,
+                RespMessage: 'เกิดข้อผิดพลาดในการสร้าง QR Code'
+            });
+        } else {
+            const fouudpayment = await PromptPayPayment.findOne({ IDbooking: id })
+            if (!fouudpayment) {
+                return res.status(404).send({ message: "Not found" });
+            } else {
+                try {
+                    await PromptPayPayment.updateOne(
+                        { IDbooking: id },
+                        {
+                            $set: {
+                                imageQRratetime: fileName,
+                                amountratetime: amount // ตัวอย่างการอัพเดตค่าอื่น ๆ
+                            }
+                        }
+                    );
+                    console.log('ข้อมูลการจ่ายเงินถูกบันทึกลงในฐานข้อมูล');
+                    return res.status(200).json({
+                        RespCode: 200,
+                        RespMessage: 'QR Code ถูกสร้างและบันทึก',
+                        Result: id + 'jpg'
+                    });
+                } catch (error) {
+                    console.error('เกิดข้อผิดพลาดในการบันทึกข้อมูล:', error);
+                    return res.status(500).json({
+                        RespCode: 500,
+                        RespMessage: 'เกิดข้อผิดพลาดในการบันทึกข้อมูล'
+                    });
+                }
+            }
+        }
+    });
+})
 
 router.post('/generateQR', (req, res) => {
-    const amount = parseFloat(_.get(req, ["body", "amount"]));
+    const amount = parseFloat(_.get(req, ["body", "integerMinutes"]));
     const id = req.body.id
     const mobileNumber = '0653724853';
 
@@ -31,13 +98,13 @@ router.post('/generateQR', (req, res) => {
     const randomReferenceCode = _.random(100000, 999999);
 
     // const fileName = 'custom-filename.jpg';
-    const fileName = id + '.jpg';
+    const fileName = randomReferenceCode + '.jpg';
     const destinationFolder = './qrcode'
     const fileFullPath = path.join(destinationFolder, fileName);
 
     // สร้าง payload
     const payload = generatePayload(
-        mobileNumber, { amount , randomReferenceCode }
+        mobileNumber, { amount, randomReferenceCode }
     );
 
     // ตั้งค่าตัวเลือกสำหรับ QR Code

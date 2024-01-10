@@ -21,6 +21,7 @@ function Logins() {
     const [fgemail, setfgEmail] = useState('');
     const [fgpassword, setfgPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
+    const [ errbox , set_errbox] = useState('')
 
     const navigate = useNavigate();
 
@@ -65,7 +66,7 @@ function Logins() {
                 .then((res) => {
                     if (res.data.data && res.data.data._id) {
                         const user = res.data.data._id.toString();
-                        console.log(res.data.data.statusverify)
+                        console.log(res.data.data)
                         if (rememberMe) {
                             localStorage.setItem('email', fgemail);
                             localStorage.setItem('password', fgpassword);
@@ -79,9 +80,14 @@ function Logins() {
 
                         // fecttopage(data);
 
+                    }else if(password.length === 0){
+                        set_errbox('Please enter your password')
+                        
                     } else if (res.data.success === false) {
-                        console.log("Email or password Invalid")
+                        set_errbox("Email or password Invalid")
+                        console.log(res.data)
                     }
+                    
                 }).catch((err) => {
                     console.log(err)
                 })
@@ -98,7 +104,6 @@ function Logins() {
                         // navigate('/Dowload_ad/' + adminemail)
                         navigate('/Dashbord_ad', { state: { idadmin } })
 
-                        // admintopage(emailadmin);
                     } else {
                         console.log(admin.data.message)
                     }
@@ -106,6 +111,11 @@ function Logins() {
                 }).catch((error) => {
                     console.log(error)
                 })
+
+        }else if (email.length === 0 || password.length === 0){
+            set_errbox('Please enter your email or password')
+        }else if (!useremails.includes(email)){
+            set_errbox('Email or password Invalid')
         }
     }
 
@@ -117,24 +127,24 @@ function Logins() {
             }).catch((err) => {
                 console.log(err)
             })
-    }
+    }  
 
-    const fecttopage = (data) => {
-        console.log(data)
-        // navigate('/Dowload/' + data)
-    }
-    const admintopage = (emailadmin) => {
-        console.log(emailadmin)
-        // navigate('/Download_ad/' + emailadmin)
-    }
+    // const fecttopage = (data) => {
+    //     console.log(data)
+    //     // navigate('/Dowload/' + data)
+    // }
+    // const admintopage = (emailadmin) => {
+    //     console.log(emailadmin)
+    //     // navigate('/Download_ad/' + emailadmin)
+    // }
 
     const storedUsername = localStorage.getItem('email');
     const storedPassword = localStorage.getItem('password');
 
     useEffect(() => {
         if (storedUsername && storedPassword) {
-            set_emails(storedUsername)
-            set_passwords(storedPassword)
+            setfgEmail(storedUsername)
+            setfgPassword(storedPassword)
         }
     }, []);
 
@@ -153,12 +163,15 @@ function Logins() {
                         </div>
                     </div>
                 </div>
+                <div className='box-error'>
+                    <p>{errbox}</p>
+                </div>
                 <div className='content-login'>
                     <div className='value-content'>
                         <div className='login'>
                             <div className='item-email'>
                                 <label htmlFor="email" className="icon"> <FontAwesomeIcon icon={faEnvelope} /></label>
-                                <input className='input' type="email" id='email' name='email' value={email} onChange={username} placeholder='email' />
+                                <input className="emailss" style={{ backgroundColor: fgemail !== '' ? 'black' : 'black' }} type="email" id='email' name='email' value={fgemail} onChange={username} placeholder='email' />
                             </div>
                             <div className='item-password'>
                                 <label htmlFor="password" className="icon"><FontAwesomeIcon icon={faLock} /></label>

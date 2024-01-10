@@ -46,9 +46,6 @@ router.post('/poststore', uploadstore.single('imageStores') ,(req ,res ,next)=>{
     const latitude = req.body.latitude;
     const longitude = req.body.longitude;
 
-    
-    
-
     try{
         StoreShema.create({IDuser : IDuser , nameStore: nameStore , provin : provin , description : description , imageStores : imageStores , latitude: latitude , longitude : longitude })
         res.status(200).json({status : ok })
@@ -69,6 +66,17 @@ router.get('/loginstore/:IDstore' , async (req , res ,next)=>{
     let loginstore = await StoreShema.findOne({_id: (req.params.IDstore) })
     res.status(200).json(loginstore)
 })
+
+router.put('/putview',(req , res)=>{
+    const {IDstore} = req.body
+    StoreShema.findByIdAndUpdate({_id : IDstore} , {$inc : {numofview : + 1}})
+    .then((resputview)=>{
+        res.send(resputview)
+    }).catch((err)=>{
+        res.send(err)
+    })
+})
+
 
 
 module.exports =  router ;

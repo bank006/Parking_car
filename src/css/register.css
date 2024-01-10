@@ -1,0 +1,103 @@
+:root {
+    --font-yello-title: #E89A05;
+    --font-title: #FFEDCB;
+    --shadow-font: #DD9304;
+    --font-under-shadow-white: #FFFFFF;
+    --bg--dark: #141618;
+}
+
+.content-regis{
+    height: 100vh;
+    overflow: hidden;
+}
+
+.item-register{
+    display:flex ;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.form-regis{
+    background-color: var(--bg--dark);
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box-register{
+    width: 480px;
+}
+
+.regis-title{
+    width: 100%;
+    color: var(--font-yello-title);
+}
+
+.regis-title p{
+    text-align: center;
+    font-size: 60px;
+    font-weight: 700;
+    
+}
+.register-bg{
+    width: 40%;
+    background: url(/public/bgregis.png);
+    background-repeat: no-repeat;
+    
+}
+/* ช่อง input */
+
+.containerinput{
+    margin-top: 20px;
+}
+
+.regis-boxinput{
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    /* margin: 10px 0; */
+    border-radius: 35px;
+    border: 2px solid var(--shadow-font);
+    margin-bottom: 20px; 
+}
+
+
+.regis-icon{
+    margin-left: 20px;
+    height: 100%;
+    width: 10%;
+    margin-right: 5px;
+    font-size: 20px;
+    color: var(--font-under-shadow-white);
+}
+
+.regis-input{
+    color: var(--font-under-shadow-white);
+    background-color: var(--bg--dark);
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.btn-submit{
+    width: 100%;
+}
+
+.btn-submit button{
+    background-color: var(--font-yello-title);
+    border: none;
+    width: 100%;
+    height: 54px;
+    border-radius: 30px;
+    font-size: 20px;
+    color: var(--font-under-shadow-white);
+}
+
+

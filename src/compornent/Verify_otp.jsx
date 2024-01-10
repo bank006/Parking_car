@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { useNavigate ,useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import OtpInput from 'react-otp-input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +11,7 @@ function Verify_otp() {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const {email} = location.state
+    const { email } = location.state
     // สร้างฟังก์ชัน renderInput เพื่อกำหนดรูปแบบของช่องใส่ OTP
     const renderInput = (input, i) => (
         <input
@@ -26,7 +26,8 @@ function Verify_otp() {
                 color: "#000",
                 fontWeight: "400",
                 caretColor: "blue",
-                textAlign: "center"
+                textAlign: "center",
+                margin: "5px"
                 // background: "black"
             }}
         />
@@ -35,7 +36,7 @@ function Verify_otp() {
 
     //เก็บรหัส OTP
     const [otp, set_otp] = useState("")
-    const [validotp, set_validotp] = useState("")
+    const [validotp, set_validotp] = useState(null)
     const changotp = (otp) => set_otp(otp)
 
     //ส่งรหัส otp ไปตรวจสอบ
@@ -47,7 +48,7 @@ function Verify_otp() {
                     console.log(resotp.data.success)
                     statusupdate(email);
                 } else {
-                    set_validotp("Invalid OTP")
+                    set_validotp("Somthing went wrong. Please try again")
                 }
             }).catch((err) => {
                 console.log(err)
@@ -76,30 +77,45 @@ function Verify_otp() {
             })
     }
 
+    console.log(validotp)
+
     return (
         <div className='otp'>
             <div className='content-otp'>
                 <div className='itemotp'>
-                    <div className='closeotp'>
-                        <button onClick={() => set_popupotp(false)}><FontAwesomeIcon icon={faClose}></FontAwesomeIcon></button>
+                    <div className='verifyotp'>
+                        <div className='titleotp'>
+                            <p>OTP valification</p>
+                        </div>
+                        <div className='OTP'>
+                            <p>เราจะส่งอีเมล์ไปยัง{email}</p>
+                        </div>
+                        <div className='inputotp'>
+                            <OtpInput
+                                value={otp}
+                                onChange={changotp}
+                                numInputs={4}
+                                separator={<span style={{ width: "8px" }}></span>}
+                                isInputNum={true}
+                                shouldAutoFocus={true}
+                                renderInput={renderInput} // นี่คือการส่งฟังก์ชัน renderInput
+                            />
+                        </div>
+                        <div className={`errotp ${validotp ? 'visible ' : ''}`}>
+                            <p>{validotp}</p>
+                        </div>
+                        <div className='resendotp'>
+                            <div className='title-resend'>
+                                <p>Disnot receive OTP ? </p>
+                            </div>
+                            <div className='button-resend '>
+                                <button type='button' onClick={() => sendOTP(email)}>Resend</button>
+                            </div>
+                        </div>
+                        <div className='send-verify'>
+                            <button type='button' onClick={() => sendsOTP(email)}>submit</button>
+                        </div>
                     </div>
-                    <div className='OTP'>
-                        <p>เราจะส่งอีเมล์ไปยัง{email}</p>
-                    </div>
-                    <OtpInput
-                        value={otp}
-                        onChange={changotp}
-                        numInputs={4}
-                        separator={<span style={{ width: "8px" }}></span>}
-                        isInputNum={true}
-                        shouldAutoFocus={true}
-                        renderInput={renderInput} // นี่คือการส่งฟังก์ชัน renderInput
-                    />
-                    <div className=''>
-                        <p>{validotp}</p>
-                        <button type='button' onClick={() => sendOTP(email)}>send OTP again</button>
-                    </div>
-                    <button type='button' onClick={() => sendsOTP(email)}>submit</button>
                 </div>
             </div>
         </div>

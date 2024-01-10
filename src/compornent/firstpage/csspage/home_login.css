@@ -19,12 +19,13 @@
     background-color: var(--bg-dark);
     overflow: hidden;
     width: 100%;
-    flex-shrink: 0;
+    /* flex-shrink: 0; */
 
 }
 
 
 .item-nav {
+    background: none;
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -25,6 +25,14 @@ let paymentSchema = new Schema({
         type :String,
         required :[true]
       },
+      imageQRratetime:{
+        type : String,
+        // required :[true]
+      },
+      amountratetime:{
+        type:Number,
+        // required:[true]
+      },
       IDbooking :{
         type:mongoose.Schema.Types.ObjectId,
         required:[true]

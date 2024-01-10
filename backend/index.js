@@ -19,6 +19,7 @@ const bookinghisRouter = require('./Bookinghis.router')
 const shoppingcardRouter = require('./Shoppingcard.router')
 const qrprompayRouter = require('./qr-prompay.router')
 const otpRouter  = require('./Otp.router')
+const income = require('./Income.router')
 
 const session = require('express-session');
 
@@ -78,10 +79,8 @@ app.use("/shoppingcart", shoppingcardRouter );
 app.use("/payment" , qrprompayRouter)
 app.use('/images', express.static(path.join(__dirname, './qrcode')));
 app.use('/otp' , otpRouter)
+app.use('/income' , income)
 // app.use('/booking' , bookingRouter )
-
-
-
 
 
 const port = process.env.PORT || 4001;

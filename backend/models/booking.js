@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
+const moment = require('moment-timezone');
 const Schema = mongoose.Schema
+
 
 let BookingSchema = new Schema({
  
@@ -24,7 +26,8 @@ let BookingSchema = new Schema({
         required:[true]
     },
     bookingtime:{
-        type: Date, default:Date.now
+        type: Date,
+        default:Date.now
     }
 })
 const booking = mongoose.model('booking' , BookingSchema)

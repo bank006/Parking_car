@@ -46,7 +46,30 @@
 }
 
 .popupconfirme.visible{
+    
     visibility: visible;
+}
+
+
+.containers{
+    display: flex;
+    width: 100%;
+    /* border: 1px solid black; */
+}
+
+
+.notification{
+    border:  1px solid black;
+}
+
+.btnshowregis button{
+    background: none;
+    color: #ffff;
+    border: none;
+    font-size: 17px;
+    font-weight: 500;
+    margin-right: 57px;
+    cursor: pointer;
 }
 
 

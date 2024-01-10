@@ -23,7 +23,7 @@ router.get('/', (req,res)=>{
 router.post('/posthistory' , (req , res)=>{
     BookinghisSchema.create(req.body)
     .then((reshistory)=>{
-        if(!resizeBy){
+        if(!reshistory){
             res.send('error create booking history')
         }else{
             res.send(reshistory)
@@ -39,20 +39,40 @@ router.get('/gethistory/:IDuser' ,(req , res)=>{
     BookinghisSchema.aggregate([{$match : {IDuserhis : mongoose.Types.ObjectId(req.params.IDuser)}},
     {$lookup:{from:Product.collection.name ,localField:'IDproductregishis',foreignField:'_id',as: 'product'}},
     {$lookup:{from:Store.collection.name ,localField:'storeregishis',foreignField:'_id',as: 'store'}}, 
-    //     {$group: {
-    //         _id: "$IDproductregishis",
-    //         count: { $sum: 1 },
-    //         data: { $first: "$$ROOT" } // เลือกรายการแรกในกลุ่ม
-    //     }
-    // },
-    // {
-    //     $replaceRoot: { newRoot: "$data" } // เปลี่ยน root document กลับมาเป็น data ที่เลือก
-    // }
+ 
 ])
     .then((datahistory)=>{
          res.send(datahistory);
     }).catch((err)=>{
         res.send(err)
+    })
+})
+
+router.get('/history/:IDstore',(req , res)=>{
+    const Product =  require('./models/product')
+    const Store = require('./models/store') 
+    const User = require('./models/users')
+    BookinghisSchema.aggregate([{$match :{storeregishis : mongoose.Types.ObjectId(req.params.IDstore)}}
+    ,{$lookup:{from:Store.collection.name , localField:'storeregishis' , foreignField:'_id' , as:'store'}},
+    {$lookup:{from:Product.collection.name ,localField:'IDproductregishis',foreignField:'_id',as: 'product'}},
+    {$lookup:{from:User.collection.name ,localField:'IDuserhis',foreignField:'_id',as: 'users'}}
+]).then((reshitory)=>{
+    res.send(reshitory)
+}).catch((err)=>{
+    res.send(err)
+})
+})
+
+router.delete('/deletebookinghis/:IDproduct',(req ,res)=>{
+    BookinghisSchema.deleteMany({IDproductregishis : req.params.IDproduct})
+    .then((data)=>{
+        if(!data){
+            res.send('error delete booking history')
+        }else{
+            res.send(data)
+        }
+    }).catch((errs)=>{
+        res.send(errs)
     })
 })
 
@@ -72,5 +92,14 @@ router.get('/gethis/:IDuser', (req , res)=>{
     
 })
 
+router.put('/updatestatus/:idbooking',(req , res)=>{
+    const {idbooking} = req.params
+    BookinghisSchema.updateOne({IDbookinghis:idbooking},{$set:{statuspayment : false}})
+    .then((statuspaymentupdate)=>{
+        res.send(statuspaymentupdate)
+    }).catch((err)=>{
+        res.send(err)
+    })
+})
 
 module.exports = router ; 

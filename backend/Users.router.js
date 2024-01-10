@@ -15,6 +15,7 @@ let UserShema = require('./models/users');
 let ProfileShema = require('./models/profile')
 const users = require('./models/users');
 const { Link } = require('react-router-dom');
+const { result } = require('lodash');
 
 // หน้าหลักการใช้เรียก  APIs เรียกเป็น http users
 router.get('/', (req, res) => {
@@ -88,7 +89,7 @@ router.post('/logins', async (req, res) => {
     try {
         const user = await UserShema.findOne({ email: email });
         if (!user) {
-            return res.status(200).json({ success: false, message: 'ไม่พบผู้ใช้' });
+            return res.status(200).json({ success: false , message: 'ไม่พบผู้ใช้' });
         }
 
         const isPasswordValid = await argon2.verify(user.password, password);
@@ -104,8 +105,6 @@ router.post('/logins', async (req, res) => {
         res.status(200).json({ success: false, message: 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ' });
     }
 });
-
-
 
 
 router.get('/getUsers', (req, res, next) => {
@@ -183,6 +182,37 @@ router.put('/update_verify', (req, res) => {
         res.status(500).send(err)
     })
 
+})
+
+router.put('/updatedata' , (req , res)=>{
+    UserShema.updateOne({_id : req.body.id},{$set :{name:req.body.validatename , email : req.body.validateemail}})
+    .then((res)=>{
+        res.status(200).send(res)
+    }).catch((err)=>{
+        res.send(err)
+    })
+
+})
+
+router.put('/changprofile' ,(req , res)=>{
+    const {IDuser , numberValue} = req.body
+    console.log(IDuser ,numberValue)
+    UserShema.findByIdAndUpdate({_id : IDuser }, {$set:{selectorsimg : numberValue}})
+    .then((result)=>{
+        res.send(result)
+    }).catch((err)=>{
+        res.send(err)
+    })
+} )
+
+router.put('/resetprofile' , (req , res)=>{
+    const {IDuser} = req.body
+    UserShema.findByIdAndUpdate({_id:IDuser},{$set:{selectorsimg: -1}})
+    .then((reset)=>{
+        res.send(reset)
+    }).catch((err)=>{
+        res.send(err)
+    })
 })
 
 

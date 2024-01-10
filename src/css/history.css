@@ -58,3 +58,19 @@
 .popup-again.visible{
     visibility: visible;
 }
+
+.btn-click button{
+    margin: auto;
+    background: none;
+    border: none;
+    color: #ffff;
+    font-size: 17px;
+    font-weight: 500;
+    margin-right: 17px;
+    cursor: pointer;
+}
+.open-register{
+    border: none;
+    background: none;
+}
+
