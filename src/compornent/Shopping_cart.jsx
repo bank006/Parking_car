@@ -5,11 +5,17 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import '../css/shopingcard.css'
 import Select from './patment/Selectpayment';
+import Dashbord from './Dashbord';
+
 
 
 function Shopping_cart(props) {
 
+    const navigate = useNavigate();
+
     const { IDuser } = props.IDuser
+
+    const IDusers = IDuser
     const [shoppingshow, set_shoppingshow] = useState(false)
     const [itemcard, set_itemcard] = useState([]);
 
@@ -85,45 +91,64 @@ function Shopping_cart(props) {
             })
     }
 
+
+    const senddatas = (IDproduct, IDstore, nameStore) => {
+        navigate('/Book_car', { state: { IDuser, IDproduct, IDstore, nameStore } })
+
+    }
+
     return (
         <div className='container'>
             <div className='button'>
                 <div className={`shopping-card ${shoppingshow ? 'visible' : ''}`}>
                     <div className='item-card'>
-                        <p>{IDuser}</p>
-                        <button type='button' onClick={closeshopping}>close</button>
-                        <b>สินค้า</b>
-                        {itemcard.map((item, index) => {
-                            const _id = item._id
-                            const IDproductregis = item.IDproductregis
-                            const IDuser = item.IDuser
-                            const storeregis = item.storeregis
-                            return (
-                                <div className='itemcard' key={index}>
-                                    <ul>{item.product[0].nameProduct}</ul>
-                                    <ul>{item.product[0].priceProduct}</ul>
-                                    <div className=''>
-                                        <div className=''>
-                                            <div className=''>
-                                                <Select item={{ selectpayment, datapayment }} />
-                                                <label htmlFor="datetime">เลือกวันที่และเวลาที่เริ่มจอง:</label>
-                                                <input type="datetime-local" id="datetime" name="datetime" onChange={handle_startbookingregis} required></input>
-                                                <label htmlFor="datetime">เลือกวันที่และเวลาสิ้นสุดการจอง:</label>
-                                                <input type="datetime-local" id="datetime" name="datetime" onChange={handle_timesregis} required></input>
+                        <div className="back-close">
+                            <button type='button' onClick={closeshopping}><img src='/public/back.png' alt="" /></button>
+                        </div>
+                        <div className="itemcontentcart">
+                            <div className="contentcart">
+                                {itemcard.map((item, index) => {
+                                    const _id = item._id
+                                    const IDstore = item.store[0]._id
+                                    const namestores = item.store[0].nameStore
+                                    const IDproductregis = item.IDproductregis
+                                    const IDuser = item.IDuser
+                                    const storeregis = item.storeregis
+                                    return (
+                                        <div className='content' key={index}>
+                                            <div className='content-favorite'>
+                                                <div className='favorite'>
+                                                    <div className="images-store">
+                                                        <img src={`../imageproduct/${item.product[0].imageProduct}`} alt="" />
+                                                    </div>
+                                                    <p>{namestores}</p>
+                                                    <Select item={{ selectpayment, datapayment }} />
+                                                    {/* <label htmlFor="datetime">เลือกวันที่และเวลาที่เริ่มจอง:</label> */}
+                                                    {/* <input type="datetime-local" id="datetime" name="datetime" onChange={handle_startbookingregis} required></input>
+                                                    <label htmlFor="datetime">เลือกวันที่และเวลาสิ้นสุดการจอง:</label>
+                                                    <input type="datetime-local" id="datetime" name="datetime" onChange={handle_timesregis} required></input>
+                                                    <button type='button' onClick={() => booking(_id, IDproductregis, IDuser, storeregis)}>สั่งจอง</button> */}
+                                                    <div className="btn-cart">
+                                                        <div className="btn-cart-booking">
+                                                            <button onClick={() => senddatas(IDproductregis, IDstore, namestores)}>จอง</button>
+                                                        </div>
+                                                        <div className="btn-cart-delete">
+                                                            <button onClick={() => confirmdelete(_id)} >ลบ</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <button type='button' onClick={() => booking(_id, IDproductregis, IDuser, storeregis)}>สั่งจอง</button>
-                                        <button onClick={() => confirmdelete(_id)} >ลบ</button>
-                                    </div>
-                                </div>
-                            )
-                        })}
+                                    )
+                                })}
+                            </div>
+                        </div>
 
                     </div>
 
                 </div>
-                <div className="btnshowregis">
-                    <button className='card-open' type='button' onClick={openshowshopping}>ตระกร้าสินค้า</button>
+                <div style={{ position: 'relative', zIndex: '10' }} className="btnshowregis">
+                    <button className='card-open' type='button' onClick={openshowshopping}>Favorite</button>
                 </div>
 
             </div>

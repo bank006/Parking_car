@@ -49,7 +49,7 @@ function Payment(props) {
 
     
 
-    const getQR = (IDbooking, IDproductregiscon, IDusercon, storeregiscon, timebookingcon, startbookingtime, bookingtimecon, amount, price) => {
+    const getQR = (IDbooking, IDproductregiscon, IDusercon, storeregiscon, timebookingcon, startbookingtime, bookingtimecon, amount, price , parkingbox) => {
         const timestartString = new Date(startbookingtime)
         const timeendString = new Date(timebookingcon)
         const deferrenttime  =  timeendString - timestartString 
@@ -60,7 +60,7 @@ function Payment(props) {
 
         // เพิ่มข้อมูลการจองเข้าไปในประวัติทั้งหมด
         const statuspayment = true
-        axios.post('http://localhost:4001/bookingcon/postcon', { IDbooking, IDproductregiscon, IDusercon, storeregiscon, timebookingcon, startbookingtime, bookingtimecon, statuspayment })
+        axios.post('http://localhost:4001/bookingcon/postcon', { IDbooking, IDproductregiscon, IDusercon, storeregiscon, timebookingcon, startbookingtime, bookingtimecon, statuspayment,parkingbox })
             .then((bookingcon) => {
                 console.log(bookingcon.data)
                 putdatatohistory(IDbooking)
@@ -90,7 +90,7 @@ function Payment(props) {
         const bookingtimehis = bookingtimecon;
 
         //บันทึกลงประวัติการจอง
-        axios.post('http://localhost:4001/bookinghis/posthistory', { IDbookinghis, IDproductregishis, IDuserhis, storeregishis, timebookinghis, bookingtimehis, statuspayment }).
+        axios.post('http://localhost:4001/bookinghis/posthistory', { IDbookinghis, IDproductregishis, IDuserhis, storeregishis, timebookinghis, bookingtimehis, statuspayment ,parkingbox }).
             then((resconf) => {
                 if (!resconf) {
                     console.log('somthing error')
@@ -103,12 +103,12 @@ function Payment(props) {
             })
 
         // // ลบ stock เข้าไปเมื่อกดจอง
-        axios.put(`http://localhost:4001/product/updatepostbooking/${IDproductregiscon}`)
-            .then((update) => {
-                console.log(update)
-            }).catch((err) => {
-                console.log(err)
-            })
+        // axios.put(`http://localhost:4001/product/updatepostbooking/${IDproductregiscon}`)
+        //     .then((update) => {
+        //         console.log(update)
+        //     }).catch((err) => {
+        //         console.log(err)
+        //     })
 
     }
 
@@ -184,7 +184,6 @@ function Payment(props) {
         window.location.reload();
     }
 
-    // console.log(booking)
     return (
         <div>
             {/* // ส่วน popup การจ่ายเงิน */}
@@ -201,6 +200,7 @@ function Payment(props) {
                         const timebookingcon = item.timeregis
                         const startbookingtime = item.startbookingregis
                         const bookingtimecon = item.bookingtime
+                        const parkingbox = item.parkingbox
                         const amount = item.product[0].priceProduct
                         const price = item.product[0].priceProduct
                         return (
@@ -209,7 +209,7 @@ function Payment(props) {
                                 <ul>รหัสการจอง : {item._id}</ul>
                                 <ul>ชื่อสินค้า : {item.product[0].nameProduct}</ul>
                                 <ul>ราคาสินค้า : {item.product[0].priceProduct}</ul>
-                                <button type='submit' onClick={() => getQR(IDbooking, IDproductregiscon, IDusercon, storeregiscon, timebookingcon, startbookingtime, bookingtimecon, amount, price)} >ชำระเงิน</button>
+                                <button type='submit' onClick={() => getQR(IDbooking, IDproductregiscon, IDusercon, storeregiscon, timebookingcon, startbookingtime, bookingtimecon, amount, price , parkingbox)} >ชำระเงิน</button>
 
                                 <button type='submit' onClick={() => updatestocks(IDbooking, IDproductregiscon)}>cancle</button>
                             </div>

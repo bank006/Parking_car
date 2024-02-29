@@ -1,0 +1,210 @@
+:root{
+    --border-color-green :#66D631;
+    --btn-color-yello: #FFAC0C;
+    --btn-color-black: #EBE4E3;
+    --bg-color-gray:#818181;
+}
+
+
+.container-historypayment{
+    height: 100vh;
+}
+
+.itembox-all{
+    height: 100%;
+}
+
+.history-checklist-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40%;
+}
+
+/* กล่องเช็ค */
+.all-data{
+    width: 100%;
+    height: 200px;
+    margin-top: 80px;
+}
+.checklist-historypayment{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+
+}
+
+.checkitem{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    width: 150px;
+    margin-right: 50px;
+    border: 4px solid var(--border-color-green);
+    border-radius:100% ;
+    background-color: white;
+    /* z-index: 2; */
+}
+
+.line{
+    position: absolute;
+    z-index: -1;
+    margin-top: 80px;
+    width:55% ;
+    border: 2px solid var(--border-color-green);
+}
+
+.checkitem img{
+    z-index: 1;
+    object-fit: cover;
+    width: 60%;
+    height: 60%;
+}
+
+
+
+.allcheck-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* .center-item{
+    width: 200px;
+    border: 1px solid black;
+} */
+
+.timecheckitem{
+    padding-top: 10px;
+    padding-left: 30px;
+
+}
+
+/* ปุ่มกด */
+.btn-checkitem-history{
+    display: flex;
+    justify-content: end;
+    height: 40px;
+    margin-right: 63px;
+    margin-top: 60px;
+}
+
+.btn-review{
+    margin-right: 10px;
+    height: 100%;
+    width: 200px;
+}
+
+.btn-review button{
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--btn-color-black);
+}
+
+.btn-regis-checkitem{
+    height: 100%;
+    width: 200px;
+}
+
+
+.btn-regis-checkitem button{
+    width: 100%;
+    height: 100%;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    background-color: var(--btn-color-yello);
+}
+
+/* กล่องข้อมูลด้าน */
+.item-aboutepayment{
+    margin-top: 130px;
+    height: 55%;
+    display: flex;
+    justify-content:center ;
+}
+
+.item-box-content{
+    width: 90%;
+    height: 90%;
+    border-radius: 13px;
+    background-color: var(--btn-color-black);
+}
+
+.img-hispayment{
+    width: 100px;
+    height: 100px;
+    margin-left: 50px;
+}
+
+.img-hispayment img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.name-boxhispayment{
+    padding: 20px;
+    display: flex;
+    width: 100%;
+    margin-left: 30px;
+    justify-content: space-between;
+}
+
+.table-histable {
+    text-align: end;
+    width: 100%;
+    height: 140px;
+    padding-right: 30px;
+}
+
+
+.title-content-historypayment{
+    display: flex;
+    align-items: center;
+    height: 42px;
+    border-top-right-radius: 13px;
+    border-top-left-radius: 13px;
+    background-color: var(--bg-color-gray);
+    justify-content: space-between;
+}
+
+.title-namestore-history p {
+    width: 100%;
+    padding-left: 20px;
+    color: var(--btn-color-black);
+    font-weight: 700px;
+}
+
+.title-pricetotal-history p {
+    width: 100%;
+    padding-right: 20px;
+    color: var(--btn-color-black);
+    font-weight: 700px;
+}
+
+.aboute-item-historypayment{
+    display: flex;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    border-bottom: 1px solid var(--bg-color-gray);
+}
+
+
+/* history */
+.nonedisplay{
+    visibility: hidden;
+}
+
+.nonedisplay.nonnone{
+    visibility: visible;
+}
+
+.itembox-all.hidden{
+    visibility: hidden;
+}
+

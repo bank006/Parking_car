@@ -24,11 +24,20 @@ let BookinghisSchema = new Schema({
         required:[true]
     },
     bookingtimehis:{
-        type: Date, default:Date.now
+        type:String,
+        required:[true]
+        // type: Date, default:Date.now
+    },
+    timeregister:{
+        type:String,
+        required:[true]
     },
     statuspayment:{
         type: Boolean,
         required:[true]
+    },
+    parkingbox:{
+        type:Number
     },
     histime:{
         type: Date, default:Date.now

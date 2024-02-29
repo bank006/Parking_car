@@ -12,7 +12,7 @@ function Selectpayment(props) {
   // เเสดงหน้าการเลือกวิธีการจ่าย
   const [popupslpay, set_popupslpay] = useState(false)
   //  เเสดงข้อมูลการรายการการจองจาก props
-  const { IDproductregis, IDuser, storeregis, startbookingregis, timeregis } = datapayment
+  const { IDproductregis, IDuser, storeregis, startbookingregis, timeregis , parkingbox } = datapayment
   // เเสดงผลข้อมูลลัพรายละเอียการจอง
   const [validate, set_validate] = useState([]);
 
@@ -87,7 +87,7 @@ function Selectpayment(props) {
   }
 
   const regisproduct = () => {
-    axios.post('http://localhost:4001/booking/postbooking', { IDproductregis, IDuser, storeregis, startbookingregis, timeregis })
+    axios.post('http://localhost:4001/booking/postbooking', { IDproductregis, IDuser, storeregis, startbookingregis, timeregis , parkingbox })
       .then((res) => {
         console.log(res)
         // window.location.reload();

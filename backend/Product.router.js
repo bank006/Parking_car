@@ -46,6 +46,9 @@ router.post('/postproduct' , uploadproduct.single('imageProduct') , (req , res ,
     const quantityInStockrel = req.body.quantityInStockrel;
     const latitude = req.body.latitude;
     const longitude =req.body.longitude;
+    const round = req.body.round;
+
+    console.log(round)
 
     const point = {
         type: 'Point',
@@ -153,7 +156,7 @@ router.put('/updateproduct', upload.single('newImage'), (req, res) => {
 router.put('/nonimg', (req, res) => {
     // รับข้อมูลที่ส่งมาจาก client
     const { IDproduct, namepr, qtypr } = req.body;
-    ProductShema.findByIdAndUpdate({_id:IDproduct}, {$set:{nameProduct:namepr , quantityInStock :qtypr}}).
+    ProductShema.findByIdAndUpdate({_id:IDproduct}, {$set:{nameProduct:namepr , quantityInStock :qtypr , quantityInStockrel: qtypr}}).
     then((ress)=>{
         res.json({ message: 'Update successful', ress });
     }).catch((err)=>{

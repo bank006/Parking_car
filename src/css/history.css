@@ -1,5 +1,17 @@
+:root{
+    --background-black :#000000 ;
+    --background-payment : #818181 ;
+    --backgroud-menu : #F1F1F1;
+    --backgroud-payment-item : #A5A5A5;
+    --btn-submit-payment: #BB271A;
+    --btn-cancel-payment: #C3C3C3;
+    --color-font-his : #FFFFFF;
+}
+
+
 .popup-history{
-    visibility: hidden;
+    margin-top: 138px;
+    /* visibility: hidden; */
     display: grid;
     place-items: center; /* จัดให้เนื้อหาตรงกลาง */
     position: fixed; /* ใช้ Fixed Position เพื่อให้คอมโพเนนต์อยู่ตรงกลางของหน้าจอ */
@@ -7,20 +19,15 @@
     right: 0;
     bottom: 0;
     left: 0;
+    background-color: white;
     
     
 }
 
-.box-history{
-    width: 800px;
-   height: 600px;
-   border: 1px solid black;
-   background-color: white;
-   overflow: scroll
 
-
-}
 .popup-history.visible{
+    margin-top: 143px;
+    background-color: aqua;
     visibility: visible;
 }
 
@@ -73,4 +80,150 @@
     border: none;
     background: none;
 }
+
+/* box-history */
+
+.box-history{
+    margin-top: 5px;
+    width: 100%;
+    height: 80vh;
+    background-color: var(--backgroud-payment-item);
+    overflow: scroll
+}
+.item-history{
+    margin-top: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 270px;
+    margin-bottom: 10px;
+}
+
+.content-history{
+    background-color: var(--background-gray);
+    width: 98%;
+    height: 100%;
+    border-radius: 18px;
+   
+}
+
+.item-allbox-payment{
+    height: 80%;
+    width: 100%;
+    border-bottom: 1px solid var(--backgroud-payment-item);
+
+}
+
+.history-namepay{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    width: 100%;
+    height: 50px;
+    background-color:  var(--background-payment);
+    /* border: 1px solid black; */
+}
+
+.history-namepay ul{
+    color: #F1F1F1;
+    font-size: 18px;
+    margin-left: 20px;
+}
+
+.item-box-history{
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.aboue-history{
+    display: flex;
+    justify-content: space-between;
+    width:70%;
+    height: 80%;
+    margin-top: 20px;
+    padding: 40px;
+}
+
+.aboue-history p {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+
+.history-img{
+    border-radius: 20px;
+    width: 220px;
+    height: 140px;
+    margin: 10px;
+    margin-left: 60px;
+}
+
+.history-img img{
+    object-fit: contain;
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+}
+
+
+.history-btn{
+    display: flex;
+    justify-content: end;
+    height: 30px;
+    margin: 12px;
+    
+}
+
+.btn-history-store button{
+    cursor: pointer;
+    height: 100%;
+    width: 120px;
+    margin-right: 13px;
+    /* border: none; */
+    border-radius: 8px;
+    color: var(--background-black);
+    background-color: var(--background-gray);
+}
+
+.btn-history-pay p{
+    margin-right: 13px;
+    width: 120px;
+    height: 100%;
+    color: var(--color-font-his);
+    background-color: var(--background-gray);
+}
+
+.btn-history-pay button{
+    cursor: pointer;
+    width: 100%;
+    border-radius: 8px;
+    height: 100%;
+    border: none;
+    color: var(--background-black);
+    background-color: var(--btn-submit-payment);
+
+}
+
+.table-history{
+    margin-top: 10px;
+    width: 100%;
+    height: 66%;
+    cursor: pointer;
+}
+
+.table-history th {
+    text-align: start;
+    padding-left: 40px;
+    font-size: 15px;
+}
+
+.table-history td {
+    text-align: end;
+    padding-right: 30px;
+}
+
+
 

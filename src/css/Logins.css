@@ -144,11 +144,14 @@
 
 .value-forgot {
     display: flex;
-    width: 220px;
+    width: 480px;
 }
 
 .forgot {
+    display: flex;
+    justify-content: space-between;
     margin-left: 10px;
+    width: 100%;
 }
 
 .forgot label {

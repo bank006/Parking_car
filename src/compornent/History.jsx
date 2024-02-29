@@ -9,10 +9,9 @@ import Select from './patment/Selectpayment';
 
 function History(props) {
 
-    const { IDuser } = props.IDuser
+    const { IDbookinghiss, IDuser, bookingagin, IDproductpay } = props.IDuser
     const navigate = useNavigate();
-
-    const [showhistory, set_showhistory] = useState(false);
+    const [showhistory, set_showhistory] = useState(true);
     const [bookagain, set_bookagain] = useState(false)
     const [datahistory, set_datahistory] = useState([]);
     const [IDproductregis, set_IDproductregis] = useState([])
@@ -21,26 +20,28 @@ function History(props) {
     const [timeregis, set_timeregis] = useState([])
     const [startbookingregis, set_startbookingregis] = useState([])
 
-    const clickbtn = () => {
-        set_showhistory(!showhistory)
-    }
-    const closebtn = () => {
-        set_showhistory(!showhistory)
-    }
 
-    const openbookagain = async (IDproduct, IDstore) => {
-        
+    useEffect(() => {
+        if (bookingagin === true) {
+            console.log('uoi')
+            const IDproduct = IDproductpay
+            const idbooking = IDbookinghiss
+
+            openbookagain(IDproduct)
+
+        } else {
+            console.log('32455')
+        }
+    }, [bookingagin])
+
+    const openbookagain = async (IDproduct, IDstore, IDbookinghis) => {
         set_bookagain(!bookagain)
-        set_IDproductregis(IDproduct )
+        set_IDproductregis(IDproduct)
         set_storeregis(IDstore)
-
-        // set_bookagain(bookagains)
-        // set_IDproductregis(IDproducts )
-        // set_storeregis(IDstores )
-
-        
+        const IDbooking = IDbookinghiss||IDbookinghis
 
         try {
+            // เอาประวัติการจองเเละไอดีทีรับมาเพื่อใช้งาน
             const resproduct = await axios.get(`http://localhost:4001/product/callproduct/${IDproduct}`)
             const all = resproduct.data
 
@@ -50,6 +51,7 @@ function History(props) {
             console.log(err)
         }
     }
+
 
     const closebookagain = () => {
         set_bookagain(!bookagain)
@@ -70,14 +72,12 @@ function History(props) {
 
     const todetail = (IDuser, IDstore) => {
         navigate('/Detail_store', { state: { IDstore, IDuser } })
-        console.log(IDuser, IDstore)
     }
 
     const [selectpayment, setselectpayment] = useState(false)
     const [datapayment, set_datapayment] = useState([])
 
     const againbooking = (IDproductregis, IDuser, storeregis, timeregis) => {
-        console.log(IDproductregis, IDuser, storeregis, timeregis)
         if (startbookingregis.length === 0) {
             alert('กรุณาเลือกเวลา')
         } else if (timeregis.length === 0) {
@@ -88,13 +88,22 @@ function History(props) {
         }
     }
 
+    // นำทางไปหน้ารายละเอียดการจ่ายเงิน
+    const linkdeshostory = (IDstore, IDbookinghis,amoutperminute) => {
+        navigate('/Historypayment', { state: { IDuser, IDstore, IDbookinghis,amoutperminute } })
+    }
+
+    // console.log(datahistory)
+
     return (
-        <div className='container'>
-            <div className={`popup-history ${showhistory ? 'visible' : ''}`}>
+        <div className='container-history'>
+            {/* <div className={`popup-history ${showhistory ? 'visible' : ''}`}> */}
+            <div className='popup-history'>
                 <div className='box-history'>
-                    <button type='button' onClick={closebtn}>close</button>
-                    <h1>history</h1>
+                    {/* <button type='button' onClick={closebtn}>close</button>
+                    <h1>history</h1> */}
                     {datahistory.map((item, index) => {
+                        const IDbookinghis = item.IDbookinghis
                         const IDproduct = item.IDproductregishis
                         const IDstore = item.storeregishis
 
@@ -108,21 +117,82 @@ function History(props) {
                         } else if (item.product[0].quantityInStock >= 0) {
                             qproduct = item.product[0].quantityInStock
                             if (item.product[0].quantityInStock >= 0) {
-                                qproducts =  <button type='button' onClick={() => openbookagain(IDproduct, IDstore)}>จองอีกครั้ง</button>
+                                qproducts = <button type='button' onClick={() => openbookagain(IDproduct, IDstore, IDbookinghis)}>จองอีกครั้ง</button>
                             }
                         }
+
+                        const isoDateTime = item.bookingtimehis
+                        const dateObject = new Date(isoDateTime);
+                        const day = dateObject.getDate();
+                        const month = dateObject.getMonth() + 1;
+                        const year = dateObject.getFullYear();
+                        // return `${day}/${month}/${year}`;
+
+                        const amount = item.product[0].priceProduct
+                        const bookingstart = item.bookingtimehis
+                        const endbooking = item.timebookinghis
+
+                        const timestartString = new Date(bookingstart)
+                        const timeendString = new Date(endbooking)
+                        const deferrenttime = timeendString - timestartString
+                        const pricesell = amount / 60
+                        const minuttime = deferrenttime / (1000 * 60)
+                        const hours = Math.floor(minuttime / 60);
+                        const amoutperminute = pricesell * minuttime
+                        // const roundedNumber = amoutperminute.toFixed(2);
                         return (
                             <div className='item-history' key={index}>
-                                <ul>{item.IDproductregishis}</ul>
-                                <ul>ร้านค้า : {item.store[0].nameStore}</ul>
-                                <ul>ชื่อสินค้า :{item.product[0].nameProduct}</ul>
-                                <ul>ราคาสินค้า : {item.product[0].priceProduct}</ul>
-                                <ul>จำนวนสินค้า : {qproduct}</ul>
-                                <div className='btn'>
-                                    <button type='button' onClick={() => todetail(IDuser, IDstore)}>ร้านค้า</button>
-                                </div>
-                                <div className='btn'>
-                                   <p>{qproducts}</p>
+                                <div className="content-history">
+                                    <div className="item-allbox-payment">
+                                        <div className="history-namepay">
+                                            <ul>{item.store[0].nameStore}</ul>
+                                            <ul style={{ marginRight: '30px', color: '#FFD27C' }} >สำเร็จ</ul>
+                                        </div>
+                                        <div className="item-box-history">
+                                            <div className="history-img">
+                                                <img src={`../imageproduct/${item.product[0].imageProduct}`} alt="" />
+                                            </div>
+                                            {/* <div className='aboue-history'>
+                                                <p>{item.product[0].descriptionProduct}</p>
+                                                <p>{item.product[0].priceProduct}</p>
+                                            </div> */}
+                                            <table onClick={() => linkdeshostory(IDstore, IDbookinghis ,amoutperminute)} className='table-history'>
+                                                <tr>
+                                                    <th>ชื่อร้านที่จอง</th>
+                                                    <td>{item.store[0].nameStore}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>ราคาสินค้า</th>
+                                                    <td>ชั่วโมงละ : THB {item.product[0].priceProduct}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>เวลาที่จอง</th>
+                                                    <td>{day}/{month}/{year}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>รวมเวลาที่จองทั้งหมด</th>
+                                                    <td>{hours}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>ราคารวม</th>
+                                                    <td>{amoutperminute}</td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                        {/* <ul>ชื่อสินค้า :{item.product[0].nameProduct}</ul>
+                                        <ul>ราคาสินค้า : {item.product[0].priceProduct}</ul>
+                                        <ul>จำนวนสินค้า : {qproduct}</ul> */}
+
+                                    </div>
+                                    <div className='history-btn'>
+                                        <div className='btn-history-store'>
+                                            <button type='button' onClick={() => todetail(IDuser, IDstore)}>ร้านค้า</button>
+                                        </div>
+                                        <div className='btn-history-pay'>
+                                            <p>{qproducts}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -152,14 +222,15 @@ function History(props) {
 
                             </div>
                         )}
+
                         <button type='button' onClick={() => againbooking(IDproductregis, IDuser, storeregis, timeregis)}>จองอีกครั้ง</button>
                         <button type='button' onClick={closebookagain}>close</button>
                     </div>
                 </div>
             </div>
-            <div className='btn-click'>
+            {/* <div style={{position:'relative' , zIndex:'20'}} className='btn-click'>
                 <button type='button' onClick={clickbtn}>history</button>
-            </div>
+            </div> */}
         </div>
     )
 }

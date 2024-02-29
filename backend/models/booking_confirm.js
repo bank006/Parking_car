@@ -33,6 +33,9 @@ let BookingconSchema = new Schema({
         type: Boolean,
         required:[true]
     },
+    parkingbox:{
+        type:Number
+    },
     contime:{
         type: Date, default:Date.now
     }

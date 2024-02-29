@@ -24,7 +24,7 @@ function Store() {
     const [priceProduct, set_priceProduct] = useState('')
     const [descriptionProduct, set_descriptionProduct] = useState('')
     const [quantityInStock, set_quantityInStock] = useState('')
-    const [quantityInStockrel , set_quantityInStockrel] = useState('')
+    const [quantityInStockrel, set_quantityInStockrel] = useState('')
 
     const [latitude, set_latitude] = useState('')
     const [longitude, set_longitude] = useState('')
@@ -35,7 +35,7 @@ function Store() {
     const [dataproduct, set_dataproduct] = useState([]);
 
     const [showpopup, set_showpopup] = useState(false)
-    
+
     const handleimagesproduct = (e) => {
         set_imageproduct(e.target.files[0])
     }
@@ -57,6 +57,58 @@ function Store() {
         set_quantityInStockrel(e.target.value)
     }
 
+    const numberOfRounds = quantityInStock; // จำนวนรอบที่ต้องการบันทึก
+    const nameToSave = 'A'; // ชื่อที่ต้องการบันทึก
+
+    const [save, set_save] = useState({})
+    const saves = async () => {
+        let newData = {};
+
+        for (let i = 0; i < numberOfRounds; i++) {
+            const dataToSave = {
+                IDstore: IDstore,
+                imageProduct: imageProduct,
+                nameProduct: nameProduct,
+                priceProduct: priceProduct,
+                descriptionProduct: descriptionProduct,
+                quantityInStock: quantityInStock,
+                quantityInStockrel: quantityInStockrel,
+                latitude: latitude,
+                longitude: longitude,
+                round: i + 1 + "-A",
+            };
+            newData = { ...newData, [i]: dataToSave }; // เก็บข้อมูลในตัวแปรใหม่เพื่อเก็บข้อมูลของทุกรอบ
+        }
+
+        axios.post('http://localhost:4001/product/postproduct', { newData })
+            .then((tests) => {
+                console.log("Successfully Save Data");
+            }).catch((err)=>{
+                alert("Error : " + err);
+            })
+
+        // const formdata = new FormData();
+        // Object.values(newData).forEach((dataToSave) => {
+        //     Object.entries(dataToSave).forEach(([key, value]) => {
+        //         formdata.append(key, value);
+        //     });
+        // });
+
+        // console.log([...formdata.entries()])
+
+        // try {
+        //     const resproduct = await axios.post('http://localhost:4001/product/postproduct', formdata, {
+        //         headers: { 'Content-Type': 'multipart/form-data' }
+        //     });
+        //     console.log('uploaded successfully:', resproduct.data);
+        //     // หลังจากอัปโหลดเสร็จแล้วทำอย่างไรต่อ หรือโหลดหน้าใหม่ เปิดหน้าใหม่ หรือใช้การนำทางไปหน้าอื่น
+        // } catch (error) {
+        //     console.log('Error upload data to store', error);
+        // }
+    };
+
+
+
     // push data to schema
     const onsubmitproduct = async () => {
         if (imageProduct) {
@@ -67,7 +119,7 @@ function Store() {
             formdataproduct.append('priceProduct', priceProduct);
             formdataproduct.append('descriptionProduct', descriptionProduct);
             formdataproduct.append('quantityInStock', quantityInStock);
-            formdataproduct.append('quantityInStockrel' , quantityInStockrel)
+            formdataproduct.append('quantityInStockrel', quantityInStockrel)
             formdataproduct.append('latitude', latitude);
             formdataproduct.append('longitude', longitude);
             try {
@@ -113,18 +165,18 @@ function Store() {
             })
     }, []);
 
-    const [allincome , setallincome] = useState([]);
+    const [allincome, setallincome] = useState([]);
     // รายได้ทั้งหมดของร้าน
-    useEffect(()=>{
+    useEffect(() => {
         axios.get(`http://localhost:4001/income/allincome/${IDstore}`)
-        .then((res)=>{
-            setallincome(res.data)
-        }).catch((err)=>{
-            console.log(err)
-        })
-    },[])
+            .then((res) => {
+                setallincome(res.data)
+            }).catch((err) => {
+                console.log(err)
+            })
+    }, [])
 
-   // สินค้าของร้าน
+    // สินค้าของร้าน
     useEffect(() => {
         axios.get(`http://localhost:4001/product/getproduct/${IDstore}`)
             .then((respro) => {
@@ -389,7 +441,7 @@ function Store() {
             <h1>{loginstore.nameStore}</h1>
             <div className='container-static'>
                 <div className='income-of-month'>
-                    <Income IDstore={{IDstore : IDstore}} />
+                    <Income IDstore={{ IDstore: IDstore }} />
                 </div>
                 <div className='container-view'>
                     <div className='item-view'>
@@ -398,7 +450,7 @@ function Store() {
                             <h1>{loginstore.numofview}</h1>
                             <p>ครั้ง</p>
                         </div>
-                        {allincome.map((item , index)=>(
+                        {allincome.map((item, index) => (
                             <div className='' key={index}>
                                 <p>รายทั้งหมด : {item.totalAmount}</p>
                             </div>
@@ -407,7 +459,7 @@ function Store() {
                 </div>
             </div>
             <div className=''>
-                <Incomeperday IDstore={{IDstore : IDstore}} />
+                <Incomeperday IDstore={{ IDstore: IDstore }} />
             </div>
 
             <div className='content-store'>
@@ -416,6 +468,7 @@ function Store() {
                 ) : (
                     <div className=''>
                         <p>ร้านค้าของคุณ</p>
+                        <button onClick={saves}>sff</button>
                         <div className='calss-box'>
                             <div className='box-input'>
                                 <div className='box-upload-'>

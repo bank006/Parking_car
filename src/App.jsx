@@ -35,7 +35,10 @@ import income from './compornent/store/income';
 import incomeperday from './compornent/store/incomeperday';
 import Iconprofile from './compornent/Iconprofile';
 import Pdpa from './compornent/pdpa/Pdpa';
-
+import Forgotpass from './compornent/Forgotpass';
+import Historypayment from './compornent/historypayment/Historypayment';
+import Chat from './compornent/Chat/Chat';
+import Userbox from './compornent/Chat/Userbox';
 
 
 function App() {
@@ -48,7 +51,7 @@ function App() {
         {/* <Route path='/Logins' element={<Login/>}/> */}
         <Route path='/Register' element={<Regiser/>}/>
         <Route path='/Dashbord' element={<Dashbord/>}/>
-        <Route path='/Book_car/' element={<Book_car/>}/>
+        <Route path='/Book_car' element={<Book_car/>}/>
         <Route path='/Dowload/:usersemail' element={<Dowload/>}/>
         <Route path='/Incrud' element={<Incurd_em/>}/>
         <Route path='/Dashbord_ad' element={<Dasgbord_ad/>}/>
@@ -59,7 +62,7 @@ function App() {
         <Route path='/Detail_store' element={<Detail_store/>}/>
         <Route path='/Pust_product/:IDstore' element={<Push_product/>}/>
         <Route path='/Booking_histre/:IDuser' element={<Booking_History/>}/>
-        <Route path='/Booking_confirm/:IDuser' element={<Booking_confirm/>}/>
+        <Route path='/Booking_confirm' element={<Booking_confirm/>}/>
         <Route  path='/login' element={<Logins/>} />
         <Route path='/History' element={<History/>}/>
         <Route path='/Payment' element={<Payment/>}/>
@@ -77,6 +80,10 @@ function App() {
         <Route path='/Incomeperday' element={<incomeperday/>} />
         <Route path="/Icons" element={<Iconprofile />} />
         <Route path='/Pdpa' element={<Pdpa/>}/>
+        <Route path='/Forgot' element={<Forgotpass/>}/>
+        <Route path='/Historypayment' element={<Historypayment/>}/>
+        <Route path='/Chat' element={<Chat/>}/>
+        <Route path='/Userbox' element={<Userbox/>}/>
       </Routes>
     </BrowserRouter>
 

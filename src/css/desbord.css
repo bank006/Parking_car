@@ -1,9 +1,14 @@
 :root {
     --back-ground: #fff;
     --text-color: #000000;
-    --box-item: #D9D9D9;
+    --box-items: #F1F1F1;
     --font-color-price: #A80000;
     --bf-btn: #DD9304;
+    --gray-btn: #D9D9D9;
+    --back-ground-item: rgba(217, 217, 217, 0.86);
+    --btn-close: #C82400;
+    --btn-ok: #618D05;
+    --back-popupDate: #FFF8DF;
 }
 
 
@@ -15,9 +20,8 @@
 /* navbar */
 
 .nav-des {
-    background: url(/public/bgdeshbord.png);
+    background-color: #141618;
     position: sticky;
-    top: -100px;
     /* กำหนดค่า top ติดลบเพื่อให้ Navbar หายไป */
     transition: top 0.5s;
 }
@@ -30,8 +34,11 @@
 
 .box-all {
     display: flex;
-    justify-content: center;
+    margin-top: 30px;
+    /* justify-content: right;
     align-items: center;
+    padding-right: 40px; */
+    padding-right: 10px;
 }
 
 
@@ -40,8 +47,8 @@
     display: flex;
     align-items: center;
     margin-bottom: 27px;
-    background-color: var(--box-item);
-    width: 1056px;
+    background: var(--box-items);
+    width: 990px;
     height: 230px;
     border-radius: 30px;
 }
@@ -51,10 +58,11 @@
     align-items: center;
     flex-direction: row;
     margin-bottom: 27px;
-    background-color: var(--box-item);
-    width: 1056px;
+    background-color: var(--box-items);
+    width: 990px;
     height: 230px;
     border-radius: 30px;
+
 }
 
 /* กล่องรูปสินค้า */
@@ -125,12 +133,12 @@
 
 .priceproducts p {
     float: right;
-
     text-align: center;
     margin: 55px;
-    font-size: 36px;
+    font-size: 27px;
     font-weight: 700px;
     color: var(--font-color-price);
+
 }
 
 .addbook {
@@ -182,11 +190,12 @@
 
 .namestore {
     width: 400px;
+    margin-left: 5px;
 }
 
 .namestore p {
     margin-bottom: 5px;
-    font-size: 40px;
+    font-size: 25px;
     font-weight: 700;
     white-space: nowrap;
     /* ไม่ตัดข้อความเป็นหลัก */
@@ -197,6 +206,7 @@
 }
 
 .desproduct {
+    margin-left: 5px;
     font-size: 15px;
     font-weight: 200px;
 }
@@ -211,270 +221,130 @@
     /* border-top: 1px solid black; */
 }
 
+
 .all-boxs {
     display: flex;
     width: 100%;
     height: 90vh;
 }
 
-.boxs,
-.box-parking {
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    width: 800px;
-}
-
-.box p {
-    text-align: right;
-    margin: 7px;
-    color: var(--back-ground);
-}
-
-/* สินค้าน้อยกว่า 5 ชิ้น */
-.fourboxs,
-.four-parking {
-    position: absolute;
-    /* z-index: 1; */
-    width: 600px;
-    height: 200px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.fourboxs .box {
+.area-parking {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    height: 100%;
-    margin-left: 260px;
-    padding: 10px;
-    border-top: 1px solid rgb(248, 245, 245);
-    /* border-right: 1px solid white;
-    border-bottom: 1px solid white; */
 }
 
-.four-parking .parking {
-    width: 150px;
-    height: 80px;
+
+
+.item-boxs {
     margin: 10px;
-    margin-left: 70px;
-    background: url(/public/car.png);
+    width: 500px;
+    height: 90px;
 }
 
-.four-parking .befparking {
+.boxs {
+    padding-left: 50px;
+    margin: 100px;
+    width: 100%;
+    height: 75vh;
+
+}
+
+.item-boxs .regiscar {
     width: 100%;
     height: 100%;
-    margin-left: 250px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    background-color: var(--bf-btn);
+    border-radius: 10px;
+    border: none;
 }
 
-/* สินค้ามากกว่า 6 ชิ้น */
-.many-boxes,
-.many-parking {
-    position: absolute;
-    /* z-index: 1; */
-    width: 600px;
-    height: 400px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+.item-boxs .regiscar:hover {
+    background-color: #D9D9D9;
 }
 
-
-.many-boxes .box {
+.item-boxs .car {
+    border: none;
+    background: var(--gray-btn);
     width: 100%;
-    height: 100%;
-    margin-left: 260px;
-    padding: 10px;
-    border-top: 1px solid rgb(250, 248, 248);
+    height: 90px;
+    border-radius: 10px;
 }
 
-.many-parking .parking {
-    width: 150px;
+/* ถ้ามากกว่า 5  */
+
+.boxs-five {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.item-boxs-five {
+    width: 250px;
     height: 80px;
-    margin: 10px;
-    margin-left: 70px;
-    background: url(/public/car.png);
 }
 
-.many-parking .befparking {
-    display: grid;
-    width: 720px;
-    height: 100px;
-    margin-left: 250px;
-    grid-template-columns: repeat(2, 1fr);
-}
-
-/* สินค้ามากกว่า 8 ชิ้น */
-.manys-boxs,
-.somany-parking {
-    position: absolute;
-    width: 600px;
-    height: 400px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.manys-boxs .box {
+.item-boxs-five .regiscar {
     width: 100%;
     height: 100%;
-    margin-left: 260px;
-    padding: 10px;
-    border-top: 1px solid rgb(249, 248, 248);
-    /* background: url(/public/car.png); */
+    border: none;
+    background-color: var(--bf-btn);
+    border-radius: 10px;
 }
 
-.somany-parking .parking {
-    width: 150px;
+.item-boxs-five .car {
+    border: none;
+    background: var(--gray-btn);
+    width: 100%;
     height: 80px;
-    /* margin: 10px; */
-    margin-left: 70px;
-    background: url(/public/car.png);
+    border-radius: 10px;
 }
 
-.somany-parking .befparking {
-    display: grid;
-    width: 720px;
-    height: 100px;
-    margin-left: 270px;
-    grid-template-columns: repeat(2, 1fr);
+.item-boxs-five .regiscar:hover {
+    background-color: white;
 }
-
-
 
 /* มากกว่า 10 */
 
-.verymore-box,
-.verymore-parking {
-    position: absolute;
-    width: 600px;
-    height: 400px;
+.boxs-ten {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr) repeat(2, 1fr);
 }
 
-
-
-.verymore-box .box {
-    /* margin: 10px; */
-    width: 100%;
-    height: 100%;
-    margin-left: 160px;
-    padding: 10px;
-    border-top: 1px solid rgb(248, 246, 246);
-}
-
-.verymore-parking .parking {
+.item-boxs-ten {
     width: 150px;
-    height: 80px;
-    margin: 1px;
-    margin-left: 60px;
-    background: url(/public/car.png);
-}
-
-.verymore-parking .befparking {
-    display: grid;
-    width: 720px;
-    height: 100px;
-    margin-left: 90px;
-    grid-template-columns: repeat(3, 1fr);
-}
-
-
-/* มากกว่า 15 */
-
-.fivety-box,
-.fivety-parking {
-    position: absolute;
-    width: 800px;
-    height: 400px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-}
-
-.fivety-box .box {
-    width: 100%;
-    height: 100%;
-    margin-left: 120px;
-    padding: 10px;
-    border-top: 1px solid rgb(249, 249, 249);
-}
-
-.fivety-parking .parking{
-    width: 150px;
-    height: 80px;
-    margin-top:15px ;
-    margin-right: 50px;
-    background: url(/public/car.png);
-}
-
-.fivety-parking .befparking{
-    display: grid;
-    width: 720px;
-    height: 100px;
-    margin-left: 130px;
-    grid-template-columns: repeat(4, 1fr);
-}
-
-/* มากกว่า 20 */
-.end-box , .end-parking{
-    position: absolute;
-    width: 800px;
-    height: 500px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-}
-
-.end-box .box{
-    width: 100%;
-    height: 100%;
-    margin-left: 130px;
-    padding: 10px;
-    border-top: 1px solid rgb(253, 253, 253);
-}
-
-.end-parking .parking{
-    width: 150px;
-    height: 80px;
-    margin-top:15px ;
-    margin-right: 50px;
-    background: url(/public/car.png);
-}
-
-.end-parking .befparking{
-    display: grid;
-    width: 720px;
-    height: 100px;
-    margin-left: 140px;
-    grid-template-columns: repeat(4, 1fr);
+    height: 50px;
 }
 
 
 /* เพิ่มวันที่ต้องการจอง */
 .des-productrecall {
+
     justify-content: space-between;
     display: flex;
-    width: 100%;
+    width: 50%;
     height: 100%;
 
 }
 
-.box-productrecall{
+.box-productrecall {
     width: 300px;
     /* padding: 20px; */
     /* border: 1px solid wheat; */
 }
 
-.recallproduct-item{
+.recallproduct-item {
     color: var(--back-ground);
 }
 
-.start-item{
+.start-item {
     margin-bottom: 20px;
 }
-.recallproduct-item{
+
+.recallproduct-item {
     margin-bottom: 20px;
 }
-.recallproduct-item .namest{
+
+.recallproduct-item .namest {
     width: 100%;
     font-size: 30px;
     font-weight: 700;
@@ -490,20 +360,21 @@
     margin-top: 10px;
 }
 
-.lebel-start label{
+.lebel-start label {
     width: 100%;
     color: var(--bf-btn);
 }
-.lebel-start{
+
+.lebel-start {
     margin-bottom: 10px;
 }
 
-.label-endtime label{
+.label-endtime label {
     width: 100%;
     color: var(--bf-btn);
 }
 
-.label-endtime{
+.label-endtime {
     margin-bottom: 10px;
 }
 
@@ -513,19 +384,19 @@
     height: 52px;
 }
 
-.input-endtime{
+.input-endtime {
     border-radius: 25px;
     height: 52px;
 }
 
-.input-start input{
+.input-start input {
     border-radius: 25px;
     width: 90%;
     height: 100%;
     border: none;
 }
 
-.input-endtime input{
+.input-endtime input {
     border-radius: 25px;
     width: 90%;
     height: 100%;
@@ -537,18 +408,27 @@ input[type="datetime-local"] {
     padding-right: 10px;
     padding-left: 10px;
     border: 2px solid var(--bf-btn);
-  }
-  
+}
+
+/* .input-endtime input[type="datetime-local"]::-webkit-datetime-edit-hour-field {
+    width: 100%;
+}
+.input-endtime input[type="datetime-local"]::-webkit-datetime-edit-minute-field {
+    display: none;
+} */
+
+
+
 
 /* ปุ่มปิด */
 
-.btn-close{
+.btn-close {
     cursor: pointer;
     z-index: 4;
     padding-left: 20px;
 }
 
-.btn-close button{
+.btn-close button {
     border: none;
     display: flex;
     justify-content: center;
@@ -559,12 +439,12 @@ input[type="datetime-local"] {
     background-color: var(--bf-btn);
 }
 
-.btn-close button img{
+.btn-close button img {
     width: 100%;
     height: 100%;
 }
 
-.btn-close button:hover{
+.btn-close button:hover {
     background: none;
     border: none;
     width: 40px;
@@ -578,7 +458,7 @@ input[type="datetime-local"] {
 
 /* ปุ่มกดจอง */
 
-.button-addproduct{
+.button-addproduct {
     margin-top: 20px;
     height: 47px;
     width: 100%;
@@ -587,7 +467,7 @@ input[type="datetime-local"] {
     border: none;
 }
 
-.button-addproduct button{
+.button-addproduct button {
     height: 100%;
     width: 200px;
     background-color: var(--bf-btn);
@@ -595,7 +475,7 @@ input[type="datetime-local"] {
     border-radius: 25px;
 }
 
-.button-addproduct button:hover{
+.button-addproduct button:hover {
     background: none;
     border: none;
     width: 200px;
@@ -643,7 +523,7 @@ input[type="datetime-local"] {
     /* height: 100%; */
     color: var(--text-color);
     background-color: var(--text-color);
-    
+
 
 }
 
@@ -654,50 +534,48 @@ input[type="datetime-local"] {
     display: block;
     object-fit: fill;
     /* margin-top: 83px; */
-    background: url(/public/bgdeshbord.png);
+    background-color: var(--back-ground-item);
 
 }
 
 /* จุดบริการ */
 
-.container-service {
-    justify-content: end;
-    display: flex;
-    width: 100%;
-    margin-bottom: 20px;
+
+.filter-price {
+    width: 500px;
+    height: 500px;
 }
 
 .item-container-service {
     display: flex;
-    margin-right: 110px;
-
+    justify-content: space-between;
+    margin: 16px;
 }
 
 .item-service {
-    padding: 5px;
-    width: 167px;
-    height: 44px;
+    height: 45px;
 }
 
 .item-service button {
+    padding: 5px;
     background: none;
     border: none;
     width: 100%;
     height: 100%;
-    border-radius: 24px;
+    border-radius: 10px;
     background-color: var(--bf-btn);
-    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
     color: var(--back-ground);
     cursor: pointer;
 }
 
 
 .item-service button:hover {
+    padding: 5px;
     background: none;
     border: none;
     width: 100%;
     height: 100%;
-    border-radius: 24px;
+    border-radius: 10px;
     background-color: var(--bf-btn);
     box-shadow: 6px 6px 6px 3px rgba(0, 0, 0, 0.25) inset;
     color: var(--back-ground);
@@ -706,6 +584,45 @@ input[type="datetime-local"] {
     transform: scale(1.05);
 }
 
+.item-filter-price {
+    background-color: var(--box-items);
+    height: 180px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.item-price-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 700;
+    height: 50px;
+}
+
+.item-rang-price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 79%;
+}
+
+.range {
+    width: 200px;
+}
+
+.range-input {
+    display: flex;
+}
+
+.range p {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.range input {
+    width: 80%;
+}
 
 /* ปุ่มต่างๆของรายการ */
 
@@ -733,4 +650,68 @@ input[type="datetime-local"] {
     padding: 10px;
     background: var(--font-color-price);
     color: var(--back-ground);
+}
+
+
+/* popupDate */
+
+.popupDate {
+    display: flex;
+    position: absolute;
+    justify-content: end;
+    align-items: end;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+}
+
+
+.popupDate.visible {
+    visibility: visible;
+}
+
+.itempopup-Date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 300px;
+    height: 230px;
+    border-radius: 25px;
+    margin: 120px;
+    background-color: var(--back-popupDate);
+
+}
+
+.itempopup-Date p {
+    margin: 10px;
+}
+
+.itempopup-Date input {
+    border: 1px solid var(--bf-btn);
+    border-radius: 25px;
+    height: 50px;
+    width: 200px;
+}
+
+.btn-Date {
+    margin: 10px;
+}
+
+.btn-Date button {
+    width: 90px;
+    height: 30px;
+    margin: 10px;
+    background: none;
+    border: none;
+}
+
+.btn-Date .btn-Date-ok {
+    border-radius: 9px;
+    background-color: var(--btn-ok);
+}
+
+.btn-Date .btn-Date-close {
+    border-radius: 9px;
+    background-color: var(--btn-close);
 }

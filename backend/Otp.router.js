@@ -80,12 +80,14 @@ router.post('/verify-otp', (req, res) => {
         if (err || !otp) {
             res.send('Invalid OTP');
         } else {
-            otp.remove((err) => {
-                if (err) {
-                    console.error(err);
-                }
-                res.json({success : true , data:'OTP verified successfully'});
-            });
+            // otp.remove((err) => {
+            //     if (err) {
+            //         console.error(err);
+            //     }
+            //     res.json({success : true , data:'OTP verified successfully'});
+            // });
+            
+            res.json({success : true , data:'OTP verified successfully'});
         }
     });
 });

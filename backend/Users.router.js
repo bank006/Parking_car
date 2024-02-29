@@ -16,6 +16,7 @@ let ProfileShema = require('./models/profile')
 const users = require('./models/users');
 const { Link } = require('react-router-dom');
 const { result } = require('lodash');
+const { errorMonitor } = require('nodemailer/lib/xoauth2');
 
 // หน้าหลักการใช้เรียก  APIs เรียกเป็น http users
 router.get('/', (req, res) => {
@@ -89,7 +90,7 @@ router.post('/logins', async (req, res) => {
     try {
         const user = await UserShema.findOne({ email: email });
         if (!user) {
-            return res.status(200).json({ success: false , message: 'ไม่พบผู้ใช้' });
+            return res.status(200).json({ success: false, message: 'ไม่พบผู้ใช้' });
         }
 
         const isPasswordValid = await argon2.verify(user.password, password);
@@ -171,48 +172,73 @@ router.get("/getimage/:UserId", (req, res) => {
 
 
 router.put('/update_verify', (req, res) => {
-    UserShema.updateOne({email : req.body.email} , {$set :{statusverify : true}})
-    .then((resverify)=>{
-        if(!resverify){
-            return res.status(401).send("Error")
-        }else{
-            res.send(resverify)
-        }
-    }).catch((err)=>{
-        res.status(500).send(err)
-    })
+    UserShema.updateOne({ email: req.body.email }, { $set: { statusverify: true } })
+        .then((resverify) => {
+            if (!resverify) {
+                return res.status(401).send("Error")
+            } else {
+                res.send(resverify)
+            }
+        }).catch((err) => {
+            res.status(500).send(err)
+        })
 
 })
 
-router.put('/updatedata' , (req , res)=>{
-    UserShema.updateOne({_id : req.body.id},{$set :{name:req.body.validatename , email : req.body.validateemail}})
-    .then((res)=>{
-        res.status(200).send(res)
-    }).catch((err)=>{
-        res.send(err)
-    })
+router.put('/updatedata', (req, res) => {
+    UserShema.updateOne({ _id: req.body.id }, { $set: { name: req.body.validatename, email: req.body.validateemail } })
+        .then((res) => {
+            res.status(200).send(res)
+        }).catch((err) => {
+            res.send(err)
+        })
 
 })
 
-router.put('/changprofile' ,(req , res)=>{
-    const {IDuser , numberValue} = req.body
-    console.log(IDuser ,numberValue)
-    UserShema.findByIdAndUpdate({_id : IDuser }, {$set:{selectorsimg : numberValue}})
-    .then((result)=>{
-        res.send(result)
-    }).catch((err)=>{
-        res.send(err)
-    })
-} )
+router.put('/changprofile', (req, res) => {
+    const { IDuser, numberValue } = req.body
+    console.log(IDuser, numberValue)
+    UserShema.findByIdAndUpdate({ _id: IDuser }, { $set: { selectorsimg: numberValue } })
+        .then((result) => {
+            res.send(result)
+        }).catch((err) => {
+            res.send(err)
+        })
+})
 
-router.put('/resetprofile' , (req , res)=>{
-    const {IDuser} = req.body
-    UserShema.findByIdAndUpdate({_id:IDuser},{$set:{selectorsimg: -1}})
-    .then((reset)=>{
-        res.send(reset)
-    }).catch((err)=>{
-        res.send(err)
+router.put('/resetprofile', (req, res) => {
+    const { IDuser } = req.body
+    UserShema.findByIdAndUpdate({ _id: IDuser }, { $set: { selectorsimg: -1 } })
+        .then((reset) => {
+            res.send(reset)
+        }).catch((err) => {
+            res.send(err)
+        })
+})
+
+router.get('/forgotpass/:email', (req, res) => {
+    const emailpass = req.params.email;
+    UserShema.findOne({ email: emailpass })
+        .then((forgotpass) => {
+            res.send(forgotpass)
+        }).catch((err) => {
+            res.send(err)
+        })
+})
+
+
+router.put('/updatepassword', (req, res) => {
+    const { ID, newpass } = req.body
+    argon2.hash(newpass).then(hash => {
+        console.log(ID, hash)
+        UserShema.findOneAndUpdate({ _id: ID }, { $set: { password: hash } })
+        .then((updatepass)=>{
+            res.send(updatepass)
+        }).catch((err)=>{
+            res.send(err)
+        })
     })
+
 })
 
 

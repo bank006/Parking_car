@@ -282,10 +282,10 @@ function Profile() {
                 {/* // เซ็ทชื่อให้เข้ากับ ภาพ */}
                 <div className=''>
                     <div className=''>
-                        <p>{names}</p>
+                        <p>name:{names}</p>
                     </div>
                     <div>
-                        <p>{emails}</p>
+                        <p>email:{emails}</p>
                     </div>
                 </div>
                 <button onClick={() => set_popupprofile(true)} >แก้ไขโปรไฟล์</button>
