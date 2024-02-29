@@ -33,7 +33,7 @@ router.post('/storechatpost', (req, res) => {
 })
 
 router.get('/getstore' , (req ,res)=>{
-    res.send('asddfgdfg')
+    res.send('asddfgdfgdfgdf')
 })
 
 
