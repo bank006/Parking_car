@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import '../css/bookinghis.css'
+
 
 function Booking_confirm(props) {
 
     // หน้าสินค้าที่ได้ทำการยืนยันการจอง
     const { IDuser } = props.IDuser
     const [showconfirme, set_showconfirme] = useState(false)
+
     const navigate = useNavigate();
+    const location = useLocation();
+    // const { IDuser } = location.state
     const [bookingcon, set_bookingcon] = useState([]);
     const [times, set_times] = useState([])
+
+
+
 
     const showcon = () => {
         set_showconfirme(!showconfirme)
@@ -132,18 +139,18 @@ function Booking_confirm(props) {
         axios.delete(`http://localhost:4001/bookingcon/delete/${id}`)
             .then((deletebookings) => {
                 console.log(deletebookings.data)
-                // window.location.reload();
+                window.location.reload();
             }).catch((err) => {
                 console.log(err)
             })
 
 
-        axios.put(`http://localhost:4001/product/updatestock/${IDproducregiscon}`)
-            .then((restock) => {
-                console.log("เพิ่ม stock เเล้ว", restock)
-            }).catch((err) => {
-                console.log(err)
-            })
+        // axios.put(`http://localhost:4001/product/updatestock/${IDproducregiscon}`)
+        //     .then((restock) => {
+        //         console.log("เพิ่ม stock เเล้ว", restock)
+        //     }).catch((err) => {
+        //         console.log(err)
+        //     })
     }
 
     // การรับค่าเกินเวลามาใช้ในการอัพเดตราคา
@@ -191,12 +198,12 @@ function Booking_confirm(props) {
                 console.log(err)
             })
 
-        axios.put(`http://localhost:4001/product/updatestock/${IDproducregiscon}`)
-            .then((restock) => {
-                console.log("เพิ่ม stock เเล้ว", restock)
-            }).catch((err) => {
-                console.log(err)
-            })
+        // axios.put(`http://localhost:4001/product/updatestock/${IDproducregiscon}`)
+        //     .then((restock) => {
+        //         console.log("เพิ่ม stock เเล้ว", restock)
+        //     }).catch((err) => {
+        //         console.log(err)
+        //     })
     }
 
     //คิดเงินเมื่อใช้งานเกินเวลา
@@ -235,12 +242,12 @@ function Booking_confirm(props) {
                 console.log(err)
             })
 
-        axios.put(`http://localhost:4001/product/updatestock/${IDproducregiscon}`)
-            .then((restock) => {
-                console.log("เพิ่ม stock เเล้ว", restock)
-            }).catch((err) => {
-                console.log(err)
-            })
+        // axios.put(`http://localhost:4001/product/updatestock/${IDproducregiscon}`)
+        //     .then((restock) => {
+        //         console.log("เพิ่ม stock เเล้ว", restock)
+        //     }).catch((err) => {
+        //         console.log(err)
+        //     })
         // console.log(deftime)
     }
 
@@ -260,70 +267,126 @@ function Booking_confirm(props) {
         window.location.reload();
     }
 
-    // console.log(timebookings)
-    // console.log( testtiming)
-    // console.log(bookingcon)
+
     return (
-        <div className=''>
-            <div className={`popupconfirme ${showconfirme ? 'visible' : ''}`}>
+        <div style={{ backgroundColor: 'blue' }}>
+            {/* <div style={{ marginTop: '50px' }} className={`popupconfirme ${showconfirme ? 'visible' : ''}`}> */}
+            <div style={{ marginTop: '148px' }} className='popupconfirme'>
                 <div className='item-confirme'>
-                    <p>รายการยืนยันการจองss</p>
-                    <button onClick={closecon}>close</button>
-                    <div className='item-contents'>
-                        {bookingcon.map((bookingcon, index) => {
-                            // เวลาที่เหลือ
-                            const DateString = bookingcon.timebookingcon
-                            const dateObject = new Date(DateString)
-                            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-                            const formattedDateTime = dateObject.toLocaleDateString('en-US', options);
+                    {/* <Navbarbooking IDuser={{IDuser:IDuser}}/> */}
+                    {/* <p>รายการยืนยันการจองss</p> */}
+                    {/* <button onClick={closecon}>close</button> */}
+                    <div className='container-item'>
+                        <div className="box-all-itemcon">
+                            {bookingcon.map((bookingcon, index) => {
+                                // เวลาที่เหลือ
+                                const DateString = bookingcon.timebookingcon
+                                const dateObject = new Date(DateString)
+                                const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+                                const formattedDateTime = dateObject.toLocaleDateString('en-US', options);
 
-                            // เวลาที่เริ่มต้นการจอง
-                            const startbookingcon = bookingcon.startbookingtime
-                            const startdateObject = new Date(startbookingcon)
-                            const startoptions = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-                            const startformattedDateTime = startdateObject.toLocaleDateString('en-US', startoptions);
+                                // เวลาที่เริ่มต้นการจอง
+                                const startbookingcon = bookingcon.startbookingtime
+                                const startdateObject = new Date(startbookingcon)
+                                const startoptions = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+                                const startformattedDateTime = startdateObject.toLocaleDateString('en-US', startoptions);
 
-                            const id = bookingcon._id
-                            const idbooking = bookingcon.IDbooking
-                            const IDproducregiscon = bookingcon.IDproductregiscon
-                            const remain = timebookings ? timebookings[id] || "ยังไม่ถึงเวลาที่กำหนด" : "หมดเวลาเเล้ว";
-                            const Ratetime = testtiming ? testtiming[id] || "ยังไม่หมด" : '';
-                            const canclebutton = showcancel ? showcancel[id] : false;
+                                const id = bookingcon._id
+                                const idbooking = bookingcon.IDbooking
+                                const IDproducregiscon = bookingcon.IDproductregiscon
+                                const remain = timebookings ? timebookings[id] || "ยังไม่ถึงเวลาที่กำหนด" : "หมดเวลาเเล้ว";
+                                const Ratetime = testtiming ? testtiming[id] || "ยังไม่หมด" : '';
+                                const canclebutton = showcancel ? showcancel[id] : false;
 
-                            return (
-                                <div className='itemcon' key={index}>
-                                    <ul>ชื่อร้าน : {bookingcon.store[0].nameStore}</ul>
-                                    <ul>รายละเอียดสินค้า : {bookingcon.store[0].description}</ul>
-                                    <ul>ชื่อสินค้า : {bookingcon.product[0].nameProduct}</ul>
-                                    <ul>ราคาสินค้า : {bookingcon.product[0].priceProduct}</ul>
-                                    <ul>วันที่เวลาที่เริ่มต้นใช้งาน : {startformattedDateTime}</ul>
-                                    <ul>วันที่เวลาที่จอง : {formattedDateTime}</ul>
-                                    {Ratetime !== "ยังไม่หมด" ? (
-                                        <div className=''>
-                                            <ul>เกินเวลาที่มาเเล้ว : {Ratetime}</ul>
-                                            <button type='submit' onClick={() => checkRatetime(idbooking, bookingcon.startbookingtime, bookingcon.timebookingcon, bookingcon.product[0].priceProduct, IDproducregiscon, id)}>ratetime</button>
+                                const startbookingtime = bookingcon.startbookingtime
+                                const endtimebooking = bookingcon.timebookingcon
+                                const amounts = bookingcon.product[0].priceProduct
+
+                                const timestartString = new Date(startbookingtime)
+                                const timeendString = new Date(endtimebooking)
+
+                                const deferrenttime = timeendString - timestartString
+                                const pricesell = amounts / 60
+                                const minuttime = deferrenttime / (1000 * 60)
+                                const hours = Math.floor(minuttime / 60);
+                                const totalPrice = pricesell * minuttime;
+                                const amoutperminute = Math.round(totalPrice)
+
+                                return (
+                                    <div className='itemcon' key={index}>
+                                        <div className="content-itemcon">
+                                            <div className="title-bookingcon">
+                                                <p>{bookingcon.store[0].nameStore}</p>
+                                                <div className="time-titlebookingcon">
+                                                    {Ratetime !== "ยังไม่หมด" ? (
+                                                        <div className=''>
+                                                            <ul>เกินเวลาที่มาเเล้ว : {Ratetime}</ul>
+                                                        </div>
+                                                    ) : (
+                                                        <div className=''>
+                                                            <ul>เหลือเวลาใช้งาน : {remain}</ul>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <div className="item-booking">
+                                                <div className="booking-img">
+                                                    <img src={`../imageproduct/${bookingcon.product[0].imageProduct}`} alt="" />
+                                                </div>
+                                                <div className="content-aboutebooking">
+                                                    <table className='table-bookingcon'>
+                                                        <tr>
+                                                            <th>รายละเอียดสินค้า :</th>
+                                                            <td>{bookingcon.store[0].description}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>ชื่อสินค้า : </th>
+                                                            <td>{bookingcon.product[0].nameProduct}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>ราคาสินค้า : </th>
+                                                            <td>{amoutperminute}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>วันที่เวลาที่เริ่มต้นใช้งาน : </th>
+                                                            <td>{formattedDateTime}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>วันที่เวลาที่จอง :</th>
+                                                            <td>{startformattedDateTime} </td>
+                                                        </tr>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                            <div className="btn-booking">
+                                                {Ratetime !== "ยังไม่หมด" ? (
+                                                    <div className='btn-ratetime'>
+                                                        <button type='submit' onClick={() => checkRatetime(idbooking, bookingcon.startbookingtime, bookingcon.timebookingcon, bookingcon.product[0].priceProduct, IDproducregiscon, id)}>ratetime</button>
+                                                    </div>
+                                                ) : (
+                                                    <div className='btn-checktime'>
+                                                        <button type='submit' onClick={() => deletebookingcon(id, IDproducregiscon)}>check out</button>
+                                                    </div>
+
+                                                )}
+                                                {canclebutton === true ? (
+                                                    <div className=''>
+                                                        <button onClick={() => deletetimebooking(id, idbooking, IDproducregiscon)}>ยกเลิกการจอง</button>
+                                                    </div>
+                                                ) : (
+                                                    null
+                                                )}
+                                                <div className="btn-checkin">
+                                                    <button>check in</button>
+                                                </div>
+
+                                            </div>
                                         </div>
-                                    ) : (
-                                        <div className=''>
-                                            <ul>เหลือเวลาใช้งาน : {remain}</ul>
-                                            <button type='submit' onClick={() => deletebookingcon(id, IDproducregiscon)}>check out</button>
-                                        </div>
-
-                                    )}
-
-
-                                    {canclebutton === true ? (
-                                        <div className=''>
-                                            <button onClick={() => deletetimebooking(id, idbooking, IDproducregiscon)}>ยกเลิกการจอง</button>
-                                        </div>
-                                    ) : (
-                                        null
-                                    )}
-
-                                    <button>check in</button>
-                                </div>
-                            )
-                        })}
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -346,7 +409,7 @@ function Booking_confirm(props) {
                     })}
                 </div>
             </div>
-            <button type='buttin' onClick={showcon}>confrimebooking</button>
+            {/* <button onClick={showcon}>confirmbooking</button> */}
         </div>
     )
 }

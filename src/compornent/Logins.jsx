@@ -21,7 +21,7 @@ function Logins() {
     const [fgemail, setfgEmail] = useState('');
     const [fgpassword, setfgPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
-    const [ errbox , set_errbox] = useState('')
+    const [errbox, set_errbox] = useState('')
 
     const navigate = useNavigate();
 
@@ -60,6 +60,9 @@ function Logins() {
         set_useremail(email)
     }, [userdata, admin_emailcheck]);
 
+    const [attempts, setAttempts] = useState(0);
+    const [showattempts , setshowattempts] = useState('')
+
     const login = () => {
         if (useremails.includes(email)) {
             axios.post('http://localhost:4001/users/logins', { email, password })
@@ -74,20 +77,24 @@ function Logins() {
                         else if (res.data.data.statusverify === false) {
                             sendOTP(email);
                             navigate('/Verify_otp', { state: { email } })
-                        }else if(res.data.data.statusverify === true){
+                        } else if (res.data.data.statusverify === true) {
                             navigate('/Dashbord', { state: { user } })
                         }
 
                         // fecttopage(data);
 
-                    }else if(password.length === 0){
+                    } else if (password.length === 0) {
                         set_errbox('Please enter your password')
-                        
+
                     } else if (res.data.success === false) {
+                        setAttempts((prevAttempts) => prevAttempts + 1);
+                        if(attempts > 3){
+                            setshowattempts(<button onClick={passtoforgot}>ok</button>)
+                        }
                         set_errbox("Email or password Invalid")
-                        console.log(res.data)
+
                     }
-                    
+
                 }).catch((err) => {
                     console.log(err)
                 })
@@ -112,11 +119,16 @@ function Logins() {
                     console.log(error)
                 })
 
-        }else if (email.length === 0 || password.length === 0){
+        } else if (email.length === 0 || password.length === 0) {
             set_errbox('Please enter your email or password')
-        }else if (!useremails.includes(email)){
+        } else if (!useremails.includes(email)) {
             set_errbox('Email or password Invalid')
         }
+    }
+
+
+    const passtoforgot = ()=>{
+        navigate('/Forgot')
     }
 
     // ส่งคำขอ OTP
@@ -127,16 +139,7 @@ function Logins() {
             }).catch((err) => {
                 console.log(err)
             })
-    }  
-
-    // const fecttopage = (data) => {
-    //     console.log(data)
-    //     // navigate('/Dowload/' + data)
-    // }
-    // const admintopage = (emailadmin) => {
-    //     console.log(emailadmin)
-    //     // navigate('/Download_ad/' + emailadmin)
-    // }
+    }
 
     const storedUsername = localStorage.getItem('email');
     const storedPassword = localStorage.getItem('password');
@@ -184,7 +187,8 @@ function Logins() {
                                             <input className='radio' type="radio" name="forgot" id="forgot" defaultChecked={rememberMe} onClick={() => setRememberMe(!rememberMe)} />
                                         </div>
                                         <div className='forgot'>
-                                            <label htmlFor="forgot"  >Forget Password?</label>
+                                            <label htmlFor="forgot">Forget Password?</label>
+                                            <p>{showattempts}</p>
                                         </div>
                                     </div>
                                 </div>

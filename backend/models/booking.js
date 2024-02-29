@@ -26,8 +26,13 @@ let BookingSchema = new Schema({
         required:[true]
     },
     bookingtime:{
-        type: Date,
-        default:Date.now
+        type: Date, default:Date.now
+    },
+    parkingbox:{
+        type:Number
+    },
+    statuspayment:{
+        type:Boolean
     }
 })
 const booking = mongoose.model('booking' , BookingSchema)

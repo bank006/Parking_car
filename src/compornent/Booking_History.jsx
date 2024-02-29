@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Booking_confirm from './Booking_confirm';
 import '../css/bookinghis.css'
 
 import Payment from '../compornent/patment/Payment';
-import Notification from './notification/notification';
+import History from './History';
+
 
 function Booking_History(props) {
     // หน้าสินค้าก่อนกดยืนยันหลังจากนั้นส่งไปที่ booking_confirm
@@ -18,16 +18,12 @@ function Booking_History(props) {
     const [booking, set_booking] = useState([]);
 
     const { IDuser } = props.totalID;
-
     const [times, set_time] = useState([]);
     const [res, set_res] = useState([]);
     const [bookingid, set_bookingid] = useState([]);
     const navigate = useNavigate();
 
-    // popup show hinstory
-    const showhistory = () => {
-        set_showpopup(true);
-    }
+
     const close = () => [
         set_showpopup(false)
     ]
@@ -79,7 +75,7 @@ function Booking_History(props) {
                         const minutes = Math.floor((timeLeft % (60 * 60 * 1000)) / (60 * 1000));
                         const seconds = Math.floor((timeLeft % (60 * 1000)) / 1000);
 
-                        const formattedTime = `${hours} ชั่วโมง ${minutes} นาที ${seconds} วินาที`;
+                        const formattedTime = `${minutes} นาที ${seconds} วินาที`;
 
                         setRemainingTime((prevState) => ({
                             ...prevState,
@@ -176,17 +172,17 @@ function Booking_History(props) {
     }
 
     // การเพิ่มข้อมูลการยืนยันเมื่อทำการจอง
-    const clicktobooking = (IDbooking, IDproductregiscon, IDusercon, storeregiscon, timebookingcon, startbookingtime, bookingtimecon, amount, price) => {
+    const clicktobooking = (IDbooking, IDproductregiscon, IDusercon, storeregiscon, timebookingcon, startbookingtime, bookingtimecon, amount, price, parkingbox) => {
         const timestartString = new Date(startbookingtime)
         const timeendString = new Date(timebookingcon)
-        const deferrenttime  =  timeendString - timestartString 
+        const deferrenttime = timeendString - timestartString
         const pricesell = amount / 60
-        const minuttime =  deferrenttime / (1000 * 60) 
+        const minuttime = deferrenttime / (1000 * 60)
         const amoutperminute = pricesell * minuttime
         const integerMinutes = Math.round(amoutperminute)
         const statuspayment = true
         // เพิ่มข้อมูลการจองลงในตัวนับเวลา
-        axios.post('http://localhost:4001/bookingcon/postcon', { IDbooking, IDproductregiscon, IDusercon, storeregiscon, timebookingcon, startbookingtime, bookingtimecon, statuspayment })
+        axios.post('http://localhost:4001/bookingcon/postcon', { IDbooking, IDproductregiscon, IDusercon, storeregiscon, timebookingcon, startbookingtime, bookingtimecon, statuspayment, parkingbox })
             .then((bookingcon) => {
                 console.log(bookingcon.data)
                 putdatatohistory(bookingid)
@@ -211,9 +207,10 @@ function Booking_History(props) {
         const IDuserhis = IDusercon;
         const storeregishis = storeregiscon;
         const timebookinghis = timebookingcon;
-        const bookingtimehis = bookingtimecon;
+        const bookingtimehis = startbookingtime;
+        const timeregister = bookingtimecon;
         //บันทึกลงประวัติการจอง
-        axios.post('http://localhost:4001/bookinghis/posthistory', { IDbookinghis, IDproductregishis, IDuserhis, storeregishis, timebookinghis, bookingtimehis, statuspayment }).
+        axios.post('http://localhost:4001/bookinghis/posthistory', { IDbookinghis, IDproductregishis, IDuserhis, storeregishis, timebookinghis, bookingtimehis,timeregister, statuspayment, parkingbox }).
             then((resconf) => {
                 if (!resconf) {
                     console.log('somthing error')
@@ -224,14 +221,6 @@ function Booking_History(props) {
             }).catch((err) => {
                 console.log(err)
             })
-
-        // // ลบ stock เข้าไปเมื่อกดจอง
-        axios.put(`http://localhost:4001/product/updatepostbooking/${IDproductregiscon}`)
-          .then((update) => {
-            console.log(update)
-          }).catch((err) => {
-            console.log(err)
-          })
 
         //จ่ายเงินด้วย qr
         const id = IDbooking
@@ -280,49 +269,192 @@ function Booking_History(props) {
     const reload = () => {
         window.location.reload();
     }
+
+    const [showpayment, set_showpayment] = useState(true)
+    const [showactive, set_showactive] = useState(false)
+    const [showactive3, setshowactive3] = useState(false)
+    const [showactive4, setshowactive4] = useState(false)
+    const [showactive5, setshowactive5] = useState(false)
+
+    // popup show hinstory
+    const showhistory = () => {
+        set_showpopup(!showpopup);
+    }
+
+    const showpayments = () => {
+        const id = 1
+        set_showactive(false)
+        handlebtncolor(id)
+        setshowactive3(false)
+
+    }
+
+    const setactive = () => {
+        const id = 2
+        set_showactive(true)
+        handlebtncolor(id)
+        setshowactive3(false)
+
+    }
+
+    const active3 = () => {
+        const id = 3
+        setshowactive3(true)
+        handlebtncolor(id)
+        set_showactive(false)
+
+    }
+
+    useEffect(() => {
+        if (booking.length !== 0) {
+            set_showpayment(true)
+        } else {
+            set_showpayment(false)
+        }
+    }, [booking])
+
+
+    const [btncolor, setbtncolor] = useState({ ID: 1, color: '#FFBA35' })
+
+    const handlebtncolor = (id) => {
+        setbtncolor({ ID: id, color: '#FFBA35' })
+    }
+
     return (
         <div className='containers'>
             <div className='button-click'>
-
                 <div className={`popup ${showpopup ? 'visible' : ''}`}>
-                    <div className='booking'>
-                        <p>booking</p>
-                        <Booking_confirm IDuser={{ IDuser: IDuser }} />
-                        <button onClick={close} >close</button>
-                        <div className='item'>
+                    <div style={{ marginTop: '167px' }} className='booking'>
+                        <div className="openbooking">
+                            <div className="itemopenbooking">
+                                <button style={{ backgroundColor: btncolor.ID === 1 ? `${btncolor.color}` : '' }} onClick={showpayments}>payment</button>
+                                <button style={{ backgroundColor: btncolor.ID === 2 ? `${btncolor.color}` : '' }} onClickCapture={setactive}>booking</button>
+                                <button style={{ backgroundColor: btncolor.ID === 3 ? `${btncolor.color}` : '' }} onClick={active3} >ประวัติการจอง</button>
+                                <button>ยกเลิก</button>
+                                <button>การคืนเงิน</button>
+                            </div>
+                        </div>
 
-                            {booking.map((booking, index) => {
-                                const DateString = booking.bookingtime
-                                const dateObject = new Date(DateString)
-                                const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-                                const formattedDateTime = dateObject.toLocaleDateString('en-US', options);
+                        <div className="container-item">
+                            <div className='item'>
+                                {showpayment === true ? (
+                                    <>
+                                        {booking.map((booking, index) => {
+                                            const DateString = booking.bookingtime
+                                            const dateObject = new Date(DateString)
+                                            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+                                            const formattedDateTime = dateObject.toLocaleDateString('en-US', options);
 
-                                const IDbooking = booking._id
-                                const IDproductregiscon = booking.IDproductregis
-                                const IDusercon = booking.IDuser
-                                const storeregiscon = booking.storeregis
-                                const timebookingcon = booking.timeregis
-                                const startbookingtime = booking.startbookingregis
-                                const bookingtimecon = booking.bookingtime
-                                const amount = booking.product[0].priceProduct
-                                // นำรหัสสินค้า (product ID) มาตรวจสอบว่ามีใน remainingTime หรือไม่
-                                const productId = booking.product[0]._id;
-                                const price = booking.product[0].priceProduct
-                                const remainingTimeForProduct = remainingTime ? remainingTime[IDbooking] || "เวลาหมด" : "เวลาหมด";
-                                return (
-                                    <div className='itemname' key={index}>
-                                        <p>{booking.product[0]._id}</p>
-                                        {/* <p>ชื่อร้าน : {booking.store[0].nameStore}<button onClick={()=> navigate(`/Detail_store/${booking.store[0]._id}/${IDuser}`)}>go store</button></p> */}
-                                        <p>ชื่อสินค้า : {booking.product[0].nameProduct}</p>
-                                        <p>ราคา :{booking.product[0].priceProduct}</p>
-                                        <p>วันที่จอง :{formattedDateTime}</p>
-                                        <p>เวลาที่เหลือ: {remainingTimeForProduct}</p>
+                                            const IDbooking = booking._id
+                                            const IDproductregiscon = booking.IDproductregis
+                                            const IDusercon = booking.IDuser
+                                            const storeregiscon = booking.storeregis
+                                            const timebookingcon = booking.timeregis
+                                            const startbookingtime = booking.startbookingregis
+                                            const bookingtimecon = booking.bookingtime
+                                            const parkingbox = booking.parkingbox
+                                            const amount = booking.product[0].priceProduct
+                                            // นำรหัสสินค้า (product ID) มาตรวจสอบว่ามีใน remainingTime หรือไม่
+                                            const productId = booking.product[0]._id;
+                                            const price = booking.product[0].priceProduct
 
-                                        <button type='button' onClick={() => clicktobooking(IDbooking, IDproductregiscon, IDusercon, storeregiscon, timebookingcon, startbookingtime, bookingtimecon, amount, price)}>จ่ายเงิน</button>
-                                        <button type='button' onClick={() => canclebooking(IDbooking, IDproductregiscon)}>cancle</button>
+                                            const timestartString = new Date(startbookingtime)
+                                            const timeendString = new Date(timebookingcon)
+
+                                            const deferrenttime = timeendString - timestartString
+                                            const pricesell = amount / 60
+                                            const minuttime = deferrenttime / (1000 * 60)
+                                            const hours = Math.floor(minuttime / 60);
+                                            const totalPrice = pricesell * minuttime
+                                            const amoutperminute = Math.round(totalPrice)
+
+                                            const remainingTimeForProduct = remainingTime ? remainingTime[IDbooking] || "เวลาหมด" : "เวลาหมด";
+                                            return (
+                                                <div className='container-box-pay' key={index}>
+                                                    <div className="all-box">
+                                                        <div className="item-all-box">
+                                                            <div className="boxpay-namestore">
+                                                                <p>{booking.store[0].nameStore}</p>
+
+                                                                <div  style={{ marginRight:'20px'}}>
+                                                                    <p>{remainingTimeForProduct}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div className="item-box-pay">
+                                                                <div className="itemabouestore">
+                                                                    <div className="img-payment">
+                                                                        <img src={`../imageproduct/${booking.product[0].imageProduct}`} alt="" />
+                                                                    </div>
+                                                                    <div className='point-payment'>
+                                                                        <div className='pay'>
+                                                                            <p> ชื่อร้านที่จอง</p>
+                                                                        </div>
+                                                                        {/* <div className='pay'>
+                                                                            <p>วันที่จอง</p>
+                                                                        </div> */}
+                                                                        <div className='pay'>
+                                                                            <p>ราคา/ต่อชั่วโมง</p>
+                                                                        </div>
+                                                                        <div className='pay'>
+                                                                            <p>เวลาที่ใช้</p>
+                                                                        </div>
+                                                                        <div className='pay'>
+                                                                            <p>ราคารวม</p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div className="itemaboutpayment">
+                                                                    <div className='pay'>
+                                                                        <p>{booking.store[0].nameStore}</p>
+                                                                    </div>
+                                                                    <div className='pay'>
+                                                                        <p>{booking.product[0].priceProduct}</p>
+                                                                    </div>
+                                                                    <div className='pay'>
+                                                                        <p>{hours}</p>
+                                                                    </div>
+                                                                    <div className='pay'>
+                                                                        <p>{amoutperminute}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className='btn-payment'>
+                                                                <div className='cancel-btn-payment'>
+                                                                    <button type='button' onClick={() => canclebooking(IDbooking, IDproductregiscon)}>cancle</button>
+                                                                </div>
+                                                                <div className='submit-btn-payment'>
+                                                                    <button type='button' onClick={() => clicktobooking(IDbooking, IDproductregiscon, IDusercon, storeregiscon, timebookingcon, startbookingtime, bookingtimecon, amount, price, parkingbox)}>จ่ายเงิน</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
+                                    </>
+                                ) :
+                                    <div className='ordernot-payment'>
+                                        <p>ไม่มีสินค้าที่ต้องชำระ</p>
                                     </div>
-                                )
-                            })}
+                                }
+
+                                {showactive3 === true ? (
+                                    <div>
+                                        <History IDuser={{ IDuser }} />
+                                    </div>
+                                ) : null}
+
+                                {showactive === true ? (
+                                    <div>
+                                        <Booking_confirm IDuser={{ IDuser }} />
+                                    </div>
+                                ) : null}
+
+
+
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -347,7 +479,7 @@ function Booking_History(props) {
                     </div>
                 </div>
                 <Payment IDuser={{ IDuser }} />
-                <div className="btnshowregis">
+                <div style={{ position: 'relative', zIndex: '5' }} className="btnshowregis">
                     <button className='open-register' onClick={showhistory} >การจอง</button>
                 </div>
             </div>

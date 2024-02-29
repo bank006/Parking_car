@@ -76,12 +76,12 @@ function Navbars(props) {
           <div className='item-page'>
             <Shopping_cart IDuser={{ IDuser: IDuser }} />
           </div>
-          <div className='item-page'>
+          {/* <div className='item-page'>
             <History IDuser={{ IDuser }} />
-          </div>
+          </div> */}
           <div className='item-page'>
             <Iconprofile IDuser={{ IDuser }} />
-          </div>
+          </div>          
         </Nav>
       </div>
 
