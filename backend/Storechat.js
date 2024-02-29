@@ -32,9 +32,10 @@ router.post('/storechatpost', (req, res) => {
         })
 })
 
-router.get('/getstore' , (req ,res)=>{
-    res.send('asddfgdfgdfgdf')
+router.get('/getstore',(req , res)=>{
+    res.send('store')
 })
 
 
 module.exports = router;
+

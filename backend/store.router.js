@@ -11,8 +11,6 @@ router.use(express.json());
 
 let StoreShema = require('./models/store');
 
-
-
 router.get('/', (req,res)=>{
     StoreShema.find((err,data)=>{
         if(err){
@@ -56,7 +54,7 @@ router.post('/poststore', uploadstore.single('imageStores') ,(req ,res ,next)=>{
 
 
 router.get('/getstore/:IDuser' ,async (req , res , next)=>{
-    const IDuser = req.params.IDuser
+    // const IDuser = req.params.IDuser
     let getstore = await  StoreShema.findOne({IDuser : (req.params.IDuser)})
     res.status(200).json(getstore)
 })
