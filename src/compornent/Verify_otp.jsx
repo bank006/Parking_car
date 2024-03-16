@@ -39,36 +39,44 @@ function Verify_otp() {
     const [validotp, set_validotp] = useState(null)
     const changotp = (otp) => set_otp(otp)
 
-    //ส่งรหัส otp ไปตรวจสอบ
     const sendsOTP = (email) => {
         const userOTP = otp;
         axios.post('http://localhost:4001/otp/verify-otp', { email, userOTP })
             .then((resotp) => {
                 if (resotp.data.success === true) {
                     console.log(resotp.data.success)
-                    statusupdate(email);
+                    statusupdate(email); // ส่ง email ไปยัง statusupdate
                 } else {
                     set_validotp("Somthing went wrong. Please try again")
                 }
             }).catch((err) => {
                 console.log(err)
             })
+
+        // axios.put('http://localhost:4001/users/update_verify', { email }).then((result) => {
+        //     console.log('update successfully');
+        //     navigate('/login')
+        // }).catch((err) => {
+        //     console.log(err);
+        // })
     }
 
     //update statusverift == true
-    const statusupdate = (email) => {
-        axios.put('http://localhost:4001/users/update_verify', { email })
-            .then((response) => {
-                console.log('update successfully')
+    const statusupdate = async (email) => {
+
+            try {
+                const response = await axios.put('http://localhost:4001/users/update_verify', { email });
+                console.log('update successfully');
                 navigate('/login')
-            }).catch((err) => {
-                console.log("Error", err)
-            })
+                window.location.reload();
+            } catch (err) {
+                console.log("Error", err);
+            }
+
     }
 
-
     // ส่งคำขอ OTP
-    const sendOTP = (email) => {
+    const sendssOTP = (email) => {
         axios.post('http://localhost:4001/otp/sendOTP', { email })
             .then((OTP) => {
                 console.log(OTP)
@@ -76,8 +84,6 @@ function Verify_otp() {
                 console.log(err)
             })
     }
-
-    console.log(validotp)
 
     return (
         <div className='otp'>
@@ -109,7 +115,7 @@ function Verify_otp() {
                                 <p>Disnot receive OTP ? </p>
                             </div>
                             <div className='button-resend '>
-                                <button type='button' onClick={() => sendOTP(email)}>Resend</button>
+                                <button type='button' onClick={() => sendssOTP(email)}>Resend</button>
                             </div>
                         </div>
                         <div className='send-verify'>

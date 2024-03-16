@@ -11,8 +11,6 @@ router.use(express.json());
 
 let StoreShema = require('./models/store');
 
-
-
 router.get('/', (req,res)=>{
     StoreShema.find((err,data)=>{
         if(err){

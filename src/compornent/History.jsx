@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 
 import '../css/history.css'
 import Select from './patment/Selectpayment';
+import Review from './review/Review';
 
 
 function History(props) {
+
+    const storeListRef = useRef(null);
 
     const { IDbookinghiss, IDuser, bookingagin, IDproductpay } = props.IDuser
     const navigate = useNavigate();
@@ -38,7 +41,7 @@ function History(props) {
         set_bookagain(!bookagain)
         set_IDproductregis(IDproduct)
         set_storeregis(IDstore)
-        const IDbooking = IDbookinghiss||IDbookinghis
+        const IDbooking = IDbookinghiss || IDbookinghis
 
         try {
             // เอาประวัติการจองเเละไอดีทีรับมาเพื่อใช้งาน
@@ -89,20 +92,36 @@ function History(props) {
     }
 
     // นำทางไปหน้ารายละเอียดการจ่ายเงิน
-    const linkdeshostory = (IDstore, IDbookinghis,amoutperminute) => {
-        navigate('/Historypayment', { state: { IDuser, IDstore, IDbookinghis,amoutperminute } })
+    const linkdeshostory = (IDstore, IDbookinghis, amoutperminute) => {
+        navigate('/Historypayment', { state: { IDuser, IDstore, IDbookinghis, amoutperminute } })
     }
 
     // console.log(datahistory)
+    useEffect(() => {
+        scrollToBottom();
+    }, [datahistory]);
+
+    const scrollToBottom = () => {
+        storeListRef.current.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    const [showreviews, setshowreview] = useState(false)
+    const [idhistory, set_idhistory] = useState([])
+
+    const showreview = (IDuser, IDhistory, IDproduct) => {
+        set_idhistory({IDuser, IDhistory, IDproduct})
+        setshowreview(!showreviews)
+    }
+
 
     return (
         <div className='container-history'>
             {/* <div className={`popup-history ${showhistory ? 'visible' : ''}`}> */}
             <div className='popup-history'>
+                <Review data={{ showreviews, idhistory }} />
                 <div className='box-history'>
-                    {/* <button type='button' onClick={closebtn}>close</button>
-                    <h1>history</h1> */}
                     {datahistory.map((item, index) => {
+                        const IDhistory = item._id
                         const IDbookinghis = item.IDbookinghis
                         const IDproduct = item.IDproductregishis
                         const IDstore = item.storeregishis
@@ -117,7 +136,9 @@ function History(props) {
                         } else if (item.product[0].quantityInStock >= 0) {
                             qproduct = item.product[0].quantityInStock
                             if (item.product[0].quantityInStock >= 0) {
-                                qproducts = <button type='button' onClick={() => openbookagain(IDproduct, IDstore, IDbookinghis)}>จองอีกครั้ง</button>
+                                // qproducts = <button type='button' onClick={() => openbookagain(IDproduct, IDstore, IDbookinghis)}>รีวิว</button>
+                                const IDproduct = item.IDproductregishis
+                                qproducts = <button type='button' onClick={() => showreview(IDuser, IDhistory, IDproduct)}>รีวิว</button>
                             }
                         }
 
@@ -156,7 +177,7 @@ function History(props) {
                                                 <p>{item.product[0].descriptionProduct}</p>
                                                 <p>{item.product[0].priceProduct}</p>
                                             </div> */}
-                                            <table onClick={() => linkdeshostory(IDstore, IDbookinghis ,amoutperminute)} className='table-history'>
+                                            <table onClick={() => linkdeshostory(IDstore, IDbookinghis, amoutperminute)} className='table-history'>
                                                 <tr>
                                                     <th>ชื่อร้านที่จอง</th>
                                                     <td>{item.store[0].nameStore}</td>
@@ -171,7 +192,7 @@ function History(props) {
                                                 </tr>
                                                 <tr>
                                                     <th>รวมเวลาที่จองทั้งหมด</th>
-                                                    <td>{hours}</td>
+                                                    <td>{hours}ชั่วโมง</td>
                                                 </tr>
                                                 <tr>
                                                     <th>ราคารวม</th>
@@ -198,6 +219,7 @@ function History(props) {
 
                         )
                     })}
+                    <div ref={storeListRef}></div>
                 </div>
             </div>
             <div className={`popup-again ${bookagain ? 'visible' : ''}`}>

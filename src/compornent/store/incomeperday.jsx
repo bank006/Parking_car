@@ -95,12 +95,12 @@ function incomeperday(props) {
 
 
     return (
-        <div className='' style={{ width: '200px' }}>
+        <div className='' style={{ width: '270px' }}>
 
             {dataincomeperday.length > 0 ? (
                 <>
                     <Doughnut data={data} />
-                    <p>ข้อมูลวันที่ :{day} เดือน: {monthss} ปี: {years} รายได้ :{amoun}</p>
+                    <p>วันที่ :{day} เดือน: {monthss} ปี: {years} รายได้ :{amoun}</p>
                 </>
             ) : (
                 <p>ไม่มีข้อมูลสำหรับวันที่ที่เลือก</p>

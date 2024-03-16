@@ -28,6 +28,7 @@ function Iconprofile(props) {
         fetchData();
     }, []);
 
+
     // ดึงข้อมูลที่ได้รับมาจาก api ที่ทำการจอยมาโดยเทียบกับข้อมูล UserId
     useEffect(() => {
         axios.get(`http://localhost:4001/profile/getimage/${IDuser}`)
@@ -60,23 +61,51 @@ function Iconprofile(props) {
         setprofile(images);
     }, [data])
 
-    const [nameusers , set_nameuser] = useState([])
+    const [nameusers, set_nameuser] = useState([])
 
-    useEffect(()=>{
+    useEffect(() => {
         const nameuser = data.map((res) => res.users)
         const concatenatedNames = [].concat(...nameuser);
-        const nameprofile = concatenatedNames.map((result)=>result.name)
+        const nameprofile = concatenatedNames.map((result) => result.name)
         set_nameuser(nameprofile)
 
-    },[data])
+    }, [data])
 
-    const handletoprofile = ()=>{
+    const [popupmenu, setpopupmenu] = useState(false)
+    const handletoprofile = () => {
+        setpopupmenu(!popupmenu)
+    }
+
+    const navigateprofile = () => {
         navigate('/Profile', { state: { IDuser } })
     }
+
+    const navigatechatbox = () => {
+        navigate('/Userbox', { state: { IDuser } })
+    }
+
     return (
-        <div className='icon-profile'>
-            <p>{nameusers[nameusers.length + a[0]]}</p>
-            <img  onClick={handletoprofile} src={`../images/${profile[profile.length + a[0]] || profile[profile.length - 1]}`}/>
+        <div className='icons-profile'>
+            <div className="containers-profile">
+                <p>{nameusers[nameusers.length + a[0]]}</p>
+                {profile.length === 0 ? (
+                    
+                    <img onClick={handletoprofile} src='/public/user.png'/>
+                ) :
+                    <img onClick={handletoprofile} src={`../images/${profile[profile.length + a[0]] || profile[profile.length - 1]}`} />
+                }
+
+            </div>
+            <div className={`popupmenuprofile ? ${popupmenu ? 'visible' : ''}  `}>
+                <div className="item-menu">
+                    <div className="item-profile-menu">
+                        <button onClick={navigateprofile} >โปรไฟล์</button>
+                    </div>
+                    <div className="item-profile-menu">
+                        <button onClick={navigatechatbox} >แชท</button>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

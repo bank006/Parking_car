@@ -79,7 +79,10 @@ router.get('/callproduct/:IDproduct' , async(req ,res)=>{
 
 router.get('/joinproduct' , (req , res )=>{
     const Store = require('./models/store')
-    ProductShema.aggregate([{$lookup :{from: Store.collection.name , localField: "IDstore" , foreignField :"_id" , as:'store'}}])
+    const Review = require('./models/Review')
+    ProductShema.aggregate([{$lookup :{from: Store.collection.name , localField: "IDstore" , foreignField :"_id" , as:'store'}},
+{$lookup:{from: Review.collection.name , localField:'_id' , foreignField:'IDproduct' ,as:'review' }}
+])
     .then((storexproduct)=>{
         if(storexproduct){
             res.send(storexproduct)
@@ -222,10 +225,20 @@ router.get('/nearlocation', (req, res) => {
     });
 });
 
-// router.put('/putview/:IDproductregishis ' ,(req ,res)=>{
-//     const {IDproductregishis} = req.params
-//     console.log(IDproductregishis)
-// })
+router.put('/updatescorereview/:IDproduct', (req, res) => {
+    const { averagescore } = req.body;
+    ProductShema.findByIdAndUpdate(
+        { _id: req.params.IDproduct },
+        { $set: { scorereview: averagescore } },
+        { new: true } // เพิ่มตัวเลือกนี้เพื่อให้คืนค่าข้อมูลที่ถูกปรับปรุงกลับ
+    )
+    .then((result) => {
+        res.send(result);
+    })
+    .catch((err) => {
+        res.status(400).send("Error: " + err);
+    });
+});
 
 router.put('/putview/:IDproductregishis' ,(req ,res)=>{
     const {IDproductregishis} = req.params

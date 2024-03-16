@@ -8,8 +8,6 @@ router.use(cors());
 router.use(express.json());
 
 let incomeSchema = require('./models/income');
-const { route } = require('./store.router');
-
 
 router.get('/', (req, res) => {
     incomeSchema.find((err, data) => {

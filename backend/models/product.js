@@ -35,6 +35,10 @@ let ProductShema = new Schema({
         type:Number,
         default:0
     },
+    scorereview:{
+        type:Number,
+        default:0
+    }
 })
 
 ProductShema.index({ location: '2dsphere' });

@@ -153,7 +153,7 @@ function Historypayment() {
                                     </tr>
                                     <tr>
                                         <th>เวลาที่จอง</th>
-                                        <td>{Hofprice}</td>
+                                        <td>{Hofprice} ชั่วโมง</td>
                                     </tr>
                                     <tr>
                                         <th>ช่องทางการชำระเงิน</th>

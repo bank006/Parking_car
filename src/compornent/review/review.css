@@ -1,0 +1,86 @@
+:root{
+    --bg-gary :#D9D9D9;
+    --bg-white :#F8F8F8;
+    --bg-yello :#F9A826;
+}
+
+.container-review{
+    height: 80vh;
+    width: 100%;
+}
+
+.allbox-review{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: var(--bg-gary);
+}
+
+.close-review{
+    display: flex;
+    justify-content: end;
+    width: 105%;
+}
+
+.item-close-review{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 2px;
+    background-color: var(--bg-white);
+}
+
+.item-review{
+    background-color: var(--bg-white);
+    width: 300px;
+    height: 300px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.title-review{
+    text-align: center ;
+    margin: 10px;
+
+}
+
+.star-icon {
+    cursor: pointer;
+    font-size: 40px;
+}
+
+.star-icons{
+    cursor: pointer;
+    font-size: 30px;
+    color: white;
+    padding: 2px;
+}
+
+.selected {
+    color: gold;
+}
+
+.btn-submit-score{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    margin-top: 25px;
+}
+
+.btn-submit-score button{
+    height: 100%;
+    width: 80%;
+    border: none;
+    background: none;
+    columns: var(--bg-white);
+    border-radius: 13px;
+    background-color: var(--bg-yello);
+}

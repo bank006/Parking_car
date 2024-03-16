@@ -6,6 +6,7 @@ import '../css/bookinghis.css'
 
 import Payment from '../compornent/patment/Payment';
 import History from './History';
+import Cancle from './Cancle';
 
 
 function Booking_History(props) {
@@ -152,6 +153,7 @@ function Booking_History(props) {
     const canclebooking = (IDbooking, IDproductregiscon) => {
         const _id = IDbooking
         const IDproductregis = IDproductregiscon
+        const IDproduct = IDproductregiscon
         axios.delete(`http://localhost:4001/booking/deletebooking/${_id}`)
             .then((resdelete) => {
                 console.log("ลบเอกสารนี้แล้ว", resdelete.data);
@@ -166,6 +168,13 @@ function Booking_History(props) {
             .then((restock) => {
                 console.log("เพิ่ม stock เเล้ว", restock)
                 window.location.reload();
+            }).catch((err) => {
+                console.log(err)
+            })
+
+        axios.post('http://localhost:4001/cancel/postcancel', { IDproduct, IDuser })
+            .then((res) => {
+                console.log(res)
             }).catch((err) => {
                 console.log(err)
             })
@@ -210,7 +219,7 @@ function Booking_History(props) {
         const bookingtimehis = startbookingtime;
         const timeregister = bookingtimecon;
         //บันทึกลงประวัติการจอง
-        axios.post('http://localhost:4001/bookinghis/posthistory', { IDbookinghis, IDproductregishis, IDuserhis, storeregishis, timebookinghis, bookingtimehis,timeregister, statuspayment, parkingbox }).
+        axios.post('http://localhost:4001/bookinghis/posthistory', { IDbookinghis, IDproductregishis, IDuserhis, storeregishis, timebookinghis, bookingtimehis, timeregister, statuspayment, parkingbox }).
             then((resconf) => {
                 if (!resconf) {
                     console.log('somthing error')
@@ -286,6 +295,7 @@ function Booking_History(props) {
         set_showactive(false)
         handlebtncolor(id)
         setshowactive3(false)
+        setshowactive4(false)
 
     }
 
@@ -294,6 +304,7 @@ function Booking_History(props) {
         set_showactive(true)
         handlebtncolor(id)
         setshowactive3(false)
+        setshowactive4(false)
 
     }
 
@@ -302,7 +313,16 @@ function Booking_History(props) {
         setshowactive3(true)
         handlebtncolor(id)
         set_showactive(false)
+        setshowactive4(false)
 
+    }
+
+    const active4 = () => {
+        const id = 4
+        setshowactive4(true)
+        handlebtncolor(id)
+        set_showactive(false)
+        setshowactive3(false)
     }
 
     useEffect(() => {
@@ -330,8 +350,8 @@ function Booking_History(props) {
                                 <button style={{ backgroundColor: btncolor.ID === 1 ? `${btncolor.color}` : '' }} onClick={showpayments}>payment</button>
                                 <button style={{ backgroundColor: btncolor.ID === 2 ? `${btncolor.color}` : '' }} onClickCapture={setactive}>booking</button>
                                 <button style={{ backgroundColor: btncolor.ID === 3 ? `${btncolor.color}` : '' }} onClick={active3} >ประวัติการจอง</button>
-                                <button>ยกเลิก</button>
-                                <button>การคืนเงิน</button>
+                                {/* <button style={{ backgroundColor: btncolor.ID === 4 ? `${btncolor.color}` : '' }} onClick={active4} >ยกเลิก</button>
+                                <button>การคืนเงิน</button> */}
                             </div>
                         </div>
 
@@ -376,7 +396,7 @@ function Booking_History(props) {
                                                             <div className="boxpay-namestore">
                                                                 <p>{booking.store[0].nameStore}</p>
 
-                                                                <div  style={{ marginRight:'20px'}}>
+                                                                <div style={{ marginRight: '20px' }}>
                                                                     <p>{remainingTimeForProduct}</p>
                                                                 </div>
                                                             </div>
@@ -415,7 +435,7 @@ function Booking_History(props) {
                                                                         <p>{hours}</p>
                                                                     </div>
                                                                     <div className='pay'>
-                                                                        <p>{amoutperminute}</p>
+                                                                        <p>{amoutperminute} บาท</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -445,6 +465,12 @@ function Booking_History(props) {
                                     </div>
                                 ) : null}
 
+                                {showactive4 === true ? (
+                                    <div>
+                                        <Cancle  IDuser={{ IDuser }}/>
+                                    </div>
+                                ) : null}
+
                                 {showactive === true ? (
                                     <div>
                                         <Booking_confirm IDuser={{ IDuser }} />
@@ -459,19 +485,19 @@ function Booking_History(props) {
                     </div>
                 </div>
 
-                <div className={`popupQR ${popupQR ? 'visible' : ''}`}>
-                    <div className='item-QR'>
+                <div  className={`popupQR ${popupQR ? 'visible' : ''}`}>
+                    <div style={{display:'flex',justifyContent:'center',borderRadius:'13px' , alignItems:'center'}} className='item-QR'>
                         {imagepayment.map((QRs, index) => {
                             const imageQR = QRs.imageQR
                             return (
                                 <div className='QR-content' key={index}>
                                     <div>
-                                        <p>ชำระเงิน</p>
+                                        <p style={{textAlign:'center'}}>ชำระเงิน</p>
                                     </div>
                                     <img src={`http://localhost:4001/images/${imageQR}`} alt="QR Code"></img>
-                                    <ul>ราคา : {QRs.amount}</ul>
-                                    <div className=''>
-                                        <button onClick={reload}>เสร็จสิน</button>
+                                    <p style={{textAlign:'center'}}>ราคา : {QRs.amount}</p>
+                                    <div style={{display:'flex', justifyContent:'center'}} className=''>
+                                        <button style={{background:'none' , border:'none' , backgroundColor:'#DD9304' , width:'100px' , marginTop:'15px' , height:'30px' , borderRadius:'13px'}} onClick={reload}>เสร็จสิน</button>
                                     </div>
                                 </div>
                             )

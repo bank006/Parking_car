@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 // เพิ่ม import ของ mongoose
 import mongoose from 'mongoose';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faStar } from '@fortawesome/free-solid-svg-icons';
 
 import Navbars from './Navbar';
 import Select from './patment/Selectpayment';
@@ -30,7 +30,6 @@ function Dashbord(props) {
 
     if (IDuser) {
         const userID = toObjectId(IDuser);
-        // setdatafromecart(IDusers, IDproduct ,IDstore ,nameStore)
 
     } else {
         navigate('/login')
@@ -82,8 +81,6 @@ function Dashbord(props) {
         set_storeregis(IDstore)
         setnamest(namestores)
         handle_callAllproduct(IDproduct)
-        // console.log(IDproduct)
-        // console.log(IDstore)
 
         try {
 
@@ -94,8 +91,6 @@ function Dashbord(props) {
 
             set_productrecall(recallproduct)
             set_storecall(recallstore)
-            // console.log(productrecall)
-            // console.log(storerecall)     
 
         } catch (err) {
             set_productrecall(null)
@@ -108,6 +103,8 @@ function Dashbord(props) {
     const closepopup = () => {
         set_showpopup(!showpopup)
     }
+
+
 
     // ฟังก์ชันคำนวณระยะทางโดยใช้สูตร Haversine
     function haversineDistance(lat1, lon1, lat2, lon2) {
@@ -184,9 +181,9 @@ function Dashbord(props) {
         fechdata();
     }, []);
 
-    const hadlepopup = () => {
-        console.log(data_user._id)
-    }
+    // const hadlepopup = () => {
+    //     console.log(data_user._id)
+    // }
 
     // ดูสินค้าที่ join กับ store
     useEffect(() => {
@@ -405,8 +402,7 @@ function Dashbord(props) {
             })
     }
 
-
-
+    // console.log(activityparking)
 
     const [changprice, setchangprice] = useState('80')
     const handlePriceChange = (e) => {
@@ -499,10 +495,75 @@ function Dashbord(props) {
     // // เริ่มต้นตัวจับเวลาเมื่อเริ่มใช้งาน
     // startSessionTimer();
 
-    const navigateto = ()=>{
-        navigate('/Chat' ,{state:{IDuser}})
+    // เช็คการเปิดใช้งาน chat
+    const navigateto = () => {
+        axios.get('http://localhost:4001/userschat').then((res) => {
+            if (res) {
+                const result = res.data
+                const IDusers = result.map((item) => item.IDuser)
+                if (IDusers.includes(IDuser)) {
+                    navigate('/Chat', { state: { IDuser, storeregis } })
+                } else {
+                    // เพิ่ม swal
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'คุณยังไม่ได้เปิดใช้งานระบบ Chat ต้องการเปิดหรือไม่',
+                        showCancelButton: true,
+                        confirmButtonText: 'เปิดใช้งาน',
+                        cancelButtonText: 'ไม่ต้องการ',
+                        preConfirm: () => {
+                            creatuserchat();
+                        }
+
+                    }).then((res) => {
+                        if (res.isConfirmed === true) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'ท่านได้เปิดใช้งานระบบ Chat เเล้ว',
+                                confirmButtonText: 'ตกลง'
+                            }).then((success) => {
+                                if (success.isConfirmed === true) {
+                                    navigate('/Chat', { state: { IDuser, storeregis } })
+                                }
+                            })
+                        }
+                    })
+
+                }
+
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+
     }
 
+    // สร้าง chat ให้  user
+    const creatuserchat = () => {
+        axios.post('http://localhost:4001/userschat/userchatpost', { IDuser })
+            .then((userchat) => {
+                console.log(userchat.data)
+            }).catch((err) => {
+                console.log(err)
+            })
+    }
+
+
+    // เช็คคะแนนของการรีวิว
+    const [rating, setRating] = useState(0);
+    const [datareview, setdatareview] = useState([])
+
+    const handleStarClick = (selectedRating) => {
+        setRating(selectedRating === rating ? 0 : selectedRating);
+    };
+
+    useEffect(() => {
+        axios.get('http://localhost:4001/review').then((getres) => {
+            setdatareview(getres.data)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }, [])
     return (
         <div className='container-des'>
             <div className="nav-des">
@@ -514,18 +575,6 @@ function Dashbord(props) {
                     <div className='regis'>
                         <Navbars totalID={{ IDuser: IDuser }} />
                         <p>เลือกพื้นที่การจอดรถ</p>
-                        {/* <div className={`popupDate ${showpopupDate ? 'visible' : ''}`}>
-                            <div className="itempopup-Date">
-                                <div className="Date">
-                                    <p>เลือกเวลาต้องการจอง</p>
-                                    <input type="datetime-local"id="datetime" name="datetime" onChange={handle_checkbbooking} required></input>
-                                    <div className="btn-Date">
-                                        <button className='btn-Date-ok'>OK</button>
-                                        <button className='btn-Date-close' onClick={closepopupDate}>close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
                         {productrecall && (
                             <div className='container-box'>
                                 <div className="all-boxs">
@@ -565,10 +614,7 @@ function Dashbord(props) {
 
                                                                         )
                                                                     })}
-
-
                                                                 </button>
-
                                                             </div>
                                                         </>
                                                     )
@@ -605,8 +651,8 @@ function Dashbord(props) {
                                                         <input type="datetime-local" id="datetime" name="datetime" onChange={handle_timesregis} required></input>
                                                     </div>
                                                     <div className="button-addproduct">
-                                                        <button onClick={navigateto} style={{width:'50px', marginRight:'10px'}}>message</button>
-                                                        <button onClick={() => regisproduct(IDproductregis, storeregis)}>addproduct</button>
+                                                        <button onClick={navigateto} style={{ width: '50px', marginRight: '10px' }}><img src='./public/Chat.png'/></button>
+                                                        <button onClick={() => regisproduct(IDproductregis, storeregis)}>จองทันที</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -680,23 +726,7 @@ function Dashbord(props) {
                                                     const IDstore = item.store[0]._id
                                                     const IDproduct = item._id
                                                     const namestores = item.store[0].nameStore
-                                                    // เช็คการจำนวนสินค้าในการจอง
-                                                    // let qproduct;
-                                                    // let qproducts;
-                                                    // if (item.quantityInStock <= 0) {
-                                                    //     qproduct = 'สินค้าหมด'
-                                                    //     if (item.quantityInStock <= 0) {
-                                                    //         qproduct = 'สินค้าหมด'
-                                                    //     }
-                                                    // } else if (item.quantityInStock >= 0) {
-                                                    //     qproduct = item.quantityInStock
-                                                    //     if (item.quantityInStock >= 0) {
-                                                    //         qproducts = <button className='btn-addbook' onClick={() => togglePopup(IDproduct, IDstore, namestores)} >Register</button>
-                                                    //     } else {
-                                                    //         qproducts = <button>สินค้าหมด</button>
-                                                    //     }
-                                                    // }
-
+                                                 
                                                     let ab
                                                     if (!favoriteitem.includes(item._id)) {
                                                         ab = <div className='btn-alls'><button style={{ border: 'none', background: 'none' }} type=' submit' onClick={() => addshoppingcard(IDproduct, IDstore, IDstore)}><FontAwesomeIcon className='white' icon={faHeart} style={{ color: iconColors[item._id] || 'white' }} /></button></div>
@@ -705,6 +735,8 @@ function Dashbord(props) {
                                                     }
 
                                                     const filterprice = item.priceProduct >= changprice
+                                                    const arraystar = [1, 2, 3, 4, 5]
+                                                    const scorereview = item.scorereview
 
                                                     if (filterprice && matchingDistance && numericDistance < 1) {
                                                         // set_num(numericDistance)
@@ -734,9 +766,21 @@ function Dashbord(props) {
                                                                     <div className="priceproducts">
                                                                         <p>{item.priceProduct} / Hr</p>
                                                                     </div>
+                                                                    <div style={{ paddingBottom: '5px' }} className='star'>
+
+                                                                        {[1, 2, 3, 4, 5].map((index) => (
+                                                                            <FontAwesomeIcon
+                                                                                key={index}
+                                                                                icon={faStar}
+                                                                                className={index <= scorereview ? "star-icons selected" : "star-icons"}
+                                                                            // onClick={() => handleStarClick(index)}
+                                                                            />
+                                                                        ))}
+                                                                    </div>
+
                                                                     <div className="addbook">
                                                                         <div className='btn-addcard'>
-                                                                            <button className='btn-addbook' onClick={() => togglePopup(IDproduct, IDstore, namestores)} >Register</button>
+                                                                            <button className='btn-addbook' onClick={() => togglePopup(IDproduct, IDstore, namestores)} >เริ่มจอง</button>
                                                                         </div>
                                                                         <div className="faver">
                                                                             <h5>{ab}</h5>
@@ -770,19 +814,7 @@ function Dashbord(props) {
                                         const IDstore = item.store[0]._id
                                         const IDproduct = item._id
                                         const namestores = item.store[0].nameStore
-                                        // เช็คการจำนวนสินค้าในการจอง
-                                        // let qproduct;
-                                        // let qproducts;
-                                        // if (item.quantityInStock <= 0) {
-                                        //     qproduct = 'สินค้าหมด'
-
-                                        // } else if (item.quantityInStock >= 0) {
-                                        //     qproduct = item.quantityInStock
-                                        //     if (item.quantityInStock !== null) {
-                                        //         qproducts = 
-                                        //     }
-                                        // }
-
+                              
 
                                         let ab
                                         if (!favoriteitem.includes(item._id)) {
@@ -791,6 +823,8 @@ function Dashbord(props) {
                                             ab = <div className='btn-alls'><button style={{ border: 'none', background: 'none' }} type=' submit' onClick={() => deletefromcard(IDproduct, IDstore, IDstore)}><FontAwesomeIcon className='red' icon={faHeart} style={{ color: iconwhite[item._id] || 'red' }} /></button></div>
                                         }
                                         const filterprice = item.priceProduct >= changprice
+                                        const arraystar = [1, 2, 3, 4, 5]
+                                        const scorereview = item.scorereview
                                         return (
                                             matchingDistance && filterprice && (
                                                 <div className='boxitem2' key={index}>
@@ -819,9 +853,20 @@ function Dashbord(props) {
                                                         <div className="priceproducts">
                                                             <p>{item.priceProduct} / Hr</p>
                                                         </div>
+                                                        <div style={{ paddingBottom: '5px' }} className='star'>
+
+                                                            {[1, 2, 3, 4, 5].map((index) => (
+                                                                <FontAwesomeIcon
+                                                                    key={index}
+                                                                    icon={faStar}
+                                                                    className={index <= scorereview ? "star-icons selected" : "star-icons"}
+                                                                // onClick={() => handleStarClick(index)}
+                                                                />
+                                                            ))}
+                                                        </div>
                                                         <div className="addbook">
                                                             <div className='btn-addcard'>
-                                                                <button className='btn-addbook' onClick={() => togglePopup(IDproduct, IDstore, namestores)} >Register</button>
+                                                                <button className='btn-addbook' onClick={() => togglePopup(IDproduct, IDstore, namestores)} >เริ่มจอง</button>
                                                             </div>
                                                             <div className="faver">
                                                                 <h5>{ab}</h5>

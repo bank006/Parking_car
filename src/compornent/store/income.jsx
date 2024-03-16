@@ -17,7 +17,7 @@ function income(props) {
 
 
     const [selectedMonth, setSelectedMonth] = useState(thaiDateString);
-    const [year, set_year] = useState([2023])
+    const [year, set_year] = useState([2024])
     const [datas, set_data] = useState([])
     const [endMonth, setendMonth] = useState(thaiDateString)
 
@@ -216,43 +216,44 @@ function income(props) {
             <div style={{ height: '260px' }}>
                 <Bar data={filteredData} options={options} />
             </div>
-
-            <select onChange={(e) => setSelectedMonth(e.target.value)}>
-                <option value="All">All Months</option>
-                <option value="มกราคม">มกราคม</option>
-                <option value="กุมพาพันธ์">กุมพาพันธ์</option>
-                <option value="มีนาคม">มีนาคม</option>
-                <option value="เมษายน">เมษายน</option>
-                <option value="พฤษภาคม">พฤษภาคม</option>
-                <option value="มิถุนายน">มิถุนายน</option>
-                <option value="กรกฎาคม">กรกฎาคม</option>
-                <option value="กันยายน">กันยายน</option>
-                <option value="สิงหาคม">สิงหาคม</option>
-                <option value="ตุลาคม">ตุลาคม</option>
-                <option value="พฤศจิกายน">พฤศจิกายน</option>
-                <option value="ธันวาคม">ธันวาคม</option>
-            </select>
-            <select onChange={(e) => setendMonth(e.target.value)}>
-                <option value="All">All Months</option>
-                <option value="มกราคม">มกราคม</option>
-                <option value="กุมพาพันธ์">กุมพาพันธ์</option>
-                <option value="มีนาคม">มีนาคม</option>
-                <option value="เมษายน">เมษายน</option>
-                <option value="พฤษภาคม">พฤษภาคม</option>
-                <option value="มิถุนายน">มิถุนายน</option>
-                <option value="กรกฎาคม">กรกฎาคม</option>
-                <option value="กันยายน">กันยายน</option>
-                <option value="สิงหาคม">สิงหาคม</option>
-                <option value="ตุลาคม">ตุลาคม</option>
-                <option value="พฤศจิกายน">พฤศจิกายน</option>
-                <option value="ธันวาคม">ธันวาคม</option>
-            </select>
-            <select onChange={(e) => set_year(e.target.value)}>
-                {/* <option value="none">none</option> */}
-                <option value="2023">2023</option>
-                <option value="2024">2024</option>
-            </select>
-            <button onClick={handleButtonClick}>ok</button>
+            <div style={{marginTop:'20px'}} className="optionvalue">
+                <select onChange={(e) => setSelectedMonth(e.target.value)}>
+                    <option value="All">All Months</option>
+                    <option value="มกราคม">มกราคม</option>
+                    <option value="กุมพาพันธ์">กุมพาพันธ์</option>
+                    <option value="มีนาคม">มีนาคม</option>
+                    <option value="เมษายน">เมษายน</option>
+                    <option value="พฤษภาคม">พฤษภาคม</option>
+                    <option value="มิถุนายน">มิถุนายน</option>
+                    <option value="กรกฎาคม">กรกฎาคม</option>
+                    <option value="กันยายน">กันยายน</option>
+                    <option value="สิงหาคม">สิงหาคม</option>
+                    <option value="ตุลาคม">ตุลาคม</option>
+                    <option value="พฤศจิกายน">พฤศจิกายน</option>
+                    <option value="ธันวาคม">ธันวาคม</option>
+                </select>
+                <select onChange={(e) => setendMonth(e.target.value)}>
+                    <option value="All">All Months</option>
+                    <option value="มกราคม">มกราคม</option>
+                    <option value="กุมพาพันธ์">กุมพาพันธ์</option>
+                    <option value="มีนาคม">มีนาคม</option>
+                    <option value="เมษายน">เมษายน</option>
+                    <option value="พฤษภาคม">พฤษภาคม</option>
+                    <option value="มิถุนายน">มิถุนายน</option>
+                    <option value="กรกฎาคม">กรกฎาคม</option>
+                    <option value="กันยายน">กันยายน</option>
+                    <option value="สิงหาคม">สิงหาคม</option>
+                    <option value="ตุลาคม">ตุลาคม</option>
+                    <option value="พฤศจิกายน">พฤศจิกายน</option>
+                    <option value="ธันวาคม">ธันวาคม</option>
+                </select>
+                <select onChange={(e) => set_year(e.target.value)}>
+                    {/* <option value="none">none</option> */}
+                    {/* <option value="2023">2023</option> */}
+                    <option value="2024">2024</option>
+                </select>
+                <button onClick={handleButtonClick}>ok</button>
+            </div>
         </div>
     )
 }

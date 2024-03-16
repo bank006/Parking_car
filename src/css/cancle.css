@@ -1,0 +1,69 @@
+:root{
+    --background-black :#000000 ;
+    --background-payment : #818181 ;
+    --backgroud-menu : #F1F1F1;
+    --backgroud-payment-item : #A5A5A5;
+    --btn-submit-payment: #BB271A;
+    --btn-cancel-payment: #C3C3C3;
+    --color-font-his : #FFFFFF;
+}
+
+.container-cancle{
+    display: grid;
+    place-items: center;
+    position: fixed;
+    margin-top: 150px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: 79vh;
+}
+
+.item-canclescoll{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: var(--backgroud-payment-item);
+}
+
+.all-box-cancle{
+    height: 100%;
+    width: 80%;
+    overflow: scroll;
+}
+
+.item-mycancel{
+    display: flex;
+    align-items: center;
+    margin: 15px;
+    height: 200px;
+    border-radius: 13px;
+    background-color: var(--background-payment);
+}
+
+.img-mycancel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 30%;
+   
+}
+
+.conten-img-mycancel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 13px;
+    width: 150px;
+    height: 150px;
+    border: 1px solid white;
+}
+
+.conten-img-mycancel img{
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
