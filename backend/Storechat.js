@@ -6,7 +6,7 @@ const router = express();
 router.use(cors());
 router.use(express.json());
 
-let Storechatschema = require('../backend/models/storeuser_chat')
+let Storechatschema = require('../backend/models/storeuser_chat');
 
 router.get('/', (req, res) => {
     Storechatschema.find((err, data) => {
@@ -32,9 +32,27 @@ router.post('/storechatpost', (req, res) => {
         })
 })
 
-router.get('/getstore',(req , res)=>{
-    res.send('store')
+router.get('/getstorebyid/:storeregis',(req , res)=>{
+    const store = require('./models/store')
+    Storechatschema.aggregate([{$match : {IDstore: mongoose.Types.ObjectId(req.params.storeregis)}},
+        {$lookup:{from: store.collection.name , localField:'IDstore' , foreignField: "_id", as: 'store' }}
+    ]).then((storebyid)=>{
+        res.send(storebyid)
+    }).catch((err)=>{
+        res.send(err)
+    })
 })
+
+router.get('/getstore',(req , res)=>{
+    const store = require('./models/store')
+    Storechatschema.aggregate([{$lookup:{from: store.collection.name , localField:'IDstore' , foreignField: "_id", as: 'store' }}])
+    .then((stores)=>{
+        res.send(stores)
+    }).catch((err)=>{
+        res.send("Error", err)
+    })
+})
+
 
 
 module.exports = router;

@@ -62,7 +62,7 @@ function Forgotpass() {
 
     // เช็คemail
     const checkemail = () => {
-        axios.post('http://localhost:4001/otp/sendOTP', { email })
+        axios.post('http://localhost:4001/otp/sendforgot', { email })
             .then((OTP) => {
                 console.log(OTP)
             }).catch((err) => {

@@ -65,6 +65,7 @@
     /* background-color: aqua; */
     height: 50px;
     padding-bottom: 10px;
+    padding-left: 25px;
     /* margin-top: 20px; */
     background-color: var(--backgroud-menu);
 }
@@ -80,7 +81,8 @@
 
 .openbooking button {
     height: 80%;
-    width: 18%;
+    width: 30%;
+
     margin: 10px;
     color: white;
     border: none;

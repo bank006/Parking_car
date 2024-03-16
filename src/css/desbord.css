@@ -129,6 +129,7 @@
 
 .priceproducts {
     margin: 0;
+    height: 10%;
 }
 
 .priceproducts p {
@@ -142,7 +143,7 @@
 }
 
 .addbook {
-    padding-top: 12px;
+    padding-top: 4px;
     float: right;
     width: 200px;
     padding-right: 30px;

@@ -21,6 +21,11 @@ const qrprompayRouter = require('./qr-prompay.router')
 const otpRouter  = require('./Otp.router')
 const income = require('./Income.router')
 const storechat = require('./Storechat')
+const chatmassage = require('./Chatmassge.router')
+const userchat = require('./Userchat')
+const historychat = require('./Historychat')
+const Review  = require("./Review")
+const cancel = require('./Cancle.router')
 
 
 const session = require('express-session');
@@ -44,7 +49,7 @@ mongoose.connect(dbconfig.db, {
     });
     console.log("database connect");
 }, (err) => {
-    console.log(err);
+    console.log('err',err);
 })
 
 
@@ -83,6 +88,11 @@ app.use('/images', express.static(path.join(__dirname, './qrcode')));
 app.use('/otp' , otpRouter)
 app.use('/income' , income)
 app.use('/storechat', storechat)
+app.use('/chatmessage' , chatmassage)
+app.use('/userschat' , userchat)
+app.use('/historychat' ,  historychat)
+app.use('/review', Review)
+app.use('/cancel' , cancel)
 // app.use('/booking' , bookingRouter )
 
 

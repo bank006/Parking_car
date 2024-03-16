@@ -1,28 +1,388 @@
-.profilepopup{
+:root {
+    --line-yello: #DD9304;
+    --back-white: #D9D9D9;
+    --font-gray: #8E8E8E;
+    --bg-: #141618;
+}
+
+.profilepopup {
     visibility: hidden;
     display: grid;
-    place-items: center; /* จัดให้เนื้อหาตรงกลาง */
-    position: fixed; /* ใช้ Fixed Position เพื่อให้คอมโพเนนต์อยู่ตรงกลางของหน้าจอ */
+    place-items: center;
+    /* จัดให้เนื้อหาตรงกลาง */
+    position: fixed;
+    /* ใช้ Fixed Position เพื่อให้คอมโพเนนต์อยู่ตรงกลางของหน้าจอ */
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    
-
-    .itemprofile{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 400px;
-        height: 400px;
-        border: 1px solid black;
-        background-color: white;
-        overflow: scroll;
-        border-radius: 16px;
-
-    }
 }
 
-.profilepopup.visible{
+
+
+
+.container-profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.allboxprofile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 66%;
+    height: 50%;
+    border-radius: 25px;
+    border: 1px solid black;
+    background-color: var(--back-white);
+}
+
+.item-box-profile {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profile {
+    padding-left: 60px;
+    display: flex;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+}
+
+.img-profile {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+
+}
+
+.img-profile img {
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+    object-fit: cover;
+}
+
+.btnsprofile {
+    width: 50px;
+    height: 50px;
+    padding-left: 150px;
+    margin-top: 110px;
+    position: absolute;
+}
+
+.btnsprofile button {
+    width: 100%;
+    height: 100%;
+    background: none;
+    background-color: black;
+    border: 2px solid white;
+    border-radius: 100px;
+    cursor: pointer;
+}
+
+/* รายละเอียดโปรไฟล์ */
+
+.aboute-profile {
+    height: 100%;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* .item-aboute-profile{
+    border: 1px solid black;
+} */
+
+.content-aboute-profile {
+    width: 440px;
+    height: 200px;
+}
+
+.container-name-profile label {
+    margin-left: 5px;
+}
+
+.name-profile {
+    border: 2px solid var(--line-yello);
+    margin: 5px;
+    height: 40px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.name-profile p {
+    margin-left: 30px;
+    color: var(--font-gray);
+}
+
+.container-email-profile {
+    margin-left: 5px;
+}
+
+.email-profile {
+    border: 2px solid var(--line-yello);
+    margin: 5px;
+    height: 40px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.email-profile p {
+    margin-left: 30px;
+    color: var(--font-gray);
+}
+
+.btn-editprofile {
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    justify-content: center;
+}
+
+.btn-editprofile button {
+    border-radius: 8px;
+    width: 200px;
+    border: none;
+    background: none;
+    background-color: var(--line-yello);
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.btn-store-profile {
+    margin-top: 40px;
+    justify-content: end;
+    display: flex;
+    height: 30px;
+}
+
+
+.btn-store-profile button {
+    width: 100px;
+    height: 100%;
+    background: none;
+    border: none;
+    background-color: var(--line-yello);
+    color: white;
+    cursor: pointer;
+    border-radius: 13px;
+}
+
+
+
+/* popup */
+
+.profilepopup.visible {
     visibility: visible;
+    z-index: 3;
+    background-color: var(--bg-);
+}
+
+
+.itemprofile {
+    width: 400px;
+    height: 400px;
+    background-color: var(--back-white);
+    overflow: scroll;
+    border-radius: 16px;
+
+
+}
+
+.content-updateprofiles {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-popups {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.all-conten-popups {
+    width: 400px;
+    height: 400px;
+
+}
+
+.img-updateptofile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 200px;
+}
+
+.img-show {
+    display: flex;
+    width: 240px;
+    height: 200px;
+}
+
+.btn-end {
+    display: flex;
+    align-items: center;
+}
+
+.btn-end button {
+    width: 20px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+
+}
+
+.btn-start {
+    display: flex;
+    align-items: center;
+}
+
+.btn-start button {
+    background: none;
+    border: none;
+    width: 20px;
+    height: 40px;
+    cursor: pointer;
+
+}
+
+.btn-end button img {
+    width: 100%;
+    height: 100%;
+}
+
+.btn-start button img {
+    width: 100%;
+    height: 100%;
+    transform: scaleX(-1);
+}
+
+.img-end {
+    width: 100%;
+    height: 100%;
+    border-radius: 90px;
+    margin: 10px;
+}
+
+.img-end img {
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+    object-fit: cover;
+
+}
+
+.buttonprofile {
+    margin-top: 20px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.upload-image {
+
+    width: 50%;
+}
+
+/* 
+.tt{
+    border: 1px solid black;
+} */
+.input-file {
+
+    height: 40px;
+    width: 100%;
+    text-align: center;
+}
+
+.input-file .custom-file-input-label {
+    background-color: var(--line-yello);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px 5px 5px 5px;
+}
+
+
+.tt input[type="file"] {
+    display: none;
+}
+
+
+.summit-image{
+    height: 80px;
+}
+
+.box-submits-image{
+    width: 100%;
+    height: 100%;
+}
+
+.btnimaget {
+    width: 100%;
+    height: 50%;
+
+}
+
+.btnimaget button{
+    width: 100%;
+    height: 100%;
+    background: none;
+    cursor: pointer;
+    background-color: green;
+    border-radius: 12px;
+    border: none;
+}
+.chageimage{
+    width: 100%;
+    height: 50%;
+
+}
+
+.chageimage button {
+    margin-top: 5px;
+    width: 100%;
+    height: 100%;
+    background: none;
+    cursor: pointer;
+    background-color: green;
+    border-radius: 12px;
+    border: none;
+}
+
+.btn-addimage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+}
+
+.btn-addimage button{
+    height: 100%;
+    width: 80%;
+    border: none;
+    background: none;
+    border: 13px;
+    border-radius: 13px;
+    color: var(--back-white);
+    background-color: green;
 }

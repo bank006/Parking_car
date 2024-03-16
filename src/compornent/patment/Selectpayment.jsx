@@ -25,7 +25,6 @@ function Selectpayment(props) {
     }
   }, [datapayment])
 
-
   const [selectedOption, setSelectedOption] = useState('');
   const [bank, set_bank] = useState('')
 

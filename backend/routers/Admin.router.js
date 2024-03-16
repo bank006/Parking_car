@@ -47,8 +47,7 @@ router.get ('/email_admin' , (req ,res , next )=>{
         if(err){
             return next(err)
         }else{
-            console.log(admindata)
-            res.status(200).send(admindata)
+            return res.status(200).send(admindata)
         }
     })
 })

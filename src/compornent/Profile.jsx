@@ -200,14 +200,17 @@ function Profile() {
             })
     };
 
+    const [no, setno] = useState(false)
     const incount = () => {
         if (count[0] > -1) {
             alert("ไม่มีข้อมูลรูปภาพ")
         } else {
+            setno(true)
             set_count([count[0] + 1])
         }
     }
     const outcount = () => {
+        setno(true)
         set_count([count[0] - 1])
     }
 
@@ -248,64 +251,130 @@ function Profile() {
         navigate('/Store', { state: { IDstores } })
     }
 
-    const createstore =()=>{
-        navigate('/Pdpa', {state:{IDuser}});
+    const createstore = () => {
+        navigate('/Pdpa', { state: { IDuser } });
+    }
+
+    const changimage = () => {
+        setimage();
+        setSelectedImage(null);
     }
 
     return (
-        <div className=''>
+        <div style={{ backgroundColor: '#141618' }} className=''>
             <div className={`profilepopup ${popuprofile ? 'visible' : ''}`}>
+
                 <div className="itemprofile">
-                    <button onClick={() => set_popupprofile(false)}>close</button>
-                    <div className='content-popup'>
-                        <img src={selectedsImage || `../images/${data[data.length + count[0]]}`} width={150} height={150} />
-                        <div className="buttonprofile">
-                            <button type="button" onClick={outcount} >ลบ</button>
-                            <button type="button" onClick={incount}>เพิ่ม</button>
-                            <button type="button" onClick={addimg}>add</button>
-                            <input type="file" name="" id="" onChange={handleimage} />
-                            <button type='submit' onClick={onsubmit} >upload profile</button>
+                    <button style={{ background: 'none', border: 'none', margin: '10px', cursor: 'pointer' }} onClick={() => set_popupprofile(false)}><img width={30} height={30} src='./public/Back.png'></img></button>
+                    <div className="content-updateprofiles">
+                        <div className='content-popups'>
+                            <div className="all-conten-popups">
+                                <div className="img-updateptofile">
+                                    <div className="img-show">
+                                        <div className="btn-end">
+                                            <button type="button" onClick={outcount} ><img src="./public/Back.png" alt="" /></button>
+                                        </div>
+                                        <div className="img-end">
+                                            <img src={selectedsImage || `../images/${data[data.length + count[0]]}`} />
+                                        </div>
+
+                                        <div className="btn-start">
+                                            <button type="button" onClick={incount}><img src="./public/Back.png" alt="" /></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="buttonprofile">
+                                    <div className="upload-image">
+                                       
+                                        {image === undefined ? (
+                                            <div className='tt'>
+                                                <div className="input-file">
+                                                    <label htmlFor="file-input" className="custom-file-input-label">
+                                                        Choose a file
+                                                    </label>
+                                                    <input className='input-image' type="file" id="file-input" onChange={handleimage} />
+                                                </div>
+
+                                            </div>
+                                        ) : <div className="summit-image">
+                                            <div className="box-submits-image">
+                                                <div className="btnimaget">
+                                                    <button type='submit' onClick={onsubmit} >ตกลง</button>
+                                                </div>
+                                                <div className='chageimage'>
+                                                    <button style={{ backgroundColor: 'red' }} onClick={changimage}>ลบ</button>
+                                                </div>
+                                            </div>
+                                        </div>}
+                                        {no === true ? (
+                                            <div className="btn-addimage">
+                                                <button type="button" onClick={addimg}>เพิ่ม</button>
+                                            </div>
+                                        ) : <></>}
+
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-            <div className='profile'>
-
-                {data.length == 0 ? (
-                    <img src="../public/images/1.png" width={150} height={150} />
-                ) : (
-                    <>
-                        <img src={`../images/${data[data.length + a[0]] || data[data.length - 1]}`} width={150} height={150} />
-                    </>
-                )}
-                {/* // เซ็ทชื่อให้เข้ากับ ภาพ */}
-                <div className=''>
-                    <div className=''>
-                        <p>name:{names}</p>
-                    </div>
-                    <div>
-                        <p>email:{emails}</p>
+            <div className="container-profile">
+                <div className="allboxprofile">
+                    <div className="item-box-profile">
+                        <div className='profile'>
+                            {/* <div className="item-profile"> */}
+                            <div className="img-profile">
+                                {data.length == 0 ? (
+                                    <img src="../public/user.png" width={150} height={150} />
+                                ) : (
+                                    <>
+                                        <img src={`../images/${data[data.length + a[0]] || data[data.length - 1]}`} width={150} height={150} />
+                                    </>
+                                )}
+                                {/* // เซ็ทชื่อให้เข้ากับ ภาพ */}
+                            </div>
+                            <div className="btnsprofile">
+                                <button onClick={() => set_popupprofile(true)} ><img src="./public/camera.png" alt="" /></button>
+                            </div>
+                            {/* </div> */}
+                        </div>
+                        <div className="aboute-profile">
+                            <div className="item-aboute-profile">
+                                <div className='content-aboute-profile'>
+                                    <div className="container-name-profile">
+                                        <label htmlFor="">name</label>
+                                        <div className='name-profile'>
+                                            <p>name:{names}</p>
+                                        </div>
+                                    </div>
+                                    <div className="contaier-email-profile">
+                                        <label htmlFor="">email</label>
+                                        <div className='email-profile'>
+                                            <p>email:{emails}</p>
+                                        </div>
+                                    </div>
+                                    <div className='btn-editprofile'>
+                                        <button onClick={() => editprofile(id, names, emails)}>แก้ไข</button>
+                                    </div>
+                                    <div className='btn-store-profile'>
+                                        {checkstore == null ? (
+                                            <div className=''>
+                                                {/* <Link to={'/Incrud/' + IDuser}>สร้างร้านค้า</Link> */}
+                                                <button onClick={createstore}>create-store</button>
+                                            </div>
+                                        ) : (
+                                            <div className=''>
+                                                <button onClick={() => tomystore(checkstore._id)} >ร้านค้าของคุณ</button>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <button onClick={() => set_popupprofile(true)} >แก้ไขโปรไฟล์</button>
-
-            </div>
-            <p>edit profile</p>
-            <div className=''>
-                <button onClick={() => editprofile(id, names, emails)}>แก้ไข</button>
-            </div>
-            <div className=''>
-                {checkstore == null ? (
-                    <div className=''>
-                        {/* <Link to={'/Incrud/' + IDuser}>สร้างร้านค้า</Link> */}
-                        <button onClick={createstore}>create-store</button>
-                    </div>
-                ) : (
-                    <div className=''>
-                        <button onClick={() => tomystore(checkstore._id)} >ร้านค้าของคุณ</button>
-                    </div>
-                )}
             </div>
         </div>
     )

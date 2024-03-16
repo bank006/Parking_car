@@ -48,7 +48,7 @@ function Logins() {
                 setadmin_emailcheck(response.data)
             })
             .catch((error) => {
-                console.error('Error fetching data:', error);
+                console.log('Error fetching data:', error);
             });
 
     }, []);
@@ -61,7 +61,7 @@ function Logins() {
     }, [userdata, admin_emailcheck]);
 
     const [attempts, setAttempts] = useState(0);
-    const [showattempts , setshowattempts] = useState('')
+    const [showattempts, setshowattempts] = useState('')
 
     const login = () => {
         if (useremails.includes(email)) {
@@ -74,24 +74,25 @@ function Logins() {
                             localStorage.setItem('email', fgemail);
                             localStorage.setItem('password', fgpassword);
                         }
-                        else if (res.data.data.statusverify === false) {
-                            sendOTP(email);
-                            navigate('/Verify_otp', { state: { email } })
-                        } else if (res.data.data.statusverify === true) {
+                        else if (res.data.data.statusverify === true) {
                             navigate('/Dashbord', { state: { user } })
+                        } else if (email && res.data.data.statusverify === false) {
+                            sendxsOTP(email);
+                            navigate('/Verify_otp', { state: { email } })
+                            window.location.reload();
                         }
 
                         // fecttopage(data);
 
                     } else if (password.length === 0) {
-                        set_errbox('Please enter your password')
+                        set_errbox(<div style={{ display: 'flex', justifyContent: 'center', border: '2px solid red' }}><p>Please enter your password</p></div>)
 
                     } else if (res.data.success === false) {
                         setAttempts((prevAttempts) => prevAttempts + 1);
-                        if(attempts > 3){
-                            setshowattempts(<button onClick={passtoforgot}>ok</button>)
+                        if (attempts > 3) {
+                            setshowattempts(<button style={{ border: 'none', background: 'none', color: 'red' }} onClick={passtoforgot}>เปลี่ยนรหัสผ่าน</button>)
                         }
-                        set_errbox("Email or password Invalid")
+                        set_errbox(<div style={{ display: 'flex', justifyContent: 'center', border: '2px solid red' }}><p>Email or password Invalid</p></div>)
 
                     }
 
@@ -127,12 +128,12 @@ function Logins() {
     }
 
 
-    const passtoforgot = ()=>{
+    const passtoforgot = () => {
         navigate('/Forgot')
     }
 
     // ส่งคำขอ OTP
-    const sendOTP = (email) => {
+    const sendxsOTP = (email) => {
         axios.post('http://localhost:4001/otp/sendOTP', { email })
             .then((OTP) => {
                 console.log(OTP)
@@ -166,9 +167,11 @@ function Logins() {
                         </div>
                     </div>
                 </div>
-                <div className='box-error'>
-                    <p>{errbox}</p>
-                </div>
+                {errbox !== '' ? (
+                    <div style={{ display: 'flex', justifyContent: 'center' }} className='box-error'>
+                        <p style={{ margin: '8px', padding: '10px', borderRadius: '13px', border: '2px solid red' }}>{errbox}</p>
+                    </div>
+                ) : null}
                 <div className='content-login'>
                     <div className='value-content'>
                         <div className='login'>

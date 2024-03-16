@@ -26,15 +26,6 @@ router.get('/',(req , res , next)=>{
     })
 })
 
-
-// const Storage = multer.diskStorage({
-//     destination: './public',
-//     filename:(req,file,cb)=>{
-//         cb(null , file.originalname)
-//     },
-
-// });
-
 const Storage = multer.diskStorage({
     destination:(req,file,cb)=>{
         cb(null , '../public/images/')

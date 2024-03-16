@@ -1,63 +1,421 @@
-.content-store {
-    overflow-y:     hidden;
-    height: 100vh; /* ความสูงเต็มหน้าจอ */
+:root {
+    --bg-gray: #D9D9D9;
+    --color-yello: #E89A05;
+    --color-black: #202020;
+    --color-red: #B20000;
+}
+
+.store {
+    /* overflow-y: hidden; */
+    height: 100vh;
+    /* ความสูงเต็มหน้าจอ */
 }
 
 
-.item-box-product{
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    border-left: 1px solid black;
-    margin: 10px;
-    width: 300px;
-
-}
-
-.content-bookinghis{
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    border-left: 1px solid black;
-    margin: 10px;
-    width: 300px;
-}
-
-.velue_menu{
-    height: 55vh;
-    overflow: scroll;
-}
 
 
 /* สถิติต่าง */
 
-.container-static{
-    border: 1px solid black;
+.container-static {
     display: flex;
     width: 100%;
-    height:300px;
+    height: 300px;
 }
 
-
-
-
-.income-of-month{
-    width: 50%;
-    margin: 10px;
+.income-of-month {
+    width: 33%;
+    padding: 20px;
+    margin-left: 20px;
 }
 
-.container-view{
+.income-of-day {
     display: flex;
     justify-content: center;
-    align-items: center;
-
-    width: 50%;
+    width: 36%;
+    padding: 20px;
 }
 
-.view{
+.container-view {
+    display: flex;
+    width: 300px;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+}
+
+.view {
     margin: 10px;
     text-align: center;
 }
 
-.view h1{
+.view h1 {
     font-size: 52px;
 }
 
+
+.title-store {
+    color: var(--color-yello);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: black;
+}
+
+.titlename-store {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.titlename-store p {
+    margin-right: 10px;
+}
+
+.popupuploadproduct {
+    height: 100vh;
+}
+
+.item-upload-product {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 600px;
+}
+
+.box-input-uploadproduct {
+    width: 80%;
+    height: 80%;
+}
+
+.content-uploadproduct {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    border-radius: 25px;
+    background-color: var(--color-black);
+}
+
+.img-product {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+
+}
+
+.content-img-product {
+    height: 300px;
+    width: 300px;
+}
+
+.showimg-product {
+    height: 90%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.itemshow {
+    height: 80%;
+    border-radius: 20px;
+    width: 80%;
+    border: 3px solid white;
+}
+
+.itemshow img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    border-radius: 20px;
+}
+
+.input-img-product {
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.input-img-product label {
+    cursor: pointer;
+    width: 80%;
+    text-align: center;
+    padding: 4px;
+    border-radius: 15px;
+    color: var(--bg-gray);
+    background-color: var(--color-yello);
+}
+
+.input-img-product input {
+    display: none;
+}
+
+.item-product-upload {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+}
+
+.content-product-product {
+    height: 80%;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.item-content-uploadproduct {
+    margin-top: 40px;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.box-upload- {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 40px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    border: 2px solid red;
+}
+
+/* .box-upload- label{
+    width: 80%;
+    height: 50%;
+    border-radius: 15px;
+    border: 2px solid  var(--color-red);
+} */
+.box-upload- input {
+    background: none;
+    height: 70%;
+    width: 95%;
+    border: none;
+    outline: none;
+    color: white;
+    /* display: none; */
+}
+
+.btn-upload-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+}
+
+.btn-upload-image button {
+    cursor: pointer;
+    height: 100%;
+    width: 50%;
+    background: none;
+    background-color: var(--color-yello);
+    color: white;
+    border-radius: 20px;
+}
+
+/* ประวัติการใช้บริการ */
+
+/* .container-allproductabput{
+    border: 1px solid black;
+} */
+
+.boxvalue {
+    margin: 10px;
+    border: 1px solid black;
+    background-color: var(--color-black);
+}
+
+.title-value {
+    color: var(--color-yello);
+    padding-left: 16px;
+}
+
+.item-value {
+    display: flex;
+}
+
+.value {
+    width: 200px;
+    height: 30px;
+    margin: 5px;
+}
+
+.value button {
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: none;
+    background-color: var(--color-yello);
+    border-radius: 20px;
+    cursor: pointer;
+    color: white;
+}
+
+.velue_menu {
+    height: 55vh;
+    width: 100%;
+    overflow: scroll;
+}
+
+.myproduct-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box_volum {
+    width: 80%;
+}
+
+
+/* ส่วนกล่องสำหรับดูข้อมูลสินค้าของตัวเอง */
+
+.item-box-product {
+    background-color: var(--bg-gray);
+    margin: 10px;
+    width: 95%;
+    height: 160px;
+}
+
+.content-myproduct {
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    column-count: 3;
+}
+
+.img-myproduct {
+    height: 97%;
+    width: 33%;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.item-img-product {
+    width: 90%;
+    height: 90%;
+    border: 1px solid white;
+    border-radius: 20px;
+
+}
+
+.item-img-product img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.content-myproduct-about {
+    height: 97%;
+    margin: 5px;
+    width: 33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.item-myproduct-about p {
+    margin: 10px;
+    font-weight: 500;
+}
+
+.btn-myproduct-control {
+    height: 97%;
+    margin: 5px;
+    width: 33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-myproduct-control{
+    width: 50%;
+    height: 50%;
+}
+.content-myproduct-control{
+    width: 100%;
+    height: 50%;
+    margin-bottom: 10px;
+    border-radius: 13px;
+    cursor: pointer;
+}
+
+.item-myproduct-control button{
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: none;
+    border-radius: 13px;
+    cursor: pointer;
+}
+
+
+/* ส่วนของประวัติการสั่งจอง */
+.content-bookinghis {
+    background-color: var(--bg-gray);
+    margin: 10px;
+    width: 95%;
+    height: 150px;
+    border-radius: 15px;
+}
+
+.item-my-bookinghis{
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.img-mybookinghis{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+}
+
+.conten-img-mybookinghis {
+    width: 80%;
+    height: 80%;
+    border-radius: 15px;
+    border: 2px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.conten-img-mybookinghis img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.item-about-mybookinghis{
+    width: 70%;
+    display: flex ;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-about-mybookinghis button{
+    cursor: pointer;
+    font-size: 16px;
+    border: none;
+    background: none;
+    margin-left: 20px;
+    color: var(--color-red);
+}

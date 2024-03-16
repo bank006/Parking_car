@@ -148,7 +148,7 @@ function Shopping_cart(props) {
 
                 </div>
                 <div style={{ position: 'relative', zIndex: '10' }} className="btnshowregis">
-                    <button className='card-open' type='button' onClick={openshowshopping}>Favorite</button>
+                    <button className='card-open' type='button' onClick={openshowshopping}>รายการที่ชอบ</button>
                 </div>
 
             </div>

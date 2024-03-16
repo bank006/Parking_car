@@ -12,11 +12,6 @@ router.use(express.json());
 
 
 let UserShema = require('./models/users');
-let ProfileShema = require('./models/profile')
-const users = require('./models/users');
-const { Link } = require('react-router-dom');
-const { result } = require('lodash');
-const { errorMonitor } = require('nodemailer/lib/xoauth2');
 
 // หน้าหลักการใช้เรียก  APIs เรียกเป็น http users
 router.get('/', (req, res) => {
@@ -113,8 +108,7 @@ router.get('/getUsers', (req, res, next) => {
         if (err) {
             return next(err)
         } else {
-            console.log(userpw)
-            res.status(200).send(userpw)
+            return res.status(200).send(userpw)
         }
     })
 })
@@ -171,19 +165,38 @@ router.get("/getimage/:UserId", (req, res) => {
 
 
 
-router.put('/update_verify', (req, res) => {
-    UserShema.updateOne({ email: req.body.email }, { $set: { statusverify: true } })
-        .then((resverify) => {
-            if (!resverify) {
-                return res.status(401).send("Error")
-            } else {
-                res.send(resverify)
-            }
-        }).catch((err) => {
-            res.status(500).send(err)
-        })
+router.put('/update_verify', async (req, res) => {
+    try {
+        const resverify = await UserShema.updateOne({ email: req.body.email }, { $set: { statusverify: true } });
+        if (!resverify) {
+            return res.status(401).send("Error");
+        }
+        return res.send(resverify);
+    } catch (err) {
+        return res.status(500).send(err);
+    }
+    // res.send(req.body.email)
+});
 
-})
+// router.put('/update_verify/:email', async (req, res) => {
+//     try {
+//         const { email } = req.params; // รับค่า email จาก URL
+//         // ทำการอัพเดต statusverify ในฐานข้อมูล
+//         const updatedUser = await UserSchema.findOneAndUpdate({ email }, { statusverify: true }, { new: true });
+//         if (!updatedUser) {
+//             return res.status(401).send("Error: User not found");
+//         }
+//         // ส่งอีเมลเพื่อตรวจสอบได้ที่นี่
+//         // เช่น sendVerificationEmail(email);
+//         res.send(updatedUser);
+//     } catch (err) {
+//         res.status(500).send(err);
+//     }
+// });
+
+
+
+
 
 router.put('/updatedata', (req, res) => {
     UserShema.updateOne({ _id: req.body.id }, { $set: { name: req.body.validatename, email: req.body.validateemail } })

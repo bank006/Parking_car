@@ -39,7 +39,10 @@ import Forgotpass from './compornent/Forgotpass';
 import Historypayment from './compornent/historypayment/Historypayment';
 import Chat from './compornent/Chat/Chat';
 import Userbox from './compornent/Chat/Userbox';
-
+import Chatstore from './compornent/store/Chatstore';
+import Userboxstore from './compornent/store/Userboxstore';
+import Review from './compornent/review/Review';
+import Cancle from './compornent/Cancle';
 
 function App() {
 
@@ -84,6 +87,10 @@ function App() {
         <Route path='/Historypayment' element={<Historypayment/>}/>
         <Route path='/Chat' element={<Chat/>}/>
         <Route path='/Userbox' element={<Userbox/>}/>
+        <Route path='/Chatstore' element={<Chatstore/>}/>
+        <Route path='/Userboxstore' element={<Userboxstore/>}/>
+        <Route path='/Review' element={<Review/>}/>
+        <Route path='/Cancle' element={<Cancle/>}/>
       </Routes>
     </BrowserRouter>
 

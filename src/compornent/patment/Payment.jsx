@@ -46,9 +46,6 @@ function Payment(props) {
     }
 
 
-
-    
-
     const getQR = (IDbooking, IDproductregiscon, IDusercon, storeregiscon, timebookingcon, startbookingtime, bookingtimecon, amount, price , parkingbox) => {
         const timestartString = new Date(startbookingtime)
         const timeendString = new Date(timebookingcon)
@@ -187,12 +184,12 @@ function Payment(props) {
     return (
         <div>
             {/* // ส่วน popup การจ่ายเงิน */}
-            <div className={`popuppayment ${popuppayment ? 'visible' : ''}`}>
+            {/* <div className={`popuppayment ${popuppayment ? 'visible' : ''}`}>
                 {/* <p>payment{IDuser}</p> */}
-                <div className='item-payment'>
-                    <button onClick={closepayment}>close</button>
+                {/* <div className='item-payment'>
+                    <button onClick={closepayment}>close</button> */} 
 
-                    {booking.map((item, index) => {
+                    {/* {booking.map((item, index) => {
                         const IDbooking = item._id
                         const IDproductregiscon = item.IDproductregis
                         const IDusercon = item.IDuser
@@ -234,7 +231,7 @@ function Payment(props) {
                     </div>
                 </div>
 
-            </div>
+            </div> */}
         </div>
     )
 }

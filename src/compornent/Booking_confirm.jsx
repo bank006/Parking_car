@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState , useRef} from 'react'
 import { useParams, Link } from 'react-router-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -6,6 +6,8 @@ import '../css/bookinghis.css'
 
 
 function Booking_confirm(props) {
+
+    const storeListRef = useRef(null);
 
     // หน้าสินค้าที่ได้ทำการยืนยันการจอง
     const { IDuser } = props.IDuser
@@ -267,6 +269,14 @@ function Booking_confirm(props) {
         window.location.reload();
     }
 
+    useEffect(() => {
+        scrollToBottom();
+    }, [bookingcon]);
+
+    const scrollToBottom = () => {
+        storeListRef.current.scrollIntoView({ behavior: 'smooth' });
+    };
+
 
     return (
         <div style={{ backgroundColor: 'blue' }}>
@@ -345,7 +355,7 @@ function Booking_confirm(props) {
                                                         </tr>
                                                         <tr>
                                                             <th>ราคาสินค้า : </th>
-                                                            <td>{amoutperminute}</td>
+                                                            <td>{amoutperminute} บาท</td>
                                                         </tr>
                                                         <tr>
                                                             <th>วันที่เวลาที่เริ่มต้นใช้งาน : </th>
@@ -362,7 +372,7 @@ function Booking_confirm(props) {
                                             <div className="btn-booking">
                                                 {Ratetime !== "ยังไม่หมด" ? (
                                                     <div className='btn-ratetime'>
-                                                        <button type='submit' onClick={() => checkRatetime(idbooking, bookingcon.startbookingtime, bookingcon.timebookingcon, bookingcon.product[0].priceProduct, IDproducregiscon, id)}>ratetime</button>
+                                                        <button type='submit' onClick={() => checkRatetime(idbooking, bookingcon.startbookingtime, bookingcon.timebookingcon, bookingcon.product[0].priceProduct, IDproducregiscon, id)}>เกินเวลา</button>
                                                     </div>
                                                 ) : (
                                                     <div className='btn-checktime'>
@@ -377,15 +387,17 @@ function Booking_confirm(props) {
                                                 ) : (
                                                     null
                                                 )}
-                                                <div className="btn-checkin">
+                                                {/* <div className="btn-checkin">
                                                     <button>check in</button>
-                                                </div>
+                                                    
+                                                </div> */}
 
                                             </div>
                                         </div>
                                     </div>
                                 )
                             })}
+                            <div ref={storeListRef}></div>
                         </div>
                     </div>
                 </div>
